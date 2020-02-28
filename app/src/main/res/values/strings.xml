@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Cheap Fashion</string>
+    <string name="emailHint">Email</string>
+    <string name="passwordHint">Password</string>
+    <string name="forgotPass"><u>Forgot password?</u></string>
+    <string name="loginButtonLabel">Login</string>
+    <string name="signUpText">Don’t have an account? <b><u>Sign Up!</u></b></string>
+    <string name="fashionLoginLabel">Fashion is waiting for you</string>
+</resources>
