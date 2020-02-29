@@ -7,7 +7,7 @@ public interface SignUpContract {
     interface View {
         void injectPresenter(Presenter presenter);
 
-        void displayData(SignUpViewModel viewModel);
+        //void displayData(SignUpViewModel viewModel);
     }
 
     interface Presenter {
@@ -17,11 +17,11 @@ public interface SignUpContract {
 
         void injectRouter(Router router);
 
-        void fetchData();
+        //void fetchData();
     }
 
     interface Model {
-        String fetchData();
+        //String fetchData();
     }
 
     interface Router {

@@ -31,6 +31,7 @@
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailLoginTextInputLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -45,15 +46,17 @@
                 android:layout_height="30dp"
                 android:background="@drawable/input_text_round"
                 android:fontFamily="@font/source_sans_pro_bold"
-                android:hint="@string/emailHint"
+                android:hint="@string/emailLoginHint"
                 android:inputType="textEmailAddress"
                 android:paddingStart="8dp"
                 android:paddingTop="4dp"
-                android:paddingEnd="8dp" />
+                android:paddingEnd="8dp"
+                tools:text="@string/emailSingUpHint" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passLoginTextInputLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -68,11 +71,12 @@
                 android:layout_height="50dp"
                 android:background="@drawable/input_text_round"
                 android:fontFamily="@font/source_sans_pro_bold"
-                android:hint="@string/passwordHint"
+                android:hint="@string/passLoginHint"
                 android:inputType="textPassword"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:paddingBottom="6dp" />
+                android:paddingBottom="6dp"
+                tools:text="@string/passSignUpHint" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,6 +96,7 @@
             android:layout_gravity="end"
             android:drawableEnd="@drawable/ic_whitearrow24px"
             android:fontFamily="@font/source_sans_pro_regular"
+            android:onClick="onForgotPassText"
             android:textColor="@color/white"
             tools:text="@string/forgotPass" />
     </LinearLayout>

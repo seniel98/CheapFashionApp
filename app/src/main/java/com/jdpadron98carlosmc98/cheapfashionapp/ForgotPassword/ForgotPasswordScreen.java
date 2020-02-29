@@ -1,4 +1,4 @@
-package com.jdpadron98carlosmc98.cheapfashionapp.SignUp;
+package com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -8,22 +8,22 @@ import com.jdpadron98carlosmc98.cheapfashionapp.app.Repository;
 
 import java.lang.ref.WeakReference;
 
-public class SignUpScreen {
+public class ForgotPasswordScreen {
 
-    public static void configure(SignUpContract.View view) {
+    public static void configure(ForgotPasswordContract.View view) {
 
         WeakReference<FragmentActivity> context =
                 new WeakReference<>((FragmentActivity) view);
 
         AppMediator mediator = (AppMediator) context.get().getApplication();
-        SignUpState state = mediator.getSignUpState();
+        ForgotPasswordState state = mediator.getForgotPasswordState();
         //Here we create a repository contract object
         Contract repository = Repository.getInstance(context.get());
 
+        ForgotPasswordContract.Router router = new ForgotPasswordRouter(mediator);
+        ForgotPasswordContract.Presenter presenter = new ForgotPasswordPresenter(state);
+        ForgotPasswordContract.Model model = new ForgotPasswordModel(repository);
 
-        SignUpContract.Router router = new SignUpRouter(mediator);
-        SignUpContract.Presenter presenter = new SignUpPresenter(state);
-        SignUpContract.Model model = new SignUpModel(repository);
         presenter.injectModel(model);
         presenter.injectRouter(router);
         presenter.injectView(new WeakReference<>(view));

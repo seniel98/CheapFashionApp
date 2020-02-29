@@ -2,11 +2,13 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Login;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 
 public class LoginActivity
@@ -16,12 +18,15 @@ public class LoginActivity
 
     private LoginContract.Presenter presenter;
     private TextView signUpText, fashionLabelText, forgotPass;
+    private EditText emailText, passText;
+    private TextInputLayout emailTextInputLayout, passTextInputLayout;
     private MaterialButton loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //---------------------------------------------//
         initLoginLayout();
         setUpLoginLayout();
         onSignUpText();
@@ -37,6 +42,10 @@ public class LoginActivity
         forgotPass = findViewById(R.id.forgotPass);
         fashionLabelText = findViewById(R.id.fashionLabelText);
         signUpText = findViewById(R.id.signUpText);
+        passText = findViewById(R.id.passLoginText);
+        emailText = findViewById(R.id.emailLoginText);
+        passTextInputLayout = findViewById(R.id.passLoginTextInputLayout);
+        emailTextInputLayout = findViewById(R.id.emailLoginTextInputLayout);
     }
 
     /**
@@ -47,7 +56,6 @@ public class LoginActivity
         forgotPass.setText(R.string.forgotPass);
         fashionLabelText.setText(R.string.fashionLoginLabel);
         signUpText.setText(R.string.signUpText);
-
     }
 
     /**
@@ -61,6 +69,10 @@ public class LoginActivity
                 presenter.goToSignUpRouter();
             }
         });
+    }
+
+    public void onForgotPassText(View view){
+        presenter.goToForgotPasswordRouter();
     }
 
     @Override

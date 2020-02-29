@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/backgroundColor"
     tools:context=".SignUp.SignUpActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,6 +30,7 @@
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameSignUpTextInputLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -43,16 +45,17 @@
                 android:layout_height="30dp"
                 android:background="@drawable/input_text_round"
                 android:fontFamily="@font/source_sans_pro_bold"
+                android:hint="@string/fullNameSignUpHint"
                 android:inputType="textPersonName"
                 android:paddingStart="8dp"
                 android:paddingTop="4dp"
                 android:paddingEnd="8dp"
-                android:hint="@string/fullNameSignUpHint"
                 tools:text="@string/fullNameSignUpHint" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailSignUpTextInputLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -67,16 +70,17 @@
                 android:layout_height="30dp"
                 android:background="@drawable/input_text_round"
                 android:fontFamily="@font/source_sans_pro_bold"
+                android:hint="@string/emailSingUpHint"
                 android:inputType="textEmailAddress"
                 android:paddingStart="8dp"
                 android:paddingTop="4dp"
                 android:paddingEnd="8dp"
-                android:hint="@string/emailSingUpHint"
                 tools:text="@string/emailSingUpHint" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneNumberSignUpTextInputLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -91,16 +95,17 @@
                 android:layout_height="30dp"
                 android:background="@drawable/input_text_round"
                 android:fontFamily="@font/source_sans_pro_bold"
+                android:hint="@string/phoneNumberSignUpHint"
                 android:inputType="phone"
                 android:paddingStart="8dp"
                 android:paddingTop="4dp"
                 android:paddingEnd="8dp"
-                android:hint="@string/phoneNumberSignUpHint"
                 tools:text="@string/phoneNumberSignUpHint" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passSignUpTextInputLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -115,11 +120,11 @@
                 android:layout_height="50dp"
                 android:background="@drawable/input_text_round"
                 android:fontFamily="@font/source_sans_pro_bold"
+                android:hint="@string/passSignUpHint"
                 android:inputType="textPassword"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:paddingBottom="6dp"
-                android:hint="@string/passSignUpHint"
                 tools:text="@string/passSignUpHint" />
 
         </com.google.android.material.textfield.TextInputLayout>

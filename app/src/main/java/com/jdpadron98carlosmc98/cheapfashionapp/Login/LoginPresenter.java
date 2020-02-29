@@ -35,4 +35,9 @@ public class LoginPresenter implements LoginContract.Presenter {
     public void goToSignUpRouter() {
         router.goToSignUp();
     }
+
+    @Override
+    public void goToForgotPasswordRouter() {
+        router.goToForgotPassword();
+    }
 }

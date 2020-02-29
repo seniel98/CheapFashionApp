@@ -15,7 +15,7 @@ public class SignUpPresenter implements SignUpContract.Presenter {
         viewModel = state;
     }
 
-    @Override
+  /*  @Override
     public void fetchData() {
         // Log.e(TAG, "fetchData()");
 
@@ -32,7 +32,7 @@ public class SignUpPresenter implements SignUpContract.Presenter {
             return;
         }
 
-        // call the model  
+        // call the model
         String data = model.fetchData();
 
         // set view state
@@ -41,7 +41,7 @@ public class SignUpPresenter implements SignUpContract.Presenter {
         // update the view
         view.get().displayData(viewModel);
 
-    }
+    }*/
 
     @Override
     public void injectView(WeakReference<SignUpContract.View> view) {

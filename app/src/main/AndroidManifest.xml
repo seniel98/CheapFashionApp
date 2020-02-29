@@ -27,7 +27,11 @@
         <activity
             android:name=".SignUp.SignUpActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ForgotPassword.ForgotPasswordActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

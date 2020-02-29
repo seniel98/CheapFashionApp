@@ -1,11 +1,13 @@
-package com.jdpadron98carlosmc98.cheapfashionapp.Login;
+package com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword;
 
 import java.lang.ref.WeakReference;
 
-public interface LoginContract {
+public interface ForgotPasswordContract {
 
     interface View {
         void injectPresenter(Presenter presenter);
+
+       // void displayData(ForgotPasswordViewModel viewModel);
     }
 
     interface Presenter {
@@ -15,23 +17,18 @@ public interface LoginContract {
 
         void injectRouter(Router router);
 
-        void goToSignUpRouter();
-
-        void goToForgotPasswordRouter();
+        //void fetchData();
     }
 
     interface Model {
+       // String fetchData();
     }
 
     interface Router {
         void navigateToNextScreen();
 
-        void passDataToNextScreen(LoginState state);
+        void passDataToNextScreen(ForgotPasswordState state);
 
-        LoginState getDataFromPreviousScreen();
-
-        void goToSignUp();
-
-        void goToForgotPassword();
+        ForgotPasswordState getDataFromPreviousScreen();
     }
 }
