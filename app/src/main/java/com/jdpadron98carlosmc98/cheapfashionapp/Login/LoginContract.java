@@ -14,6 +14,8 @@ public interface LoginContract {
         void injectModel(Model model);
 
         void injectRouter(Router router);
+
+        void goToSignUpRouter();
     }
 
     interface Model {
@@ -25,5 +27,7 @@ public interface LoginContract {
         void passDataToNextScreen(LoginState state);
 
         LoginState getDataFromPreviousScreen();
+
+        void goToSignUp();
     }
 }

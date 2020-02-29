@@ -23,6 +23,7 @@ public class SignUpActivity
         setContentView(R.layout.activity_sign_up);
 
         initSignUpLayout();
+        setSignUpLayout();
         // do the setup
         SignUpScreen.configure(this);
     }
@@ -42,14 +43,14 @@ public class SignUpActivity
      * Fijamos los textos del layout
      */
     private void setSignUpLayout(){
-
+        signUpButton.setText(R.string.signUpButtonLabel);
     }
     @Override
     protected void onResume() {
         super.onResume();
 
         // load the data
-        presenter.fetchData();
+//        presenter.fetchData();
     }
 
     @Override
