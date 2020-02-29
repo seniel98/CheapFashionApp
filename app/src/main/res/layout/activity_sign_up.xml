@@ -47,6 +47,7 @@
                 android:paddingStart="8dp"
                 android:paddingTop="4dp"
                 android:paddingEnd="8dp"
+                android:hint="@string/fullNameSignUpHint"
                 tools:text="@string/fullNameSignUpHint" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -70,6 +71,7 @@
                 android:paddingStart="8dp"
                 android:paddingTop="4dp"
                 android:paddingEnd="8dp"
+                android:hint="@string/emailSingUpHint"
                 tools:text="@string/emailSingUpHint" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -93,6 +95,7 @@
                 android:paddingStart="8dp"
                 android:paddingTop="4dp"
                 android:paddingEnd="8dp"
+                android:hint="@string/phoneNumberSignUpHint"
                 tools:text="@string/phoneNumberSignUpHint" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -116,6 +119,7 @@
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:paddingBottom="6dp"
+                android:hint="@string/passSignUpHint"
                 tools:text="@string/passSignUpHint" />
 
         </com.google.android.material.textfield.TextInputLayout>

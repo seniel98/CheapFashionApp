@@ -23,7 +23,6 @@ public class SignUpActivity
         setContentView(R.layout.activity_sign_up);
 
         initSignUpLayout();
-        setSignUpLayout();
         // do the setup
         SignUpScreen.configure(this);
     }
@@ -43,12 +42,7 @@ public class SignUpActivity
      * Fijamos los textos del layout
      */
     private void setSignUpLayout(){
-        nameText.setHint(R.string.fullNameSignUpHint);
-        emailText.setHint(R.string.emailSingUpHint);
-        phoneText.setHint(R.string.phoneNumberSignUpHint);
-        passText.setHint(R.string.passSignUpHint);
 
-        signUpButton.setText(R.string.signUpButtonLabel);
     }
     @Override
     protected void onResume() {
