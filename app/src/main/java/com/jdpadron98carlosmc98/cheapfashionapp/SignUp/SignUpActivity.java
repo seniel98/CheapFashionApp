@@ -1,11 +1,11 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.SignUp;
 
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.button.MaterialButton;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 
 public class SignUpActivity
@@ -14,8 +14,8 @@ public class SignUpActivity
     public static String TAG = SignUpActivity.class.getSimpleName();
 
     private SignUpContract.Presenter presenter;
-    private TextView nameText,emailText,phoneText,passText;
-    private Button signUpButton;
+    private TextView nameText, emailText, phoneText, passText;
+    private MaterialButton signUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class SignUpActivity
     /**
      * Inicializamos los distintos elementos de la vista
      */
-    private void initSignUpLayout(){
+    private void initSignUpLayout() {
         nameText = findViewById(R.id.nameSignUpText);
         emailText = findViewById(R.id.emailSignUpText);
         phoneText = findViewById(R.id.phoneNumberSignUpText);
@@ -42,9 +42,10 @@ public class SignUpActivity
     /**
      * Fijamos los textos del layout
      */
-    private void setSignUpLayout(){
+    private void setSignUpLayout() {
         signUpButton.setText(R.string.signUpButtonLabel);
     }
+
     @Override
     protected void onResume() {
         super.onResume();

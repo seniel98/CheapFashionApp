@@ -92,8 +92,8 @@
             android:layout_gravity="end"
             android:drawableEnd="@drawable/ic_whitearrow24px"
             android:fontFamily="@font/source_sans_pro_regular"
-            android:text="@string/forgotPass"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:text="@string/forgotPass" />
     </LinearLayout>
 
     <LinearLayout
@@ -113,7 +113,6 @@
             android:paddingTop="10dp"
             android:paddingEnd="75dp"
             android:paddingBottom="10dp"
-            android:text="@string/loginButtonLabel"
             android:textAllCaps="true"
             android:textAppearance="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:textColor="@color/backgroundColor"
@@ -121,7 +120,8 @@
             app:backgroundTint="@color/white"
             app:cornerRadius="20dp"
             app:icon="@drawable/ic_input_24px"
-            app:iconTint="@color/backgroundColor" />
+            app:iconTint="@color/backgroundColor"
+            tools:text="@string/loginButtonLabel" />
 
 
         <TextView
@@ -131,9 +131,9 @@
             android:layout_gravity="center"
             android:layout_margin="32dp"
             android:fontFamily="@font/source_sans_pro_regular"
-            android:text="@string/signUpText"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:text="@string/signUpText" />
 
         <TextView
             android:id="@+id/fashionLabelText"
@@ -141,9 +141,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/pacifico_regular"
-            android:text="@string/fashionLoginLabel"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:text="@string/fashionLoginLabel" />
 
 
     </LinearLayout>
