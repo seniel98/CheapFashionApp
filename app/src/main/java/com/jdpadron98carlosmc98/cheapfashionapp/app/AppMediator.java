@@ -3,7 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.app;
 import android.app.Application;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginState;
-import com.jdpadron98carlosmc98.cheapfashionapp.SignUpState;
+import com.jdpadron98carlosmc98.cheapfashionapp.SignUp.SignUpState;
 import com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen.SplashScreenState;
 
 public class AppMediator extends Application {

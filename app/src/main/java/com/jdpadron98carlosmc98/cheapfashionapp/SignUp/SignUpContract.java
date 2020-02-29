@@ -1,4 +1,4 @@
-package com.jdpadron98carlosmc98.cheapfashionapp;
+package com.jdpadron98carlosmc98.cheapfashionapp.SignUp;
 
 import java.lang.ref.WeakReference;
 

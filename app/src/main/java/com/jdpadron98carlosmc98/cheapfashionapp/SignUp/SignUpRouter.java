@@ -1,6 +1,5 @@
-package com.jdpadron98carlosmc98.cheapfashionapp;
+package com.jdpadron98carlosmc98.cheapfashionapp.SignUp;
 
-import android.util.Log;
 import android.content.Intent;
 import android.content.Context;
 
