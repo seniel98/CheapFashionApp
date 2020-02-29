@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Cheap Fashion</string>
     <string name="emailHint">Email</string>
+
+    <string name="emailSingUpHint">Email</string>
+    <string name="fullNameSignUpHint">Name Surname</string>
+    <string name="phoneNumberSignUpHint">Phone Number</string>
+    <string name="passSignUpHint">Password</string>
+    <string name="signUpButtonLabel">Sign Up</string>
     <string name="passwordHint">Password</string>
     <string name="forgotPass"><u>Forgot password?</u></string>
     <string name="loginButtonLabel">Login</string>
