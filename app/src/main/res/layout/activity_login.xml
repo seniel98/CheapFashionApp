@@ -45,6 +45,8 @@
                 android:layout_width="330dp"
                 android:layout_height="30dp"
                 android:background="@drawable/input_text_round"
+                android:drawableEnd="@drawable/ic_mail_24px"
+                android:drawableTint="@color/backgroundColor"
                 android:fontFamily="@font/source_sans_pro_bold"
                 android:hint="@string/emailLoginHint"
                 android:inputType="textEmailAddress"
