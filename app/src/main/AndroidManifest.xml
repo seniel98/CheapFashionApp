@@ -20,18 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Login.LoginActivity" />
         <activity
-            android:name=".Login.LoginActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:name=".SignUp.SignUpActivity" />
         <activity
-            android:name=".SignUp.SignUpActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ForgotPassword.ForgotPasswordActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:name=".ForgotPassword.ForgotPasswordActivity" />
     </application>
 
 </manifest>
