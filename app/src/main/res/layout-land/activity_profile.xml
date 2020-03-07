@@ -1,6 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:padding="16dp"
+    tools:context=".Profile.ProfileActivity"
+    android:orientation="horizontal">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameProfileTextInputLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="72dp"
+            android:background="@drawable/input_text_round"
+            android:elevation="4dp"
+            app:errorEnabled="true">
+
+            <EditText
+                android:id="@+id/nameProfileText"
+                android:layout_width="330dp"
+                android:layout_height="30dp"
+                android:background="@drawable/input_text_round"
+                android:fontFamily="@font/source_sans_pro_bold"
+                android:hint="@string/fullNameSignUpHint"
+                android:inputType="textPersonName"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="8dp"
+                tools:text="@string/fullNameSignUpHint" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailProfileTextInputLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/input_text_round"
+            android:elevation="4dp"
+            app:errorEnabled="true">
+
+            <EditText
+                android:id="@+id/emailProfileText"
+                android:layout_width="330dp"
+                android:layout_height="30dp"
+                android:background="@drawable/input_text_round"
+                android:fontFamily="@font/source_sans_pro_bold"
+                android:hint="@string/emailSingUpHint"
+                android:inputType="textEmailAddress"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="8dp"
+                tools:text="@string/emailSingUpHint" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneNumberProfileTextInputLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/input_text_round"
+            android:elevation="4dp"
+            app:errorEnabled="true">
+
+            <EditText
+                android:id="@+id/phoneNumberProfileText"
+                android:layout_width="330dp"
+                android:layout_height="30dp"
+                android:background="@drawable/input_text_round"
+                android:fontFamily="@font/source_sans_pro_bold"
+                android:hint="@string/phoneNumberSignUpHint"
+                android:inputType="phone"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="8dp"
+                tools:text="@string/phoneNumberSignUpHint" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/profileImageTExt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_profile_settings" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="67dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveProfileButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="36dp"
+                android:elevation="6dp"
+                android:fontFamily="@font/source_sans_pro_bold"
+                android:paddingStart="75dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="75dp"
+                android:paddingBottom="10dp"
+                android:text="@string/saveProfileButtonLabel"
+                android:textAllCaps="true"
+                android:textAppearance="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textColor="@color/backgroundColor"
+                android:textSize="18sp"
+                app:backgroundTint="@color/white"
+                app:cornerRadius="20dp"
+                app:iconTint="@color/backgroundColor" />
+
+            <TextView
+                android:id="@+id/changePassText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="32dp"
+                android:fontFamily="@font/source_sans_pro_regular"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                tools:text="@string/changePassText" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
