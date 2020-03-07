@@ -13,7 +13,7 @@
         <activity
             android:name=".SplashScreen.SplashScreenActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,10 +21,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Login.LoginActivity" />
-        <activity
-            android:name=".SignUp.SignUpActivity" />
-        <activity
-            android:name=".ForgotPassword.ForgotPasswordActivity" />
+        <activity android:name=".SignUp.SignUpActivity" />
+        <activity android:name=".ForgotPassword.ForgotPasswordActivity" />
+        <activity android:name=".Profile.ProfileActivity" />
     </application>
 
 </manifest>

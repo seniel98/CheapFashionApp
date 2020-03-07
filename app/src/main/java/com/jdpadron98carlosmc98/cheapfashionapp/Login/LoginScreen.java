@@ -3,7 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Login;
 import androidx.fragment.app.FragmentActivity;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.Contract;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.Repository;
 
 import java.lang.ref.WeakReference;
@@ -18,7 +18,7 @@ public class LoginScreen {
         AppMediator mediator = (AppMediator) context.get().getApplication();
         LoginState state = mediator.getLoginState();
         //Here we create a repository contract object
-        Contract repository = Repository.getInstance(context.get());
+        RepositoryContract repository = Repository.getInstance(context.get());
 
 
         LoginContract.Router router = new LoginRouter(mediator);

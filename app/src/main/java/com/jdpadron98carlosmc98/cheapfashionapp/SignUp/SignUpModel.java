@@ -1,14 +1,14 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.SignUp;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.app.Contract;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
 public class SignUpModel implements SignUpContract.Model {
 
     public static String TAG = SignUpModel.class.getSimpleName();
 
-    private Contract repository;
+    private RepositoryContract repository;
 
-    public SignUpModel(Contract repository) {
+    public SignUpModel(RepositoryContract repository) {
         this.repository = repository;
     }
 

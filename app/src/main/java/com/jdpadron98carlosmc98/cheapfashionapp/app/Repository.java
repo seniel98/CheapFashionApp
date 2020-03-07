@@ -2,13 +2,13 @@ package com.jdpadron98carlosmc98.cheapfashionapp.app;
 
 import android.content.Context;
 
-public class Repository implements Contract {
+public class Repository implements RepositoryContract {
 
     private static Repository INSTANCE;
     private Context context;
 
 
-    public static Contract getInstance(Context context) {
+    public static RepositoryContract getInstance(Context context) {
         if (INSTANCE == null) {
             INSTANCE = new Repository(context);
         }
