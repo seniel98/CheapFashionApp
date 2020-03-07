@@ -14,4 +14,6 @@
     <string name="loginButtonLabel">Login</string>
     <string name="signUpText">Don’t have an account? <b><u>Sign Up!</u></b></string>
     <string name="fashionLoginLabel">Fashion is waiting for you</string>
+    <string name="changePassText">Do you want to change your pass? <b><u>Click!</u></b></string>
+    <string name="saveProfileButtonLabel">Save</string>
 </resources>
