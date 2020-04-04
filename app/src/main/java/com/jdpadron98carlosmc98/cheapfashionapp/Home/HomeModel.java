@@ -1,14 +1,16 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 
-import android.util.Log;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
 public class HomeModel implements HomeContract.Model {
 
     public static String TAG = HomeModel.class.getSimpleName();
 
     private String data;
+    private RepositoryContract repository;
 
-    public HomeModel(String data) {
+    public HomeModel(String data, RepositoryContract repository) {
+        this.repository = repository;
         this.data = data;
     }
 

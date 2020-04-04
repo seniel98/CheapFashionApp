@@ -5,6 +5,9 @@ import java.lang.ref.WeakReference;
 import androidx.fragment.app.FragmentActivity;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.Repository;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
 public class HomeScreen {
 
@@ -17,10 +20,11 @@ public class HomeScreen {
 
         AppMediator mediator = (AppMediator) context.get().getApplication();
         HomeState state = mediator.getHomeState();
+        RepositoryContract repository = Repository.getInstance(context.get());
 
         HomeContract.Router router = new HomeRouter(mediator);
         HomeContract.Presenter presenter = new HomePresenter(state);
-        HomeContract.Model model = new HomeModel(data);
+        HomeContract.Model model = new HomeModel(data,repository);
         presenter.injectModel(model);
         presenter.injectRouter(router);
         presenter.injectView(new WeakReference<>(view));

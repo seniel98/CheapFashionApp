@@ -6,4 +6,5 @@
     <color name="backgroundColor">#F48FB1</color>
     <color name="white">#FFFFFF</color>
     <color name="inactive_nav_item">#9E9E9E</color>
+    <color name="flotaing_button_color">#C51162</color>
 </resources>
