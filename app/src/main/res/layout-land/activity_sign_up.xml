@@ -8,113 +8,117 @@
     android:padding="16dp"
     tools:context=".SignUp.SignUpActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nameSignUpTextInputLayout"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="36dp"
-            android:background="@drawable/input_text_round"
-            android:elevation="4dp"
-            app:errorEnabled="true">
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/nameSignUpText"
-                android:layout_width="330dp"
-                android:layout_height="30dp"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailSignUpTextInputLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="36dp"
                 android:background="@drawable/input_text_round"
-                android:fontFamily="@font/source_sans_pro_bold"
-                android:hint="@string/fullNameSignUpHint"
-                android:inputType="textPersonName"
-                android:paddingStart="8dp"
-                android:paddingTop="4dp"
-                android:paddingEnd="8dp"
-                tools:text="@string/fullNameSignUpHint" />
+                android:elevation="4dp"
+                app:errorEnabled="true">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <EditText
+                    android:id="@+id/emailSignUpText"
+                    android:layout_width="330dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/input_text_round"
+                    android:fontFamily="@font/source_sans_pro_bold"
+                    android:hint="@string/emailSingUpHint"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="8dp"
+                    tools:text="@string/emailSingUpHint" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailSignUpTextInputLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="36dp"
-            android:background="@drawable/input_text_round"
-            android:elevation="4dp"
-            app:errorEnabled="true">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/emailSignUpText"
-                android:layout_width="330dp"
-                android:layout_height="30dp"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameSignUpTextInputLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="36dp"
                 android:background="@drawable/input_text_round"
-                android:fontFamily="@font/source_sans_pro_bold"
-                android:hint="@string/emailSingUpHint"
-                android:inputType="textEmailAddress"
-                android:paddingStart="8dp"
-                android:paddingTop="4dp"
-                android:paddingEnd="8dp"
-                tools:text="@string/emailSingUpHint" />
+                android:elevation="4dp"
+                app:errorEnabled="true">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <EditText
+                    android:id="@+id/nameSignUpText"
+                    android:layout_width="330dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/input_text_round"
+                    android:fontFamily="@font/source_sans_pro_bold"
+                    android:hint="@string/fullNameSignUpHint"
+                    android:inputType="textPersonName"
+                    android:paddingStart="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="8dp"
+                    tools:text="@string/fullNameSignUpHint" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phoneNumberSignUpTextInputLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="36dp"
-            android:background="@drawable/input_text_round"
-            android:elevation="4dp"
-            app:errorEnabled="true">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/phoneNumberSignUpText"
-                android:layout_width="330dp"
-                android:layout_height="30dp"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phoneNumberSignUpTextInputLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="36dp"
                 android:background="@drawable/input_text_round"
-                android:fontFamily="@font/source_sans_pro_bold"
-                android:hint="@string/phoneNumberSignUpHint"
-                android:inputType="phone"
-                android:paddingStart="8dp"
-                android:paddingTop="4dp"
-                android:paddingEnd="8dp"
-                tools:text="@string/phoneNumberSignUpHint" />
+                android:elevation="4dp"
+                app:errorEnabled="true">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <EditText
+                    android:id="@+id/phoneNumberSignUpText"
+                    android:layout_width="330dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/input_text_round"
+                    android:fontFamily="@font/source_sans_pro_bold"
+                    android:hint="@string/phoneNumberSignUpHint"
+                    android:inputType="phone"
+                    android:paddingStart="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="8dp"
+                    tools:text="@string/phoneNumberSignUpHint" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passSignUpTextInputLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="36dp"
-            android:background="@drawable/input_text_round"
-            android:elevation="4dp"
-            app:passwordToggleEnabled="true">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/passSignUpText"
-                android:layout_width="330dp"
-                android:layout_height="50dp"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passSignUpTextInputLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="36dp"
                 android:background="@drawable/input_text_round"
-                android:fontFamily="@font/source_sans_pro_bold"
-                android:hint="@string/passSignUpHint"
-                android:inputType="textPassword"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingBottom="6dp"
-                tools:text="@string/passSignUpHint" />
+                android:elevation="4dp"
+                app:passwordToggleEnabled="true">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <EditText
+                    android:id="@+id/passSignUpText"
+                    android:layout_width="330dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/input_text_round"
+                    android:fontFamily="@font/source_sans_pro_bold"
+                    android:hint="@string/passSignUpHint"
+                    android:inputType="textPassword"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="6dp"
+                    tools:text="@string/passSignUpHint" />
 
-    </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
     <Space
         android:layout_width="wrap_content"
@@ -133,11 +137,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="36dp"
             android:src="@drawable/ic_signup_text" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="127dp" />
+            android:layout_height="87dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/signUpButton"
