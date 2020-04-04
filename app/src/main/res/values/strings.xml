@@ -16,4 +16,9 @@
     <string name="fashionLoginLabel">Fashion is waiting for you</string>
     <string name="changePassText">Do you want to change your pass? <b><u>Click!</u></b></string>
     <string name="saveProfileButtonLabel">Save</string>
+    <string name="market_bottom_nav_menu">Market</string>
+    <string name="liked_bottom_nav_menu">Liked</string>
+    <string name="stuff_bottom_nav_menu">Stuff</string>
+    <string name="profile_bottom_nav_menu">Profile</string>
+    <string name="logout_bottom_nav_menu">Logout</string>
 </resources>

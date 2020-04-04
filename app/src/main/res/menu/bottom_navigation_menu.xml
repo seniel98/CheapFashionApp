@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_menu_market"
+        android:icon="@drawable/ic_shopping_basket_24px"
+        android:title="@string/market_bottom_nav_menu" />
+    <item
+        android:id="@+id/nav_menu_liked"
+        android:icon="@drawable/ic_favorite_24px"
+        android:title="@string/liked_bottom_nav_menu"/>
+
+    <item
+        android:id="@+id/nav_menu_stuff"
+        android:icon="@drawable/ic_list_alt_24px"
+        android:title="@string/stuff_bottom_nav_menu"/>
+
+    <item
+        android:id="@+id/nav_menu_profile"
+        android:icon="@drawable/ic_person_24px"
+        android:title="@string/profile_bottom_nav_menu"/>
+
+    <item
+        android:id="@+id/nav_menu_logout"
+        android:icon="@drawable/ic_power_settings_new_24px"
+        android:title="@string/logout_bottom_nav_menu"/>
+
+
+</menu>

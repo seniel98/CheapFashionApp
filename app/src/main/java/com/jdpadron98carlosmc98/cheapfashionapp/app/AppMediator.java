@@ -3,6 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.app;
 import android.app.Application;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword.ForgotPasswordState;
+import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeState;
 import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginState;
 import com.jdpadron98carlosmc98.cheapfashionapp.Profile.ProfileState;
 import com.jdpadron98carlosmc98.cheapfashionapp.SignUp.SignUpState;
@@ -15,7 +16,15 @@ public class AppMediator extends Application {
     private SignUpState signUpState;
     private ForgotPasswordState forgotPasswordState;
     private ProfileState profileState;
+    private HomeState homeState;
 
+    public HomeState getHomeState() {
+        return homeState;
+    }
+
+    public void setHomeState(HomeState homeState) {
+        this.homeState = homeState;
+    }
 
     public ProfileState getProfileState() {
         return profileState;
@@ -55,5 +64,19 @@ public class AppMediator extends Application {
 
     public void setSplashScreenState(SplashScreenState splashScreenState) {
         this.splashScreenState = splashScreenState;
+    }
+
+    public void setNextHomeScreenState(HomeState state) {
+    }
+
+    public void setPreviousHomeScreenState(HomeState state) {
+    }
+
+    public HomeState getPreviousHomeScreenState() {
+        return null;
+    }
+
+    public HomeState getNextHomeScreenState() {
+        return null;
     }
 }
