@@ -2,6 +2,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.app;
 
 import android.app.Application;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.ChangePassword.ChangePasswordState;
 import com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword.ForgotPasswordState;
 import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeState;
 import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginState;
@@ -77,6 +78,20 @@ public class AppMediator extends Application {
     }
 
     public HomeState getNextHomeScreenState() {
+        return null;
+    }
+
+    public void setNextChangePasswordScreenState(ChangePasswordState state) {
+    }
+
+    public void setPreviousChangePasswordScreenState(ChangePasswordState state) {
+    }
+
+    public ChangePasswordState getPreviousChangePasswordScreenState() {
+        return null;
+    }
+
+    public ChangePasswordState getNextChangePasswordScreenState() {
         return null;
     }
 }
