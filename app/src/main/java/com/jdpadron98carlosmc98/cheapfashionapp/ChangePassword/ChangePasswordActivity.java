@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 
@@ -20,7 +21,7 @@ public class ChangePasswordActivity
     private TextInputLayout newPasswordTextInputLayout, repeatPasswordTextInputLayout;
 
     private EditText newPasswordText, repeatPasswordText;
-    private Button changePasswordButton;
+    private MaterialButton changePasswordButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -6,6 +6,7 @@ import com.jdpadron98carlosmc98.cheapfashionapp.ChangePassword.ChangePasswordSta
 import com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword.ForgotPasswordState;
 import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeState;
 import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginState;
+import com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail.ProductDetailState;
 import com.jdpadron98carlosmc98.cheapfashionapp.Profile.ProfileState;
 import com.jdpadron98carlosmc98.cheapfashionapp.SignUp.SignUpState;
 import com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen.SplashScreenState;
@@ -18,6 +19,15 @@ public class AppMediator extends Application {
     private ForgotPasswordState forgotPasswordState;
     private ProfileState profileState;
     private HomeState homeState;
+    private ProductDetailState productDetailState;
+
+    public ProductDetailState getProductDetailState() {
+        return productDetailState;
+    }
+
+    public void setProductDetailState(ProductDetailState productDetailState) {
+        this.productDetailState = productDetailState;
+    }
 
     public HomeState getHomeState() {
         return homeState;
@@ -92,6 +102,20 @@ public class AppMediator extends Application {
     }
 
     public ChangePasswordState getNextChangePasswordScreenState() {
+        return null;
+    }
+
+    public void setNextProductDetailScreenState(ProductDetailState state) {
+    }
+
+    public void setPreviousProductDetailScreenState(ProductDetailState state) {
+    }
+
+    public ProductDetailState getPreviousProductDetailScreenState() {
+        return null;
+    }
+
+    public ProductDetailState getNextProductDetailScreenState() {
         return null;
     }
 }
