@@ -26,6 +26,7 @@
         <activity android:name=".Profile.ProfileActivity" />
         <activity android:name=".Home.HomeActivity" />
         <activity android:name=".ChangePassword.ChangePasswordActivity" />
+        <activity android:name=".AddProduct.AddProductActivity"/>
     </application>
 
 </manifest>

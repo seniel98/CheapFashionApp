@@ -21,4 +21,15 @@
     <string name="stuff_bottom_nav_menu">Stuff</string>
     <string name="profile_bottom_nav_menu">Profile</string>
     <string name="logout_bottom_nav_menu">Logout</string>
+    <string name="newPasswordChangePasswordHint">New Password</string>
+    <string name="repeatPasswordChangePasswordHint">Repeat Password</string>
+    <string name="changePasswordButtonLabel">Save</string>
+    <string name="addProductAddImageText">Add Image</string>
+    <string name="addProductProductHint">Product</string>
+    <string name="addProductPriceHint">Price</string>
+    <string name="addProductDescriptionHint">Description</string>
+    <string name="addProductAddButtonLabel">Add</string>
+
+
+
 </resources>
