@@ -1,10 +1,8 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 
