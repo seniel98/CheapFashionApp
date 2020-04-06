@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.AddProduct.AddProductState;
 import com.jdpadron98carlosmc98.cheapfashionapp.ChangePassword.ChangePasswordState;
+import com.jdpadron98carlosmc98.cheapfashionapp.Favorite.FavoriteState;
 import com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword.ForgotPasswordState;
 import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeState;
 import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginState;
@@ -22,6 +23,15 @@ public class AppMediator extends Application {
     private HomeState homeState;
     private ProductDetailState productDetailState;
     private AddProductState addProductState;
+    private FavoriteState favoriteState;
+
+    public FavoriteState getFavoriteState() {
+        return favoriteState;
+    }
+
+    public void setFavoriteState(FavoriteState favoriteState) {
+        this.favoriteState = favoriteState;
+    }
 
     public ProductDetailState getProductDetailState() {
         return productDetailState;
@@ -144,6 +154,20 @@ public class AppMediator extends Application {
     }
 
     public ChangePasswordState getChangePasswordState() {
+        return null;
+    }
+
+    public void setNextFavoriteScreenState(FavoriteState state) {
+    }
+
+    public void setPreviousFavoriteScreenState(FavoriteState state) {
+    }
+
+    public FavoriteState getPreviousFavoriteScreenState() {
+        return null;
+    }
+
+    public FavoriteState getNextFavoriteScreenState() {
         return null;
     }
 }
