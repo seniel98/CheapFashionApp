@@ -1,5 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
+
 import java.lang.ref.WeakReference;
 
 public interface HomeContract {
@@ -28,6 +30,8 @@ public interface HomeContract {
         void onPause();
 
         void onDestroy();
+
+        void selectProduct(ProductItem item);
     }
 
     interface Model {

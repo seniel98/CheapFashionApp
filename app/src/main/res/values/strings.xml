@@ -33,7 +33,8 @@
     <string name="addProductPriceHint">Price</string>
     <string name="addProductDescriptionHint">Description</string>
     <string name="addProductAddButtonLabel">Add</string>
-
+    <string name="homeProductNameText">Ropa 1</string>
+    <string name="homeProductPriceText"><b>Precio 1</b></string>
 
 
 </resources>
