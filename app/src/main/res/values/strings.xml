@@ -35,6 +35,8 @@
     <string name="addProductAddButtonLabel">Add</string>
     <string name="favoriteProductNameText">Product1</string>
     <string name="favoriteProductPriceText">Precio1</string>
+    <string name="homeProductNameText">Ropa 1</string>
+    <string name="homeProductPriceText"><b>Precio 1</b></string>
 
 
 </resources>
