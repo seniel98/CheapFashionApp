@@ -33,7 +33,8 @@
     <string name="addProductPriceHint">Price</string>
     <string name="addProductDescriptionHint">Description</string>
     <string name="addProductAddButtonLabel">Add</string>
-
+    <string name="favoriteProductNameText">Product1</string>
+    <string name="favoriteProductPriceText">Precio1</string>
 
 
 </resources>

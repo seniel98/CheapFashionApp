@@ -28,6 +28,7 @@
         <activity android:name=".ChangePassword.ChangePasswordActivity" />
         <activity android:name=".ProductDetail.ProductDetailActivity"/>
         <activity android:name=".AddProduct.AddProductActivity"/>
+        <activity android:name=".Favorite.FavoriteActivity"/>
     </application>
 
 </manifest>
