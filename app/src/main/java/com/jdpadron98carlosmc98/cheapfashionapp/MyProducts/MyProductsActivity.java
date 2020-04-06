@@ -1,43 +1,36 @@
-package com.jdpadron98carlosmc98.cheapfashionapp.Home;
+package com.jdpadron98carlosmc98.cheapfashionapp.MyProducts;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
-public class HomeActivity
-        extends AppCompatActivity implements HomeContract.View {
+public class MyProductsActivity
+        extends AppCompatActivity implements MyProductsContract.View {
 
-    public static String TAG = HomeActivity.class.getSimpleName();
+    public static String TAG = MyProductsActivity.class.getSimpleName();
 
-    private HomeContract.Presenter presenter;
+    private MyProductsContract.Presenter presenter;
 
-    private BottomNavigationView bottomNavigationView;
-
-    private FloatingActionButton addProductButton;
-
-    private HomeAdapter homeAdapter;
+    private MyProductsAdapter myProductsAdapter;
 
     private RecyclerView recyclerView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_my_products);
         getSupportActionBar().setTitle(R.string.app_name);
 
-
-        recyclerView = findViewById(R.id.homeProductRecyclerView);
+        recyclerView = findViewById(R.id.myProductsProductRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        homeAdapter = new HomeAdapter(new View.OnClickListener() {
+        myProductsAdapter = new MyProductsAdapter(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -46,10 +39,11 @@ public class HomeActivity
             }
         });
 
-        recyclerView.setAdapter(homeAdapter);
+        recyclerView.setAdapter(myProductsAdapter);
+
 
         // do the setup
-        HomeScreen.configure(this);
+        MyProductsScreen.configure(this);
 
         if (savedInstanceState == null) {
             presenter.onStart();
@@ -71,9 +65,7 @@ public class HomeActivity
     public void onBackPressed() {
         super.onBackPressed();
 
-        //presenter.onBackPressed();
-
-        finishAffinity();
+        presenter.onBackPressed();
     }
 
     @Override
@@ -90,17 +82,16 @@ public class HomeActivity
         presenter.onDestroy();
     }
 
-
     @Override
-    public void onDataUpdated(HomeViewModel viewModel) {
+    public void onDataUpdated(MyProductsViewModel viewModel) {
         //Log.e(TAG, "onDataUpdated()");
 
         // deal with the data
-//        ((TextView) findViewById(R.id.data)).setText(viewModel.data);
+        //((TextView) findViewById(R.id.data)).setText(viewModel.data);
     }
 
     @Override
-    public void injectPresenter(HomeContract.Presenter presenter) {
+    public void injectPresenter(MyProductsContract.Presenter presenter) {
         this.presenter = presenter;
     }
 }
