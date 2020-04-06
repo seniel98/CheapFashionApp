@@ -8,6 +8,7 @@ import com.jdpadron98carlosmc98.cheapfashionapp.Favorite.FavoriteState;
 import com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword.ForgotPasswordState;
 import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeState;
 import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginState;
+import com.jdpadron98carlosmc98.cheapfashionapp.MyProducts.MyProductsState;
 import com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail.ProductDetailState;
 import com.jdpadron98carlosmc98.cheapfashionapp.Profile.ProfileState;
 import com.jdpadron98carlosmc98.cheapfashionapp.SignUp.SignUpState;
@@ -24,6 +25,11 @@ public class AppMediator extends Application {
     private ProductDetailState productDetailState;
     private AddProductState addProductState;
     private FavoriteState favoriteState;
+    private MyProductsState myProductsState;
+
+    public void setMyProductsState(MyProductsState myProductsState) {
+        this.myProductsState = myProductsState;
+    }
 
     public FavoriteState getFavoriteState() {
         return favoriteState;
@@ -168,6 +174,24 @@ public class AppMediator extends Application {
     }
 
     public FavoriteState getNextFavoriteScreenState() {
+        return null;
+    }
+
+    public MyProductsState getMyProductsState() {
+        return null;
+    }
+
+    public void setNextMyProductsScreenState(MyProductsState state) {
+    }
+
+    public void setPreviousMyProductsScreenState(MyProductsState state) {
+    }
+
+    public MyProductsState getPreviousMyProductsScreenState() {
+        return null;
+    }
+
+    public MyProductsState getNextMyProductsScreenState() {
         return null;
     }
 }
