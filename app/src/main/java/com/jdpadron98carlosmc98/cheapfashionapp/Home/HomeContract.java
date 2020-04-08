@@ -10,6 +10,7 @@ public interface HomeContract {
         void injectPresenter(Presenter presenter);
 
         void onDataUpdated(HomeViewModel viewModel);
+
     }
 
     interface Presenter {
@@ -32,6 +33,15 @@ public interface HomeContract {
         void onDestroy();
 
         void selectProduct(ProductItem item);
+
+        void goToFavoritesRouter();
+
+        void goToMyProductsRouter();
+
+        void goToProfileRouter();
+
+        void callLogout();
+
     }
 
     interface Model {
@@ -54,5 +64,13 @@ public interface HomeContract {
         HomeState getStateFromNextScreen();
 
         void passStateToPreviousScreen(HomeState state);
+
+        void goToFavorites();
+
+        void goToMyProducts();
+
+        void goToProfile();
+
+        void goToLogin();
     }
 }

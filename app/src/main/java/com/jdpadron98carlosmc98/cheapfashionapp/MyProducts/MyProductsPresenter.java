@@ -1,6 +1,6 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.MyProducts;
 
-import android.util.Log;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 import java.lang.ref.WeakReference;
 
@@ -76,6 +76,31 @@ public class MyProductsPresenter implements MyProductsContract.Presenter {
     @Override
     public void onDestroy() {
         // Log.e(TAG, "onDestroy()");
+    }
+
+    @Override
+    public void selectProduct(ProductItem item) {
+
+    }
+
+    @Override
+    public void goToFavoritesRouter() {
+        router.goToFavorites();
+    }
+
+    @Override
+    public void goToHomeRouter() {
+        router.goToHome();
+    }
+
+    @Override
+    public void goToProfileRouter() {
+        router.goToProfile();
+    }
+
+    @Override
+    public void callLogout() {
+        router.goToLogin();
     }
 
     @Override

@@ -33,6 +33,14 @@ public interface FavoriteContract {
         void onDestroy();
 
         void selectProductData(ProductItem item);
+
+        void goToHomeRouter();
+
+        void goToMyProductsRouter();
+
+        void goToProfileRouter();
+
+        void callLogout();
     }
 
     interface Model {
@@ -55,5 +63,14 @@ public interface FavoriteContract {
         FavoriteState getStateFromNextScreen();
 
         void passStateToPreviousScreen(FavoriteState state);
+
+        void goToHome();
+
+        void goToMyProducts();
+
+        void goToProfile();
+
+        void goToLogin();
+
     }
 }

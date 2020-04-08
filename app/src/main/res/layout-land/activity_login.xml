@@ -102,6 +102,7 @@
                 android:layout_height="wrap_content"
                 android:elevation="6dp"
                 android:fontFamily="@font/source_sans_pro_bold"
+                android:onClick="onLoginClicked"
                 android:paddingStart="75dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="75dp"

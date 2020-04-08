@@ -32,6 +32,14 @@ public interface MyProductsContract {
         void onDestroy();
 
         void selectProduct(ProductItem item);
+
+        void goToFavoritesRouter();
+
+        void goToHomeRouter();
+
+        void goToProfileRouter();
+
+        void callLogout();
     }
 
     interface Model {
@@ -54,5 +62,13 @@ public interface MyProductsContract {
         MyProductsState getStateFromNextScreen();
 
         void passStateToPreviousScreen(MyProductsState state);
+
+        void goToFavorites();
+
+        void goToHome();
+
+        void goToProfile();
+
+        void goToLogin();
     }
 }

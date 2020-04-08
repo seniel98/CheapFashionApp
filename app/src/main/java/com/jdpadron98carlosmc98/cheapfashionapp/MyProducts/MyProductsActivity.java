@@ -1,13 +1,16 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.MyProducts;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
@@ -22,13 +25,19 @@ public class MyProductsActivity
 
     private RecyclerView recyclerView;
 
+    private BottomNavigationView bottomNavigationView;
+
+    private FloatingActionButton addProductButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_products);
-        getSupportActionBar().setTitle(R.string.app_name);
 
-        recyclerView = findViewById(R.id.myProductsProductRecyclerView);
+        initLayoutComponents();
+
+        MyProductsScreen.configure(this);
+
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         myProductsAdapter = new MyProductsAdapter(new View.OnClickListener() {
 
@@ -42,8 +51,7 @@ public class MyProductsActivity
         recyclerView.setAdapter(myProductsAdapter);
 
 
-        // do the setup
-        MyProductsScreen.configure(this);
+        initBottomNavMenu();
 
         if (savedInstanceState == null) {
             presenter.onStart();
@@ -60,6 +68,41 @@ public class MyProductsActivity
         // load the data
         presenter.onResume();
     }
+
+    private void initLayoutComponents() {
+        bottomNavigationView = findViewById(R.id.bottomNavViewMyProducts);
+        addProductButton = findViewById(R.id.floatingButtonMyProducts);
+        recyclerView = findViewById(R.id.myProductsProductRecyclerView);
+    }
+
+    private void initBottomNavMenu() {
+        BottomNavigationView.OnNavigationItemSelectedListener navListener =
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    //Checks which item is selected to then call presenter method
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_menu_liked:
+                                presenter.goToFavoritesRouter();
+                                break;
+                            case R.id.nav_menu_market:
+                                presenter.goToHomeRouter();
+                                break;
+                            case R.id.nav_menu_profile:
+                                presenter.goToProfileRouter();
+                                break;
+                            case R.id.nav_menu_logout:
+                                presenter.callLogout();
+                                break;
+                        }
+                        return true;
+                    }
+
+                };
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
+    }
+
 
     @Override
     public void onBackPressed() {

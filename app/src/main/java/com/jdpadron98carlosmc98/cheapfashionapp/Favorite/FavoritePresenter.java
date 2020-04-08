@@ -1,7 +1,5 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Favorite;
 
-import android.util.Log;
-
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 import java.lang.ref.WeakReference;
@@ -83,6 +81,26 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
     @Override
     public void selectProductData(ProductItem item) {
 
+    }
+
+    @Override
+    public void goToHomeRouter() {
+        router.goToHome();
+    }
+
+    @Override
+    public void goToMyProductsRouter() {
+        router.goToMyProducts();
+    }
+
+    @Override
+    public void goToProfileRouter() {
+        router.goToProfile();
+    }
+
+    @Override
+    public void callLogout() {
+        router.goToLogin();
     }
 
     @Override

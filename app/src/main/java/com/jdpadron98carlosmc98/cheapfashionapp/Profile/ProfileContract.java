@@ -18,6 +18,14 @@ public interface ProfileContract {
         void injectRouter(Router router);
 
         //void fetchData();
+
+        void goToFavoritesRouter();
+
+        void goToMyProductsRouter();
+
+        void goToHomeRouter();
+
+        void callLogout();
     }
 
     interface Model {
@@ -30,5 +38,13 @@ public interface ProfileContract {
         void passDataToNextScreen(ProfileState state);
 
         ProfileState getDataFromPreviousScreen();
+
+        void goToFavorites();
+
+        void goToMyProducts();
+
+        void goToHome();
+
+        void goToLogin();
     }
 }

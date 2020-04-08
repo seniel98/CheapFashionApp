@@ -1,150 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".Profile.ProfileActivity">
 
-    <LinearLayout
+
+    <ImageView
+        android:id="@+id/profileImageTExt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:layout_marginBottom="72dp"
+        android:src="@drawable/ic_profile_settings"
+        app:layout_constraintBottom_toTopOf="@+id/nameProfileTextInputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameProfileTextInputLayout"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/input_text_round"
+        android:elevation="4dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/emailProfileTextInputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageTExt">
+
+        <EditText
+            android:id="@+id/nameProfileText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_text_round"
+            android:fontFamily="@font/source_sans_pro_bold"
+            android:hint="@string/fullNameSignUpHint"
+            android:inputType="textPersonName"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            tools:text="@string/fullNameSignUpHint" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailProfileTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:background="@drawable/input_text_round"
+        android:elevation="4dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/phoneNumberProfileTextInputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameProfileTextInputLayout">
+
+        <EditText
+            android:id="@+id/emailProfileText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_text_round"
+            android:fontFamily="@font/source_sans_pro_bold"
+            android:hint="@string/emailSingUpHint"
+            android:inputType="textEmailAddress"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            tools:text="@string/emailSingUpHint" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phoneNumberProfileTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:background="@drawable/input_text_round"
+        android:elevation="4dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/saveProfileButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailProfileTextInputLayout">
+
+        <EditText
+            android:id="@+id/phoneNumberProfileText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_text_round"
+            android:fontFamily="@font/source_sans_pro_bold"
+            android:hint="@string/phoneNumberSignUpHint"
+            android:inputType="phone"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            tools:text="@string/phoneNumberSignUpHint" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/saveProfileButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:elevation="6dp"
+        android:fontFamily="@font/source_sans_pro_bold"
+        android:paddingStart="75dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="75dp"
+        android:paddingBottom="10dp"
+        android:text="@string/saveProfileButtonLabel"
+        android:textAllCaps="true"
+        android:textAppearance="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:textColor="@color/backgroundColor"
+        android:textSize="18sp"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="20dp"
+        app:iconTint="@color/backgroundColor"
+        app:layout_constraintEnd_toEndOf="@+id/phoneNumberProfileTextInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/phoneNumberProfileTextInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumberProfileTextInputLayout" />
+
+    <TextView
+        android:id="@+id/changePassText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:orientation="vertical">
+        android:fontFamily="@font/source_sans_pro_regular"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavViewMarket"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saveProfileButton"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="@string/changePassText" />
 
-        <ImageView
-            android:id="@+id/profileImageTExt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_profile_settings" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavViewProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/white"
+        app:itemIconTint="@drawable/bottom_menu_icon_color_selector"
+        app:itemTextColor="@drawable/bottom_menu_icon_color_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_menu" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nameProfileTextInputLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="72dp"
-            android:background="@drawable/input_text_round"
-            android:elevation="4dp"
-            app:errorEnabled="true">
-
-            <EditText
-                android:id="@+id/nameProfileText"
-                android:layout_width="330dp"
-                android:layout_height="30dp"
-                android:background="@drawable/input_text_round"
-                android:fontFamily="@font/source_sans_pro_bold"
-                android:hint="@string/fullNameSignUpHint"
-                android:inputType="textPersonName"
-                android:paddingStart="8dp"
-                android:paddingTop="4dp"
-                android:paddingEnd="8dp"
-                tools:text="@string/fullNameSignUpHint" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailProfileTextInputLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="36dp"
-            android:background="@drawable/input_text_round"
-            android:elevation="4dp"
-            app:errorEnabled="true">
-
-            <EditText
-                android:id="@+id/emailProfileText"
-                android:layout_width="330dp"
-                android:layout_height="30dp"
-                android:background="@drawable/input_text_round"
-                android:fontFamily="@font/source_sans_pro_bold"
-                android:hint="@string/emailSingUpHint"
-                android:inputType="textEmailAddress"
-                android:paddingStart="8dp"
-                android:paddingTop="4dp"
-                android:paddingEnd="8dp"
-                tools:text="@string/emailSingUpHint" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phoneNumberProfileTextInputLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="36dp"
-            android:background="@drawable/input_text_round"
-            android:elevation="4dp"
-            app:errorEnabled="true">
-
-            <EditText
-                android:id="@+id/phoneNumberProfileText"
-                android:layout_width="330dp"
-                android:layout_height="30dp"
-                android:background="@drawable/input_text_round"
-                android:fontFamily="@font/source_sans_pro_bold"
-                android:hint="@string/phoneNumberSignUpHint"
-                android:inputType="phone"
-                android:paddingStart="8dp"
-                android:paddingTop="4dp"
-                android:paddingEnd="8dp"
-                tools:text="@string/phoneNumberSignUpHint" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/saveProfileButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="36dp"
-            android:elevation="6dp"
-            android:fontFamily="@font/source_sans_pro_bold"
-            android:paddingStart="75dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="75dp"
-            android:paddingBottom="10dp"
-            android:text="@string/saveProfileButtonLabel"
-            android:textAllCaps="true"
-            android:textAppearance="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:textColor="@color/backgroundColor"
-            android:textSize="18sp"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="20dp"
-            app:iconTint="@color/backgroundColor" />
-
-        <TextView
-            android:id="@+id/changePassText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="32dp"
-            android:fontFamily="@font/source_sans_pro_regular"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            tools:text="@string/changePassText" />
-
-
-    </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

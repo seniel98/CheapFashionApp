@@ -49,6 +49,8 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
         }
     */
+
+
     @Override
     public void injectView(WeakReference<ProfileContract.View> view) {
         this.view = view;
@@ -62,5 +64,25 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     @Override
     public void injectRouter(ProfileContract.Router router) {
         this.router = router;
+    }
+
+    @Override
+    public void goToFavoritesRouter() {
+        router.goToFavorites();
+    }
+
+    @Override
+    public void goToMyProductsRouter() {
+        router.goToMyProducts();
+    }
+
+    @Override
+    public void goToHomeRouter() {
+        router.goToHome();
+    }
+
+    @Override
+    public void callLogout() {
+        router.goToLogin();
     }
 }

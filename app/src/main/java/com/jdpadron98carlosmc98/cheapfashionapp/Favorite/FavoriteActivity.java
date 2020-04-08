@@ -1,14 +1,15 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Favorite;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
@@ -21,11 +22,15 @@ public class FavoriteActivity
     private FavoriteAdapter listAdapter;
     private RecyclerView recyclerView;
 
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
-        getSupportActionBar().setTitle(R.string.app_name);
+
+        initLayoutComponents();
+
 
         // do the setup
         FavoriteScreen.configure(this);
@@ -36,9 +41,8 @@ public class FavoriteActivity
         } else {
             presenter.onRestart();
         }
-        recyclerView = findViewById(R.id.recyclerFavoriteProducts);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        listAdapter = new FavoriteAdapter( new View.OnClickListener() {
+        listAdapter = new FavoriteAdapter(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -47,6 +51,7 @@ public class FavoriteActivity
             }
         });
 
+        initBottomNavMenu();
         recyclerView.setAdapter(listAdapter);
     }
 
@@ -56,6 +61,39 @@ public class FavoriteActivity
 
         // load the data
         presenter.onResume();
+    }
+
+    private void initLayoutComponents() {
+        bottomNavigationView = findViewById(R.id.bottomNavViewMarket);
+        recyclerView = findViewById(R.id.homeProductRecyclerView);
+    }
+
+    private void initBottomNavMenu() {
+        BottomNavigationView.OnNavigationItemSelectedListener navListener =
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    //Checks which item is selected to then call presenter method
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_menu_market:
+                                presenter.goToHomeRouter();
+                                break;
+                            case R.id.nav_menu_stuff:
+                                presenter.goToMyProductsRouter();
+                                break;
+                            case R.id.nav_menu_profile:
+                                presenter.goToProfileRouter();
+                                break;
+                            case R.id.nav_menu_logout:
+                                presenter.callLogout();
+                                break;
+                        }
+                        return true;
+                    }
+
+                };
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
     }
 
     @Override

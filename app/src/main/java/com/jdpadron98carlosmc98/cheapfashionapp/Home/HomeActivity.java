@@ -1,8 +1,10 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,10 +34,12 @@ public class HomeActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        getSupportActionBar().setTitle(R.string.app_name);
+        //Init Layout components
+        initLayoutComponents();
 
+        // do the setup
+        HomeScreen.configure(this);
 
-        recyclerView = findViewById(R.id.homeProductRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         homeAdapter = new HomeAdapter(new View.OnClickListener() {
 
@@ -48,8 +52,8 @@ public class HomeActivity
 
         recyclerView.setAdapter(homeAdapter);
 
-        // do the setup
-        HomeScreen.configure(this);
+        initBottomNavMenu();
+
 
         if (savedInstanceState == null) {
             presenter.onStart();
@@ -57,6 +61,41 @@ public class HomeActivity
         } else {
             presenter.onRestart();
         }
+    }
+
+
+    private void initLayoutComponents() {
+        bottomNavigationView = findViewById(R.id.bottomNavViewMarket);
+        addProductButton = findViewById(R.id.floatingButtonMarket);
+        recyclerView = findViewById(R.id.homeProductRecyclerView);
+    }
+
+    private void initBottomNavMenu() {
+        BottomNavigationView.OnNavigationItemSelectedListener navListener =
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    //Checks which item is selected to then call presenter method
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_menu_liked:
+                                presenter.goToFavoritesRouter();
+                                break;
+                            case R.id.nav_menu_stuff:
+                                presenter.goToMyProductsRouter();
+                                break;
+                            case R.id.nav_menu_profile:
+                                presenter.goToProfileRouter();
+                                break;
+                            case R.id.nav_menu_logout:
+                                presenter.callLogout();
+                                break;
+                        }
+                        return true;
+                    }
+
+                };
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
     }
 
     @Override

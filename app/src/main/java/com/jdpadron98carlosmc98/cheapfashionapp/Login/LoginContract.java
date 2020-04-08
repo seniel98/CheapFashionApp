@@ -18,6 +18,8 @@ public interface LoginContract {
         void goToSignUpRouter();
 
         void goToForgotPasswordRouter();
+
+        void goToHomeRouter();
     }
 
     interface Model {
@@ -33,5 +35,7 @@ public interface LoginContract {
         void goToSignUp();
 
         void goToForgotPassword();
+
+        void goToHome();
     }
 }

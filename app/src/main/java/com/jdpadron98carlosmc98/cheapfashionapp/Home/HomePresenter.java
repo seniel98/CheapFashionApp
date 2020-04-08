@@ -2,6 +2,8 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 
 import android.util.Log;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
+
 import java.lang.ref.WeakReference;
 
 public class HomePresenter implements HomeContract.Presenter {
@@ -76,6 +78,31 @@ public class HomePresenter implements HomeContract.Presenter {
     @Override
     public void onDestroy() {
         // Log.e(TAG, "onDestroy()");
+    }
+
+    @Override
+    public void selectProduct(ProductItem item) {
+
+    }
+
+    @Override
+    public void goToFavoritesRouter() {
+        router.goToFavorites();
+    }
+
+    @Override
+    public void goToMyProductsRouter() {
+        router.goToMyProducts();
+    }
+
+    @Override
+    public void goToProfileRouter() {
+        router.goToProfile();
+    }
+
+    @Override
+    public void callLogout() {
+        router.goToLogin();
     }
 
     @Override

@@ -90,4 +90,8 @@ public class LoginActivity
     public void injectPresenter(LoginContract.Presenter presenter) {
         this.presenter = presenter;
     }
+
+    public void onLoginClicked(View view) {
+        presenter.goToHomeRouter();
+    }
 }
