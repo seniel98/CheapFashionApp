@@ -106,6 +106,11 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
+    public void goToAddProduct() {
+        router.goAddProduct();
+    }
+
+    @Override
     public void injectView(WeakReference<HomeContract.View> view) {
         this.view = view;
     }

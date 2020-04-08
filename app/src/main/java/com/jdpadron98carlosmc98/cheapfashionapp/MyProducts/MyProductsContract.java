@@ -40,6 +40,8 @@ public interface MyProductsContract {
         void goToProfileRouter();
 
         void callLogout();
+
+        void goToAddProduct();
     }
 
     interface Model {
@@ -70,5 +72,7 @@ public interface MyProductsContract {
         void goToProfile();
 
         void goToLogin();
+
+        void goAddProduct();
     }
 }

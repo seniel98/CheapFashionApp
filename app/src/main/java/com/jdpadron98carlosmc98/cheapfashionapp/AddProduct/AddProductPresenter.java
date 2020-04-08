@@ -31,7 +31,7 @@ public class AddProductPresenter implements AddProductContract.Presenter {
         if (savedState != null) {
 
             // update the model if is necessary
-            model.onDataFromPreviousScreen(savedState.data);
+//            model.onDataFromPreviousScreen(savedState.data);
         }
     }
 
@@ -40,7 +40,7 @@ public class AddProductPresenter implements AddProductContract.Presenter {
         // Log.e(TAG, "onRestart()");
 
         // update the model if is necessary
-        model.onRestartScreen(state.data);
+//        model.onRestartScreen(state.data);
     }
 
     @Override
@@ -52,11 +52,11 @@ public class AddProductPresenter implements AddProductContract.Presenter {
         if (savedState != null) {
 
             // update the model if is necessary
-            model.onDataFromNextScreen(savedState.data);
+//            model.onDataFromNextScreen(savedState.data);
         }
 
         // call the model and update the state
-        state.data = model.getStoredData();
+//        state.data = model.getStoredData();
 
         // update the view
         view.get().onDataUpdated(state);

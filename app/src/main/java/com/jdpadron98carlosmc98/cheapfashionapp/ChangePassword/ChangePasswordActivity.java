@@ -27,7 +27,6 @@ public class ChangePasswordActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
-        getSupportActionBar().setTitle(R.string.app_name);
         //---------------------------------------------//
         initLoginLayout();
         setUpLoginLayout();

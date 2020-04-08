@@ -44,8 +44,6 @@ public class AddProductActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
-        getSupportActionBar().setTitle(R.string.app_name);
-
         initLayoutComponents();
         initLayoutData();
         askPermission(Manifest.permission.READ_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE);
@@ -95,7 +93,7 @@ public class AddProductActivity
         if(ContextCompat.checkSelfPermission(this, permission)!= PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
         }else{
-            onBackPressed();
+
         }
     }
 
