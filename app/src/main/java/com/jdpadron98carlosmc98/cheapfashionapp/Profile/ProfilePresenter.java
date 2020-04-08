@@ -85,4 +85,9 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     public void callLogout() {
         router.goToLogin();
     }
+
+    @Override
+    public void goToChangePass() {
+        router.goChangePass();
+    }
 }

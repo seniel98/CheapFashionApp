@@ -26,6 +26,8 @@ public interface ProfileContract {
         void goToHomeRouter();
 
         void callLogout();
+
+        void goToChangePass();
     }
 
     interface Model {
@@ -46,5 +48,7 @@ public interface ProfileContract {
         void goToHome();
 
         void goToLogin();
+
+        void goChangePass();
     }
 }

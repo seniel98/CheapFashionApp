@@ -2,6 +2,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Profile;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,6 +38,13 @@ public class ProfileActivity
         ProfileScreen.configure(this);
 
         initBottomNavMenu();
+
+        changePassText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.goToChangePass();
+            }
+        });
     }
 
     @Override

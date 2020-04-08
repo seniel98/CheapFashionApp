@@ -3,6 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Profile;
 import android.content.Context;
 import android.content.Intent;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.ChangePassword.ChangePasswordActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.Favorite.FavoriteActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginActivity;
@@ -66,6 +67,14 @@ public class ProfileRouter implements ProfileContract.Router {
         Context context = mediator.getApplicationContext();
         Intent intent = new Intent(context, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    @Override
+    public void goChangePass() {
+        Context context = mediator.getApplicationContext();
+        Intent intent = new Intent(context, ChangePasswordActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
