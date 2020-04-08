@@ -64,8 +64,8 @@ public class FavoriteActivity
     }
 
     private void initLayoutComponents() {
-        bottomNavigationView = findViewById(R.id.bottomNavViewMarket);
-        recyclerView = findViewById(R.id.homeProductRecyclerView);
+        bottomNavigationView = findViewById(R.id.bottomNavViewFavorite);
+        recyclerView = findViewById(R.id.recyclerFavoriteProducts);
     }
 
     private void initBottomNavMenu() {
