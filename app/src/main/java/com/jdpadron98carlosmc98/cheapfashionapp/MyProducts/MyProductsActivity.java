@@ -59,6 +59,12 @@ public class MyProductsActivity
         } else {
             presenter.onRestart();
         }
+        addProductButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.goToAddProduct();
+            }
+        });
     }
 
     @Override

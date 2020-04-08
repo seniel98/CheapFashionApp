@@ -42,6 +42,7 @@ public interface HomeContract {
 
         void callLogout();
 
+        void goToAddProduct();
     }
 
     interface Model {
@@ -72,5 +73,7 @@ public interface HomeContract {
         void goToProfile();
 
         void goToLogin();
+
+        void goAddProduct();
     }
 }

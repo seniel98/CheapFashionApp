@@ -104,6 +104,11 @@ public class MyProductsPresenter implements MyProductsContract.Presenter {
     }
 
     @Override
+    public void goToAddProduct() {
+        router.goAddProduct();
+    }
+
+    @Override
     public void injectView(WeakReference<MyProductsContract.View> view) {
         this.view = view;
     }
