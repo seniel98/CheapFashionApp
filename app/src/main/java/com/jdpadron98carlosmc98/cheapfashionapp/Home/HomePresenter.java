@@ -1,7 +1,5 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 
-import android.util.Log;
-
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 import java.lang.ref.WeakReference;
@@ -33,7 +31,7 @@ public class HomePresenter implements HomeContract.Presenter {
         if (savedState != null) {
 
             // update the model if is necessary
-            model.onDataFromPreviousScreen(savedState.data);
+            // model.onDataFromPreviousScreen(savedState.data);
         }
     }
 
@@ -42,7 +40,7 @@ public class HomePresenter implements HomeContract.Presenter {
         // Log.e(TAG, "onRestart()");
 
         // update the model if is necessary
-        model.onRestartScreen(state.data);
+        //model.onRestartScreen(state.data);
     }
 
     @Override
@@ -58,7 +56,7 @@ public class HomePresenter implements HomeContract.Presenter {
         }
 
         // call the model and update the state
-        state.data = model.getStoredData();
+//        state.data = model.getStoredData();
 
         // update the view
         view.get().onDataUpdated(state);
