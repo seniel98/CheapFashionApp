@@ -53,6 +53,9 @@ public class MyProductsActivity
 
         initBottomNavMenu();
 
+        bottomNavigationView.getMenu().getItem(2).setChecked(true);
+
+
         if (savedInstanceState == null) {
             presenter.onStart();
 
@@ -76,7 +79,28 @@ public class MyProductsActivity
     }
 
     private void initBottomNavMenu() {
-        BottomNavigationView.OnNavigationItemSelectedListener navListener =
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_menu_liked:
+                        presenter.goToFavoritesRouter();
+                        break;
+                    case R.id.nav_menu_profile:
+                        presenter.goToProfileRouter();
+                        break;
+                    case R.id.nav_menu_market:
+                        presenter.goToHomeRouter();
+                        break;
+                    case R.id.nav_menu_logout:
+                        presenter.callLogout();
+                        break;
+                }
+
+                return false;
+            }
+        });
+        /*BottomNavigationView.OnNavigationItemSelectedListener navListener =
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     //Checks which item is selected to then call presenter method
@@ -100,7 +124,7 @@ public class MyProductsActivity
 
                 };
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);*/
     }
 
 

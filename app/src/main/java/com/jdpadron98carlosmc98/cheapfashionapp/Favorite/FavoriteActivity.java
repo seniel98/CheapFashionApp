@@ -52,6 +52,7 @@ public class FavoriteActivity
         });
 
         initBottomNavMenu();
+        bottomNavigationView.getMenu().getItem(1).setChecked(true);
         recyclerView.setAdapter(listAdapter);
     }
 
@@ -69,7 +70,28 @@ public class FavoriteActivity
     }
 
     private void initBottomNavMenu() {
-        BottomNavigationView.OnNavigationItemSelectedListener navListener =
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_menu_profile:
+                        presenter.goToProfileRouter();
+                        break;
+                    case R.id.nav_menu_stuff:
+                        presenter.goToMyProductsRouter();
+                        break;
+                    case R.id.nav_menu_market:
+                        presenter.goToHomeRouter();
+                        break;
+                    case R.id.nav_menu_logout:
+                        presenter.callLogout();
+                        break;
+                }
+
+                return false;
+            }
+        });
+     /*   BottomNavigationView.OnNavigationItemSelectedListener navListener =
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     //Checks which item is selected to then call presenter method
@@ -93,7 +115,7 @@ public class FavoriteActivity
 
                 };
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);*/
     }
 
     @Override

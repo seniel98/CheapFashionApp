@@ -37,6 +37,10 @@ public class ProfileActivity
         ProfileScreen.configure(this);
 
         initBottomNavMenu();
+
+
+        bottomNavigationView.getMenu().getItem(3).setChecked(true);
+
     }
 
     @Override
@@ -70,31 +74,27 @@ public class ProfileActivity
     }
 
     private void initBottomNavMenu() {
-        BottomNavigationView.OnNavigationItemSelectedListener navListener =
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    //Checks which item is selected to then call presenter method
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.nav_menu_liked:
-                                presenter.goToFavoritesRouter();
-                                break;
-                            case R.id.nav_menu_stuff:
-                                presenter.goToMyProductsRouter();
-                                break;
-                            case R.id.nav_menu_market:
-                                presenter.goToHomeRouter();
-                                break;
-                            case R.id.nav_menu_logout:
-                                presenter.callLogout();
-                                break;
-                        }
-                        return true;
-                    }
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_menu_liked:
+                        presenter.goToFavoritesRouter();
+                        break;
+                    case R.id.nav_menu_stuff:
+                        presenter.goToMyProductsRouter();
+                        break;
+                    case R.id.nav_menu_market:
+                        presenter.goToHomeRouter();
+                        break;
+                    case R.id.nav_menu_logout:
+                        presenter.callLogout();
+                        break;
+                }
 
-                };
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
+                return false;
+            }
+        });
     }
 
     /*

@@ -41,6 +41,7 @@ public class MyProductsRouter implements MyProductsContract.Router {
     public void goToFavorites() {
         Context context = mediator.getApplicationContext();
         Intent intent = new Intent(context, FavoriteActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
@@ -49,6 +50,7 @@ public class MyProductsRouter implements MyProductsContract.Router {
     public void goToHome() {
         Context context = mediator.getApplicationContext();
         Intent intent = new Intent(context, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
@@ -57,6 +59,7 @@ public class MyProductsRouter implements MyProductsContract.Router {
     public void goToProfile() {
         Context context = mediator.getApplicationContext();
         Intent intent = new Intent(context, ProfileActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
