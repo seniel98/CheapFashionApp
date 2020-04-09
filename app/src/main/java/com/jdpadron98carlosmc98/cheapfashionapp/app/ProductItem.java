@@ -8,6 +8,7 @@ public class ProductItem {
     public String name;
     public String picture;
     public UserData userData;
+    public String detail;
 
     /**
      * Constructor para las imagenes de sample
@@ -18,12 +19,25 @@ public class ProductItem {
      * @param name
      * @param userData
      */
-    public ProductItem(int id, int drawable, String price, String name, UserData userData) {
+    public ProductItem(int id, int drawable, String price, String name, UserData userData, String detail) {
         this.id = id;
         this.drawable = drawable;
         this.price = price;
         this.name = name;
         this.userData = userData;
+        this.detail = detail;
+    }
+
+    public ProductItem() {
+
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public int getId() {

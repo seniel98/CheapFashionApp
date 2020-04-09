@@ -25,11 +25,11 @@ public class ProductDetailPresenter implements ProductDetailContract.Presenter {
         if (state == null) {
             state = new ProductDetailState();
         }
+        ProductDetailState savedState = router.getStateFromPreviousScreen();
 
         // use passed state if is necessary
-        ProductDetailState savedState = router.getStateFromPreviousScreen();
         if (savedState != null) {
-
+            view.get().displayProductData(savedState);
             // update the model if is necessary
            // model.onDataFromPreviousScreen(savedState.data);
         }

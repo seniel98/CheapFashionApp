@@ -7,6 +7,7 @@ import com.jdpadron98carlosmc98.cheapfashionapp.AddProduct.AddProductActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.Favorite.FavoriteActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.MyProducts.MyProductsActivity;
+import com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail.ProductDetailActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.Profile.ProfileActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 
@@ -78,6 +79,14 @@ public class HomeRouter implements HomeContract.Router {
     public void goAddProduct() {
         Context context = mediator.getApplicationContext();
         Intent intent = new Intent(context, AddProductActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    @Override
+    public void goToDetail() {
+        Context context = mediator.getApplicationContext();
+        Intent intent = new Intent(context, ProductDetailActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

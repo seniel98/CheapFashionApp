@@ -8,6 +8,8 @@ public interface ProductDetailContract {
         void injectPresenter(Presenter presenter);
 
         void onDataUpdated(ProductDetailViewModel viewModel);
+
+        void displayProductData(ProductDetailState state);
     }
 
     interface Presenter {

@@ -26,6 +26,12 @@ public class AppMediator extends Application {
     private AddProductState addProductState;
     private FavoriteState favoriteState;
     private MyProductsState myProductsState;
+    private ChangePasswordState changePasswordState;
+    private ProductItem item;
+
+    public void setChangePasswordState(ChangePasswordState changePasswordState) {
+        this.changePasswordState = changePasswordState;
+    }
 
     public void setMyProductsState(MyProductsState myProductsState) {
         this.myProductsState = myProductsState;
@@ -104,17 +110,14 @@ public class AppMediator extends Application {
     }
 
     public void setNextHomeScreenState(HomeState state) {
+        this.item = state.item;
     }
 
     public void setPreviousHomeScreenState(HomeState state) {
     }
 
-    public HomeState getPreviousHomeScreenState() {
-        return null;
-    }
-
     public HomeState getNextHomeScreenState() {
-        return null;
+        return homeState;
     }
 
     public void setNextChangePasswordScreenState(ChangePasswordState state) {
@@ -124,11 +127,11 @@ public class AppMediator extends Application {
     }
 
     public ChangePasswordState getPreviousChangePasswordScreenState() {
-        return null;
+        return changePasswordState;
     }
 
     public ChangePasswordState getNextChangePasswordScreenState() {
-        return null;
+        return changePasswordState;
     }
 
     public void setNextProductDetailScreenState(ProductDetailState state) {
@@ -138,11 +141,13 @@ public class AppMediator extends Application {
     }
 
     public ProductDetailState getPreviousProductDetailScreenState() {
-        return null;
+        productDetailState = new ProductDetailState();
+        this.productDetailState.item = item;
+        return productDetailState;
     }
 
     public ProductDetailState getNextProductDetailScreenState() {
-        return null;
+        return productDetailState;
     }
 
     public void setNextAddProductScreenState(AddProductState state) {
@@ -152,15 +157,15 @@ public class AppMediator extends Application {
     }
 
     public AddProductState getPreviousAddProductScreenState() {
-        return null;
+        return addProductState;
     }
 
     public AddProductState getNextAddProductScreenState() {
-        return null;
+        return addProductState;
     }
 
     public ChangePasswordState getChangePasswordState() {
-        return null;
+        return changePasswordState;
     }
 
     public void setNextFavoriteScreenState(FavoriteState state) {
@@ -170,15 +175,15 @@ public class AppMediator extends Application {
     }
 
     public FavoriteState getPreviousFavoriteScreenState() {
-        return null;
+        return favoriteState;
     }
 
     public FavoriteState getNextFavoriteScreenState() {
-        return null;
+        return favoriteState;
     }
 
     public MyProductsState getMyProductsState() {
-        return null;
+        return myProductsState;
     }
 
     public void setNextMyProductsScreenState(MyProductsState state) {
@@ -188,10 +193,14 @@ public class AppMediator extends Application {
     }
 
     public MyProductsState getPreviousMyProductsScreenState() {
-        return null;
+        return myProductsState;
     }
 
     public MyProductsState getNextMyProductsScreenState() {
-        return null;
+        return myProductsState;
+    }
+
+    public HomeState getPreviousHomeScreenState() {
+        return homeState;
     }
 }

@@ -15,6 +15,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jdpadron98carlosmc98.cheapfashionapp.AddProduct.AddProductActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 public class ProductDetailActivity
         extends AppCompatActivity implements ProductDetailContract.View {
@@ -137,6 +138,17 @@ public class ProductDetailActivity
 
         // deal with the data
 //        ((TextView) findViewById(R.id.data)).setText(viewModel.data);
+    }
+
+    @Override
+    public void displayProductData(ProductDetailState state) {
+        ProductItem item = state.item;
+        productImage.setImageResource(item.getDrawable());
+        productSeller.setText(item.getUserData().getName());
+        productPrice.setText(item.getPrice());
+        productDetail.setText(item.getDetail());
+        productName.setText(item.getName());
+
     }
 
     @Override

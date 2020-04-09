@@ -51,11 +51,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        holder.itemView.setTag(itemList.get(position));
+        holder.itemView.setOnClickListener(clickListener);
+
         holder.priceProduct.setText(itemList.get(position).getPrice());
         holder.nameProduct.setText(itemList.get(position).getName());
         //Esto esta hecho solo para la version del primer Sprint
         holder.imageProduct.setImageResource(itemList.get(position).getDrawable());
         //loadImageFromURL(holder.imageProduct, itemList.get(position).getPicture());
+
+
     }
 
     @Override
