@@ -10,6 +10,12 @@ public interface ProductDetailContract {
         void onDataUpdated(ProductDetailViewModel viewModel);
 
         void displayProductData(ProductDetailState state);
+        
+        void sendEmail(ProductDetailViewModel viewModel);
+        
+        void callUser(ProductDetailViewModel viewModel);
+        
+        void selectContact(ProductDetailViewModel viewModel);
     }
 
     interface Presenter {
@@ -30,6 +36,8 @@ public interface ProductDetailContract {
         void onPause();
 
         void onDestroy();
+
+        void initDialog();
     }
 
     interface Model {

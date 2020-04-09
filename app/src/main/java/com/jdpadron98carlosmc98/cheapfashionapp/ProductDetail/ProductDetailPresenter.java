@@ -26,7 +26,7 @@ public class ProductDetailPresenter implements ProductDetailContract.Presenter {
             state = new ProductDetailState();
         }
         ProductDetailState savedState = router.getStateFromPreviousScreen();
-
+        state = savedState;
         // use passed state if is necessary
         if (savedState != null) {
             view.get().displayProductData(savedState);
@@ -76,6 +76,11 @@ public class ProductDetailPresenter implements ProductDetailContract.Presenter {
     @Override
     public void onDestroy() {
         // Log.e(TAG, "onDestroy()");
+    }
+
+    @Override
+    public void initDialog() {
+        view.get().selectContact(state);
     }
 
     @Override
