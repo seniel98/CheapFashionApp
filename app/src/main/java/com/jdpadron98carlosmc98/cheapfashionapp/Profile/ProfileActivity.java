@@ -1,5 +1,6 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Profile;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -81,6 +83,26 @@ public class ProfileActivity
         changePassText.setText(R.string.changePassText);
     }
 
+    private void logoutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Logout")
+                .setMessage("Are you sure?")
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.callLogout();
+                    }
+                });
+
+        builder.show();
+    }
+
     private void initBottomNavMenu() {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -96,7 +118,7 @@ public class ProfileActivity
                         presenter.goToHomeRouter();
                         break;
                     case R.id.nav_menu_logout:
-                        presenter.callLogout();
+                        logoutDialog();
                         break;
                 }
 
