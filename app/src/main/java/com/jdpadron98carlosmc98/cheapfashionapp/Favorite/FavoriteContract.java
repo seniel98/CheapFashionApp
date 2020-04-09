@@ -77,5 +77,6 @@ public interface FavoriteContract {
 
         void goToLogin();
 
+        void goToDetail();
     }
 }

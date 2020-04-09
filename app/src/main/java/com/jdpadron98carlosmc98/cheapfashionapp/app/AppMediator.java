@@ -169,6 +169,7 @@ public class AppMediator extends Application {
     }
 
     public void setNextFavoriteScreenState(FavoriteState state) {
+        item = state.item;
     }
 
     public void setPreviousFavoriteScreenState(FavoriteState state) {

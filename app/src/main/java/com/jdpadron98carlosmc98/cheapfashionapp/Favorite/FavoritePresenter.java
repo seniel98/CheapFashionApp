@@ -81,7 +81,9 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
 
     @Override
     public void selectProductData(ProductItem item) {
-
+        state.item = item;
+        router.passStateToNextScreen(state);
+        router.goToDetail();
     }
 
     @Override

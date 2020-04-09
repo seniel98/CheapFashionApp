@@ -10,4 +10,5 @@ public class FavoriteViewModel {
 
     // put the view state here
     public String data;
+    public ProductItem item;
 }

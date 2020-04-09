@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.MyProducts.MyProductsActivity;
+import com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail.ProductDetailActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.Profile.ProfileActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 
@@ -69,6 +70,14 @@ public class FavoriteRouter implements FavoriteContract.Router {
         Context context = mediator.getApplicationContext();
         Intent intent = new Intent(context, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    @Override
+    public void goToDetail() {
+        Context context = mediator.getApplicationContext();
+        Intent intent = new Intent(context, ProductDetailActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
