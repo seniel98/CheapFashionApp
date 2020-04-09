@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/favoriteProductImage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             tools:srcCompat="@tools:sample/avatars[0]" />

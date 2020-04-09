@@ -49,7 +49,7 @@ public class FavoriteActivity
                 ProductItem item = (ProductItem) view.getTag();
                 presenter.selectProductData(item);
             }
-        });
+        },presenter.getListFromModel());
 
         initBottomNavMenu();
         bottomNavigationView.getMenu().getItem(1).setChecked(true);

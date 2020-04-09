@@ -3,6 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 public interface HomeContract {
 
@@ -43,6 +44,8 @@ public interface HomeContract {
         void callLogout();
 
         void goToAddProduct();
+
+        List<ProductItem> getListFromModel();
     }
 
     interface Model {
@@ -51,6 +54,8 @@ public interface HomeContract {
         void onDataFromNextScreen(String data);
 
         void onRestartScreen(String data);
+
+        List<ProductItem> getListFromRepository();
 
         void onDataFromPreviousScreen(String data);
     }

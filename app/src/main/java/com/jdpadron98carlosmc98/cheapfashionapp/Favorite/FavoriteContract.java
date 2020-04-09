@@ -3,6 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Favorite;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 public interface FavoriteContract {
 
@@ -41,6 +42,8 @@ public interface FavoriteContract {
         void goToProfileRouter();
 
         void callLogout();
+
+        List<ProductItem> getListFromModel();
     }
 
     interface Model {
@@ -51,6 +54,8 @@ public interface FavoriteContract {
         void onRestartScreen(String data);
 
         void onDataFromPreviousScreen(String data);
+
+        List<ProductItem> getListFromRepository();
     }
 
     interface Router {

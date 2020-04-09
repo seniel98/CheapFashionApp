@@ -21,9 +21,9 @@ public class MyProductsAdapter extends RecyclerView.Adapter<MyProductsAdapter.Vi
     private final View.OnClickListener clickListener;
 
 
-    public MyProductsAdapter(View.OnClickListener listener) {
+    public MyProductsAdapter(View.OnClickListener listener,List<ProductItem> itemList) {
 
-        itemList = new ArrayList();
+        this.itemList = itemList;
         clickListener = listener;
     }
 
@@ -54,7 +54,9 @@ public class MyProductsAdapter extends RecyclerView.Adapter<MyProductsAdapter.Vi
     public void onBindViewHolder(final MyProductsAdapter.ViewHolder holder, int position) {
         holder.priceProduct.setText(itemList.get(position).getPrice());
         holder.nameProduct.setText(itemList.get(position).getName());
-        loadImageFromURL(holder.imageProduct, itemList.get(position).getPicture());
+        //Esto esta hecho solo para la version del primer Sprint
+        holder.imageProduct.setImageResource(itemList.get(position).getDrawable());
+        //loadImageFromURL(holder.imageProduct, itemList.get(position).getPicture());
     }
 
     @Override

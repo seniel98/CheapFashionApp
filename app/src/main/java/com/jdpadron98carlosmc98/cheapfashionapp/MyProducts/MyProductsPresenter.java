@@ -3,6 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.MyProducts;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 public class MyProductsPresenter implements MyProductsContract.Presenter {
 
@@ -106,6 +107,11 @@ public class MyProductsPresenter implements MyProductsContract.Presenter {
     @Override
     public void goToAddProduct() {
         router.goAddProduct();
+    }
+
+    @Override
+    public List<ProductItem> getListFromModel() {
+        return model.getListFromRepository();
     }
 
     @Override

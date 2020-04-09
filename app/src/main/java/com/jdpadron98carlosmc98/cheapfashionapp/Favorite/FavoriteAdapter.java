@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteAdapter
@@ -22,24 +21,24 @@ public class FavoriteAdapter
     private final View.OnClickListener clickListener;
 
 
-    public FavoriteAdapter(View.OnClickListener listener) {
+    public FavoriteAdapter(View.OnClickListener listener, List<ProductItem> itemList) {
 
-        itemList = new ArrayList();
+        this.itemList = itemList;
         clickListener = listener;
     }
 
 
-    public void addItem(ProductItem item){
+    public void addItem(ProductItem item) {
         itemList.add(item);
         notifyDataSetChanged();
     }
 
-    public void addItems(List<ProductItem> items){
+    public void addItems(List<ProductItem> items) {
         itemList.addAll(items);
         notifyDataSetChanged();
     }
 
-    public void setItems(List<ProductItem> items){
+    public void setItems(List<ProductItem> items) {
         itemList = items;
         notifyDataSetChanged();
     }
@@ -55,7 +54,9 @@ public class FavoriteAdapter
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.priceProduct.setText(itemList.get(position).getPrice());
         holder.nameProduct.setText(itemList.get(position).getName());
-        loadImageFromURL(holder.imageProduct, itemList.get(position).getPicture());
+        //Esto esta hecho solo para la version del primer Sprint
+        holder.imageProduct.setImageResource(itemList.get(position).getDrawable());
+        //loadImageFromURL(holder.imageProduct, itemList.get(position).getPicture());
     }
 
     @Override
@@ -73,10 +74,11 @@ public class FavoriteAdapter
             super(view);
             priceProduct = view.findViewById(R.id.favoriteProductPrice);
             nameProduct = view.findViewById(R.id.favoriteProductName);
-            imageProduct = view.findViewById(R.id.favoriteProductPrice);
+            imageProduct = view.findViewById(R.id.favoriteProductImage);
             favoriteButton = view.findViewById(R.id.favoriteProductLikeButton);
         }
     }
+
     private void loadImageFromURL(ImageView imageView, String imageURL) {
         Glide.with(imageView.getContext())
                 .load(imageURL)
