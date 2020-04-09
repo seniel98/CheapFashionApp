@@ -38,6 +38,7 @@ public class ProductDetailPresenter implements ProductDetailContract.Presenter {
     @Override
     public void onRestart() {
         // Log.e(TAG, "onRestart()");
+        view.get().displayProductData(state);
 
         // update the model if is necessary
         //model.onRestartScreen(state.data);
