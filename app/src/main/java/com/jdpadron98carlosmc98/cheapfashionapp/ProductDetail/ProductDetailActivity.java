@@ -60,6 +60,7 @@ public class ProductDetailActivity
         productSeller = findViewById(R.id.nameSurnameProductDetailText);
 
     }
+
     private void selectContact(){
         final CharSequence[] items= {"E-mail", "Phone number", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -80,8 +81,8 @@ public class ProductDetailActivity
     }
 
     public void sendEmail(){
-        String email = "mdbviewerandeditor@gmail.com";
-        String subject = "Don't have user ID";
+        String email = "test@gmail.com";
+        String subject = "Im interested in one of your products";
         String body = "";
         String chooserTitle = "Choose your preferred app";
         Uri uri = Uri.parse("mailto:" + email)
