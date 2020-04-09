@@ -1,13 +1,19 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.jdpadron98carlosmc98.cheapfashionapp.AddProduct.AddProductActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 
 public class ProductDetailActivity
@@ -53,6 +59,47 @@ public class ProductDetailActivity
         productLikeButton = findViewById(R.id.productDetailLikeButton);
         productSeller = findViewById(R.id.nameSurnameProductDetailText);
 
+    }
+
+    private void selectContact(){
+        final CharSequence[] items= {"E-mail", "Phone number", "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Contact with seller");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                if(items[i].equals("E-mail")){
+                    sendEmail();
+                }else if(items[i].equals("Phone number")){
+                    callUser();
+                }else if(items[i].equals("Cancel")){
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    public void sendEmail(){
+        String email = "test@gmail.com";
+        String subject = "Im interested in one of your products";
+        String body = "";
+        String chooserTitle = "Choose your preferred app";
+        Uri uri = Uri.parse("mailto:" + email)
+                .buildUpon()
+                .appendQueryParameter("To", email)
+                .appendQueryParameter("subject", subject)
+                .appendQueryParameter("body", body)
+                .build();
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, uri);
+        startActivity(Intent.createChooser(emailIntent, chooserTitle));
+    }
+
+    public void callUser(){
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:123456789"));
+        startActivity(intent);
     }
 
     @Override
