@@ -1,6 +1,9 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Favorite;
 
-import android.util.Log;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
+import java.util.List;
 
 public class FavoriteModel implements FavoriteContract.Model {
 
@@ -8,14 +11,16 @@ public class FavoriteModel implements FavoriteContract.Model {
 
     private String data;
 
-    public FavoriteModel(String data) {
-        this.data = data;
+    private RepositoryContract repository;
+
+    public FavoriteModel(RepositoryContract repository) {
+        this.repository = repository;
     }
 
     @Override
     public String getStoredData() {
         // Log.e(TAG, "getStoredData()");
-        return data;
+        return "data";
     }
 
     @Override
@@ -31,5 +36,10 @@ public class FavoriteModel implements FavoriteContract.Model {
     @Override
     public void onDataFromPreviousScreen(String data) {
         // Log.e(TAG, "onDataFromPreviousScreen()");
+    }
+
+    @Override
+    public List<ProductItem> getListFromRepository() {
+        return repository.getProductList();
     }
 }

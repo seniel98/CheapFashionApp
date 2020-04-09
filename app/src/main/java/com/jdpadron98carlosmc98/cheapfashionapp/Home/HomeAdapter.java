@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
@@ -21,9 +20,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     private final View.OnClickListener clickListener;
 
 
-    public HomeAdapter(View.OnClickListener listener) {
+    public HomeAdapter(View.OnClickListener listener, List<ProductItem> itemList) {
 
-        itemList = new ArrayList();
+        this.itemList = itemList;
         clickListener = listener;
     }
 
@@ -54,7 +53,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.priceProduct.setText(itemList.get(position).getPrice());
         holder.nameProduct.setText(itemList.get(position).getName());
-        loadImageFromURL(holder.imageProduct, itemList.get(position).getPicture());
+        //Esto esta hecho solo para la version del primer Sprint
+        holder.imageProduct.setImageResource(itemList.get(position).getDrawable());
+        //loadImageFromURL(holder.imageProduct, itemList.get(position).getPicture());
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 public class HomePresenter implements HomeContract.Presenter {
 
@@ -81,6 +82,11 @@ public class HomePresenter implements HomeContract.Presenter {
     @Override
     public void selectProduct(ProductItem item) {
 
+    }
+
+    @Override
+    public List<ProductItem> getListFromModel() {
+        return model.getListFromRepository();
     }
 
     @Override

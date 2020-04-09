@@ -1,6 +1,9 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
+import java.util.List;
 
 public class HomeModel implements HomeContract.Model {
 
@@ -9,15 +12,20 @@ public class HomeModel implements HomeContract.Model {
     private String data;
     private RepositoryContract repository;
 
-    public HomeModel(String data, RepositoryContract repository) {
+    public HomeModel(RepositoryContract repository) {
         this.repository = repository;
-        this.data = data;
     }
+
+
+    public List<ProductItem> getListFromRepository() {
+        return repository.getProductList();
+    }
+
 
     @Override
     public String getStoredData() {
         // Log.e(TAG, "getStoredData()");
-        return data;
+        return "null";
     }
 
     @Override

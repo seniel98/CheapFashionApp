@@ -1,6 +1,9 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.MyProducts;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
+import java.util.List;
 
 public class MyProductsModel implements MyProductsContract.Model {
 
@@ -9,15 +12,15 @@ public class MyProductsModel implements MyProductsContract.Model {
     private String data;
     private RepositoryContract repository;
 
-    public MyProductsModel(String data, RepositoryContract repository) {
+    public MyProductsModel(RepositoryContract repository) {
         this.repository = repository;
-        this.data = data;
     }
+
 
     @Override
     public String getStoredData() {
         // Log.e(TAG, "getStoredData()");
-        return data;
+        return "data";
     }
 
     @Override
@@ -33,5 +36,10 @@ public class MyProductsModel implements MyProductsContract.Model {
     @Override
     public void onDataFromPreviousScreen(String data) {
         // Log.e(TAG, "onDataFromPreviousScreen()");
+    }
+
+    @Override
+    public List<ProductItem> getListFromRepository() {
+        return repository.getProductList();
     }
 }

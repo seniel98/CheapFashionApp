@@ -1,7 +1,5 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword;
 
-import android.util.Log;
-
 import java.lang.ref.WeakReference;
 
 public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter {
@@ -17,34 +15,34 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
         viewModel = state;
     }
 
-   /* @Override
-    public void fetchData() {
-        // Log.e(TAG, "fetchData()");
+    /* @Override
+     public void fetchData() {
+         // Log.e(TAG, "fetchData()");
 
-        // use passed state if is necessary
-        ForgotPasswordState state = router.getDataFromPreviousScreen();
-        if (state != null) {
+         // use passed state if is necessary
+         ForgotPasswordState state = router.getDataFromPreviousScreen();
+         if (state != null) {
 
-            // update view and model state
-            viewModel.data = state.data;
+             // update view and model state
+             viewModel.data = state.data;
 
-            // update the view
-            view.get().displayData(viewModel);
+             // update the view
+             view.get().displayData(viewModel);
 
-            return;
-        }
+             return;
+         }
 
-        // call the model  
-        String data = model.fetchData();
+         // call the model
+         String data = model.fetchData();
 
-        // set view state
-        viewModel.data = data;
+         // set view state
+         viewModel.data = data;
 
-        // update the view
-        view.get().displayData(viewModel);
+         // update the view
+         view.get().displayData(viewModel);
 
-    }
-*/
+     }
+ */
     @Override
     public void injectView(WeakReference<ForgotPasswordContract.View> view) {
         this.view = view;

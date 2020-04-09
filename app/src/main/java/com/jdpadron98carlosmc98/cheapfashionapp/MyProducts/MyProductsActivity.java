@@ -46,7 +46,7 @@ public class MyProductsActivity
                 ProductItem item = (ProductItem) view.getTag();
                 presenter.selectProduct(item);
             }
-        });
+        },presenter.getListFromModel());
 
         recyclerView.setAdapter(myProductsAdapter);
 

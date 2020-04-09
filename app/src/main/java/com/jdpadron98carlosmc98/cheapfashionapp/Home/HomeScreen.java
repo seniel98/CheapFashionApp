@@ -16,7 +16,6 @@ public class HomeScreen {
         WeakReference<FragmentActivity> context =
                 new WeakReference<>((FragmentActivity) view);
 
-        String data = context.get().getString(R.string.app_name);
 
         AppMediator mediator = (AppMediator) context.get().getApplication();
         HomeState state = mediator.getHomeState();
@@ -24,7 +23,7 @@ public class HomeScreen {
 
         HomeContract.Router router = new HomeRouter(mediator);
         HomeContract.Presenter presenter = new HomePresenter(state);
-        HomeContract.Model model = new HomeModel(data,repository);
+        HomeContract.Model model = new HomeModel(repository);
         presenter.injectModel(model);
         presenter.injectRouter(router);
         presenter.injectView(new WeakReference<>(view));

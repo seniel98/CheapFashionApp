@@ -37,12 +37,12 @@
         android:id="@+id/myProductsProductRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="56dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavViewMarket"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/my_products_product_list">
-    </androidx.recyclerview.widget.RecyclerView>
+        tools:listitem="@layout/my_products_product_list"></androidx.recyclerview.widget.RecyclerView>
 
 
 

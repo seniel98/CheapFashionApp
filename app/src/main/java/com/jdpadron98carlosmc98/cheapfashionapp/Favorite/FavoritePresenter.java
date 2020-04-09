@@ -3,6 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Favorite;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 public class FavoritePresenter implements FavoriteContract.Presenter {
 
@@ -101,6 +102,11 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
     @Override
     public void callLogout() {
         router.goToLogin();
+    }
+
+    @Override
+    public List<ProductItem> getListFromModel() {
+        return model.getListFromRepository();
     }
 
     @Override

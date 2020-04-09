@@ -16,7 +16,6 @@ public class MyProductsScreen {
         WeakReference<FragmentActivity> context =
                 new WeakReference<>((FragmentActivity) view);
 
-        String data = context.get().getString(R.string.app_name);
 
         AppMediator mediator = (AppMediator) context.get().getApplication();
         MyProductsState state = mediator.getMyProductsState();
@@ -24,7 +23,7 @@ public class MyProductsScreen {
 
         MyProductsContract.Router router = new MyProductsRouter(mediator);
         MyProductsContract.Presenter presenter = new MyProductsPresenter(state);
-        MyProductsContract.Model model = new MyProductsModel(data,repository);
+        MyProductsContract.Model model = new MyProductsModel(repository);
         presenter.injectModel(model);
         presenter.injectRouter(router);
         presenter.injectView(new WeakReference<>(view));
