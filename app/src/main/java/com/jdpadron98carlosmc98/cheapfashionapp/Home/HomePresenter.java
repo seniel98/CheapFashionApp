@@ -81,6 +81,9 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void selectProduct(ProductItem item) {
+        state.item = item;
+        router.passStateToNextScreen(state);
+        router.goToDetail();
 
     }
 

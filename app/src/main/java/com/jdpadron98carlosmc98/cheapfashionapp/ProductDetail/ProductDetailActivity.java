@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jdpadron98carlosmc98.cheapfashionapp.AddProduct.AddProductActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 public class ProductDetailActivity
         extends AppCompatActivity implements ProductDetailContract.View {
@@ -44,6 +46,12 @@ public class ProductDetailActivity
         } else {
             presenter.onRestart();
         }
+        contactProductButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.initDialog();
+            }
+        });
     }
 
     private void setProductDetailLayout() {
@@ -61,7 +69,7 @@ public class ProductDetailActivity
 
     }
 
-    private void selectContact(){
+    public void selectContact(final ProductDetailViewModel viewModel){
         final CharSequence[] items= {"E-mail", "Phone number", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Contact with seller");
@@ -69,9 +77,9 @@ public class ProductDetailActivity
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 if(items[i].equals("E-mail")){
-                    sendEmail();
+                    sendEmail(viewModel);
                 }else if(items[i].equals("Phone number")){
-                    callUser();
+                    callUser(viewModel);
                 }else if(items[i].equals("Cancel")){
                     dialog.dismiss();
                 }
@@ -80,8 +88,9 @@ public class ProductDetailActivity
         builder.show();
     }
 
-    public void sendEmail(){
-        String email = "test@gmail.com";
+    public void sendEmail(ProductDetailViewModel viewModel){
+        String emailSender = viewModel.item.getUserData().getEmail();
+        String email = emailSender;
         String subject = "Im interested in one of your products";
         String body = "";
         String chooserTitle = "Choose your preferred app";
@@ -96,11 +105,14 @@ public class ProductDetailActivity
         startActivity(Intent.createChooser(emailIntent, chooserTitle));
     }
 
-    public void callUser(){
+    @Override
+    public void callUser(ProductDetailViewModel viewModel) {
+        String phoneNumber = viewModel.item.getUserData().getPhoneNumber();
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:123456789"));
+        intent.setData(Uri.parse("tel:"+phoneNumber));
         startActivity(intent);
     }
+
 
     @Override
     protected void onResume() {
@@ -137,6 +149,17 @@ public class ProductDetailActivity
 
         // deal with the data
 //        ((TextView) findViewById(R.id.data)).setText(viewModel.data);
+    }
+
+    @Override
+    public void displayProductData(ProductDetailState state) {
+        ProductItem item = state.item;
+        productImage.setImageResource(item.getDrawable());
+        productSeller.setText(item.getUserData().getName());
+        productPrice.setText(item.getPrice());
+        productDetail.setText(item.getDetail());
+        productName.setText(item.getName());
+
     }
 
     @Override

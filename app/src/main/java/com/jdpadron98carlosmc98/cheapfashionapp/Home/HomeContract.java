@@ -80,5 +80,7 @@ public interface HomeContract {
         void goToLogin();
 
         void goAddProduct();
+
+        void goToDetail();
     }
 }

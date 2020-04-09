@@ -2,6 +2,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -52,6 +53,7 @@ public class HomeActivity
                     @Override
                     public void onClick(View view) {
                         ProductItem item = (ProductItem) view.getTag();
+                        Log.e(TAG, "HomeAdapter.item" + item.getName());
                         presenter.selectProduct(item);
                     }
                 }, presenter.getListFromModel());

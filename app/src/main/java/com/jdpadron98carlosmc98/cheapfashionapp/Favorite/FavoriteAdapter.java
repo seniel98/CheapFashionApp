@@ -52,6 +52,8 @@ public class FavoriteAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        holder.itemView.setTag(itemList.get(position));
+        holder.itemView.setOnClickListener(clickListener);
         holder.priceProduct.setText(itemList.get(position).getPrice());
         holder.nameProduct.setText(itemList.get(position).getName());
         //Esto esta hecho solo para la version del primer Sprint
