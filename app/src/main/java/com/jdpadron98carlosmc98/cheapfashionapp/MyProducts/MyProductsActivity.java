@@ -44,12 +44,14 @@ public class MyProductsActivity
         initLayoutComponents();
 
         MyProductsScreen.configure(this);
+
         if (savedInstanceState == null) {
             presenter.onStart();
 
         } else {
             presenter.onRestart();
         }
+
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         myProductsAdapter = new MyProductsAdapter(new View.OnClickListener() {
 
@@ -192,7 +194,7 @@ public class MyProductsActivity
 
     @Override
     public void fillArrayList(MyProductsViewModel viewModel) {
-
+        list = viewModel.list;
     }
 
     @Override
