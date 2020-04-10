@@ -11,6 +11,8 @@ public interface MyProductsContract {
         void injectPresenter(Presenter presenter);
 
         void onDataUpdated(MyProductsViewModel viewModel);
+
+        void fillArrayList(MyProductsViewModel viewModel);
     }
 
     interface Presenter {

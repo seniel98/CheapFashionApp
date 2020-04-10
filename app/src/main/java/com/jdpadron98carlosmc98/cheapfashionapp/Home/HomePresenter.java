@@ -3,6 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomePresenter implements HomeContract.Presenter {
@@ -34,14 +35,31 @@ public class HomePresenter implements HomeContract.Presenter {
             // update the model if is necessary
             // model.onDataFromPreviousScreen(savedState.data);
         }
+        //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
+        List<ProductItem> list = getListFromModel();
+        state.homeProductList = list;
+        view.get().fillArrayList(state);
     }
 
     @Override
     public void onRestart() {
         // Log.e(TAG, "onRestart()");
+        // initialize the state if is necessary
+        if (state == null) {
+            state = new HomeState();
+        }
 
-        // update the model if is necessary
-        //model.onRestartScreen(state.data);
+        // use passed state if is necessary
+        HomeState savedState = router.getStateFromPreviousScreen();
+        if (savedState != null) {
+
+            // update the model if is necessary
+            // model.onDataFromPreviousScreen(savedState.data);
+        }
+        //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
+        List<ProductItem> list = getListFromModel();
+        state.homeProductList = list;
+        view.get().fillArrayList(state);
     }
 
     @Override

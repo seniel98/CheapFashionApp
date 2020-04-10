@@ -12,6 +12,7 @@ public interface FavoriteContract {
 
         void onDataUpdated(FavoriteViewModel viewModel);
 
+        void fillArrayList(FavoriteViewModel viewModel);
     }
 
     interface Presenter {
