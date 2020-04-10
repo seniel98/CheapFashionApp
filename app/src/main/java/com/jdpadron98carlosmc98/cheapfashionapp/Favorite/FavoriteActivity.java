@@ -2,6 +2,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Favorite;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -36,8 +37,6 @@ public class FavoriteActivity
         setContentView(R.layout.activity_favorite);
 
         initLayoutComponents();
-
-
         // do the setup
         FavoriteScreen.configure(this);
 
@@ -47,7 +46,7 @@ public class FavoriteActivity
         } else {
             presenter.onRestart();
         }
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+   /*     recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         listAdapter = new FavoriteAdapter(new View.OnClickListener() {
 
             @Override
@@ -55,11 +54,11 @@ public class FavoriteActivity
                 ProductItem item = (ProductItem) view.getTag();
                 presenter.selectProductData(item);
             }
-        },list);
-
+        }, list);
+*/
         initBottomNavMenu();
         bottomNavigationView.getMenu().getItem(1).setChecked(true);
-        recyclerView.setAdapter(listAdapter);
+        //recyclerView.setAdapter(listAdapter);
     }
 
     @Override
@@ -68,13 +67,27 @@ public class FavoriteActivity
 
         // load the data
         presenter.onResume();
+
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        listAdapter = new FavoriteAdapter(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                ProductItem item = (ProductItem) view.getTag();
+                presenter.selectProductData(item);
+            }
+        }, list);
+
+
+        recyclerView.setAdapter(listAdapter);
     }
 
     private void initLayoutComponents() {
         bottomNavigationView = findViewById(R.id.bottomNavViewFavorite);
         recyclerView = findViewById(R.id.recyclerFavoriteProducts);
     }
-    private void logoutDialog(){
+
+    private void logoutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Logout")
                 .setMessage("Are you sure?")
@@ -93,6 +106,7 @@ public class FavoriteActivity
 
         builder.show();
     }
+
     private void initBottomNavMenu() {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -115,31 +129,6 @@ public class FavoriteActivity
                 return false;
             }
         });
-     /*   BottomNavigationView.OnNavigationItemSelectedListener navListener =
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    //Checks which item is selected to then call presenter method
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.nav_menu_market:
-                                presenter.goToHomeRouter();
-                                break;
-                            case R.id.nav_menu_stuff:
-                                presenter.goToMyProductsRouter();
-                                break;
-                            case R.id.nav_menu_profile:
-                                presenter.goToProfileRouter();
-                                break;
-                            case R.id.nav_menu_logout:
-                                presenter.callLogout();
-                                break;
-                        }
-                        return true;
-                    }
-
-                };
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);*/
     }
 
     @Override
@@ -166,7 +155,6 @@ public class FavoriteActivity
     @Override
     public void onDataUpdated(FavoriteViewModel viewModel) {
         //Log.e(TAG, "onDataUpdated()");
-
         // deal with the data
 //        ((TextView) findViewById(R.id.data)).setText(viewModel.data);
     }

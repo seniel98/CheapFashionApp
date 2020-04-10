@@ -36,7 +36,8 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
         }
         //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
         List<ProductItem> list = getListFromModel();
-        state.productItems = list;
+        List<ProductItem> favoriteList = model.getFavoriteList(list);
+        state.productItems = favoriteList;
         view.get().fillArrayList(state);
     }
 
@@ -56,7 +57,8 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
         }
         //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
         List<ProductItem> list = getListFromModel();
-        state.productItems = list;
+        List<ProductItem> favoriteList = model.getFavoriteList(list);
+        state.productItems = favoriteList;
         view.get().fillArrayList(state);
         // update the model if is necessary
         //model.onRestartScreen(state.data);
@@ -78,7 +80,9 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
 //        state.data = model.getStoredData();
 
         // update the view
-        view.get().onDataUpdated(state);
+        List<ProductItem> favoriteList = model.getFavoriteList(state.productItems);
+        state.productItems = favoriteList;
+        view.get().fillArrayList(state);
 
     }
 
