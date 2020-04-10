@@ -64,7 +64,6 @@ public class FavoriteActivity
     @Override
     protected void onResume() {
         super.onResume();
-
         // load the data
         presenter.onResume();
 
@@ -163,6 +162,7 @@ public class FavoriteActivity
     public void fillArrayList(FavoriteViewModel viewModel) {
         list = viewModel.productItems;
     }
+
 
     @Override
     public void injectPresenter(FavoriteContract.Presenter presenter) {

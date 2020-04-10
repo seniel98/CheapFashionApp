@@ -1,8 +1,11 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Favorite;
 
+import android.util.Log;
+
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FavoritePresenter implements FavoriteContract.Presenter {
@@ -67,7 +70,7 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
     @Override
     public void onResume() {
         // Log.e(TAG, "onResume()");
-
+        Log.d(TAG,"Favorite.onResume");
         // use passed state if is necessary
         FavoriteState savedState = router.getStateFromNextScreen();
         if (savedState != null) {
@@ -83,6 +86,7 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
         List<ProductItem> favoriteList = model.getFavoriteList(state.productItems);
         state.productItems = favoriteList;
         view.get().fillArrayList(state);
+
 
     }
 
