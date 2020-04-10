@@ -55,14 +55,4 @@ public class FavoriteModel implements FavoriteContract.Model {
         return repository.getProductList();
     }
 
-    @Override
-    public List<ProductItem> getFavoriteList(List<ProductItem> list) {
-        List<ProductItem> favoriteList = new ArrayList<>();
-        for(int i = 0; i<list.size(); i++){
-            if(list.get(i).liked){
-                favoriteList.add(list.get(i));
-            }
-        }
-        return favoriteList;
-    }
 }
