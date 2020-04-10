@@ -58,6 +58,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         holder.nameProduct.setText(itemList.get(position).getName());
         //Esto esta hecho solo para la version del primer Sprint
         holder.imageProduct.setImageResource(itemList.get(position).getDrawable());
+        holder.itemView.setTag(itemList.get(position));
+        holder.itemView.setOnClickListener(clickListener);
         //loadImageFromURL(holder.imageProduct, itemList.get(position).getPicture());
 
 

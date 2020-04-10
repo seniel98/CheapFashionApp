@@ -78,7 +78,8 @@ public class HomeActivity
             }
         });
     }
-    private void logoutDialog(){
+
+    private void logoutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Logout")
                 .setMessage("Are you sure?")
