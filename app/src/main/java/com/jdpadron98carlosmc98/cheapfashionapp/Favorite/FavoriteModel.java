@@ -3,6 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Favorite;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteModel implements FavoriteContract.Model {
@@ -36,6 +37,17 @@ public class FavoriteModel implements FavoriteContract.Model {
     @Override
     public void onDataFromPreviousScreen(String data) {
         // Log.e(TAG, "onDataFromPreviousScreen()");
+    }
+
+    @Override
+    public List<ProductItem> getFavoriteList(List<ProductItem> list) {
+        List<ProductItem> favoriteList = new ArrayList<>();
+        for(int i = 0; i<list.size(); i++){
+            if(list.get(i).liked){
+                favoriteList.add(list.get(i));
+            }
+        }
+        return favoriteList;
     }
 
     @Override

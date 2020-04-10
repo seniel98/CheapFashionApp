@@ -57,6 +57,8 @@ public interface FavoriteContract {
         void onDataFromPreviousScreen(String data);
 
         List<ProductItem> getListFromRepository();
+
+        List<ProductItem> getFavoriteList(List<ProductItem> list);
     }
 
     interface Router {
