@@ -17,6 +17,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
+import java.util.List;
+
 public class MyProductsActivity
         extends AppCompatActivity implements MyProductsContract.View {
 
@@ -32,6 +34,8 @@ public class MyProductsActivity
 
     private FloatingActionButton addProductButton;
 
+    private List<ProductItem> list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +44,12 @@ public class MyProductsActivity
         initLayoutComponents();
 
         MyProductsScreen.configure(this);
+        if (savedInstanceState == null) {
+            presenter.onStart();
 
+        } else {
+            presenter.onRestart();
+        }
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         myProductsAdapter = new MyProductsAdapter(new View.OnClickListener() {
 
@@ -49,7 +58,7 @@ public class MyProductsActivity
                 ProductItem item = (ProductItem) view.getTag();
                 presenter.selectProduct(item);
             }
-        },presenter.getListFromModel());
+        },list);
 
         recyclerView.setAdapter(myProductsAdapter);
 
@@ -59,12 +68,7 @@ public class MyProductsActivity
         bottomNavigationView.getMenu().getItem(2).setChecked(true);
 
 
-        if (savedInstanceState == null) {
-            presenter.onStart();
 
-        } else {
-            presenter.onRestart();
-        }
         addProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,6 +188,11 @@ public class MyProductsActivity
 
         // deal with the data
         //((TextView) findViewById(R.id.data)).setText(viewModel.data);
+    }
+
+    @Override
+    public void fillArrayList(MyProductsViewModel viewModel) {
+
     }
 
     @Override

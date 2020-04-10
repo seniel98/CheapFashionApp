@@ -12,6 +12,7 @@ public interface HomeContract {
 
         void onDataUpdated(HomeViewModel viewModel);
 
+        void fillArrayList(HomeViewModel viewModel);
     }
 
     interface Presenter {

@@ -15,6 +15,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
+import java.util.List;
+
 public class FavoriteActivity
         extends AppCompatActivity implements FavoriteContract.View {
 
@@ -25,6 +27,8 @@ public class FavoriteActivity
     private RecyclerView recyclerView;
 
     private BottomNavigationView bottomNavigationView;
+
+    private List<ProductItem> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,7 @@ public class FavoriteActivity
                 ProductItem item = (ProductItem) view.getTag();
                 presenter.selectProductData(item);
             }
-        },presenter.getListFromModel());
+        },list);
 
         initBottomNavMenu();
         bottomNavigationView.getMenu().getItem(1).setChecked(true);
@@ -165,6 +169,11 @@ public class FavoriteActivity
 
         // deal with the data
 //        ((TextView) findViewById(R.id.data)).setText(viewModel.data);
+    }
+
+    @Override
+    public void fillArrayList(FavoriteViewModel viewModel) {
+        list = viewModel.productItems;
     }
 
     @Override

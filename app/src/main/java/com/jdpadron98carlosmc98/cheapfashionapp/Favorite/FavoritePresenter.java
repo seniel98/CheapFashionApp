@@ -34,12 +34,30 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
             // update the model if is necessary
             //model.onDataFromPreviousScreen(savedState.data);
         }
+        //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
+        List<ProductItem> list = getListFromModel();
+        state.productItems = list;
+        view.get().fillArrayList(state);
     }
 
     @Override
     public void onRestart() {
         // Log.e(TAG, "onRestart()");
+        if (state == null) {
+            state = new FavoriteState();
+        }
 
+        // use passed state if is necessary
+        FavoriteState savedState = router.getStateFromPreviousScreen();
+        if (savedState != null) {
+
+            // update the model if is necessary
+            //model.onDataFromPreviousScreen(savedState.data);
+        }
+        //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
+        List<ProductItem> list = getListFromModel();
+        state.productItems = list;
+        view.get().fillArrayList(state);
         // update the model if is necessary
         //model.onRestartScreen(state.data);
     }

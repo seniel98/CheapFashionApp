@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity
@@ -34,6 +35,8 @@ public class HomeActivity
 
     private RecyclerView recyclerView;
 
+    private List<ProductItem> list;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,12 @@ public class HomeActivity
         // do the setup
         HomeScreen.configure(this);
 
+        if (savedInstanceState == null) {
+            presenter.onStart();
+
+        } else {
+            presenter.onRestart();
+        }
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         homeAdapter = new HomeAdapter(
@@ -56,7 +65,7 @@ public class HomeActivity
                         Log.e(TAG, "HomeAdapter.item" + item.getName());
                         presenter.selectProduct(item);
                     }
-                }, presenter.getListFromModel());
+                }, list);
 
         recyclerView.setAdapter(homeAdapter);
 
@@ -64,12 +73,7 @@ public class HomeActivity
 
         bottomNavigationView.getMenu().getItem(0).setChecked(true);
 
-        if (savedInstanceState == null) {
-            presenter.onStart();
 
-        } else {
-            presenter.onRestart();
-        }
 
         addProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +176,11 @@ public class HomeActivity
 
         // deal with the data
 //        ((TextView) findViewById(R.id.data)).setText(viewModel.data);
+    }
+
+    @Override
+    public void fillArrayList(HomeViewModel viewModel) {
+        list = viewModel.homeProductList;
     }
 
     @Override
