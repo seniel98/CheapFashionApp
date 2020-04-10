@@ -16,6 +16,10 @@ public interface ProductDetailContract {
         void callUser(ProductDetailViewModel viewModel);
         
         void selectContact(ProductDetailViewModel viewModel);
+
+        void setLikedButtonDisabled();
+
+        void setLikeButtonEnabled();
     }
 
     interface Presenter {
@@ -38,6 +42,8 @@ public interface ProductDetailContract {
         void onDestroy();
 
         void initDialog();
+
+        void likeButtonPressed();
     }
 
     interface Model {

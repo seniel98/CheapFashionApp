@@ -25,17 +25,17 @@ public class Repository implements RepositoryContract {
     private UserData userData6 = new UserData("name6", "email6", "phone6");
 
     private ProductItem productItem1 = new ProductItem(0, R.drawable.cloth1, "35.00",
-            "Cloth 1", userData1, loremIpsum);
+            "Cloth 1", userData1, loremIpsum,false);
     private ProductItem productItem2 = new ProductItem(1, R.drawable.cloth2, "36.00",
-            "Cloth 2", userData2, loremIpsum);
+            "Cloth 2", userData2, loremIpsum,false);
     private ProductItem productItem3 = new ProductItem(2, R.drawable.cloth3, "37.00",
-            "Cloth 3", userData3, loremIpsum);
+            "Cloth 3", userData3, loremIpsum,false);
     private ProductItem productItem4 = new ProductItem(3, R.drawable.cloth4, "38.00",
-            "Cloth 4", userData4, loremIpsum);
+            "Cloth 4", userData4, loremIpsum,false);
     private ProductItem productItem5 = new ProductItem(4, R.drawable.cloth5, "39.00",
-            "Cloth 5", userData5, loremIpsum);
+            "Cloth 5", userData5, loremIpsum,false);
     private ProductItem productItem6 = new ProductItem(5, R.drawable.cloth6, "40.00",
-            "Cloth 6", userData6, loremIpsum);
+            "Cloth 6", userData6, loremIpsum,false);
 
 
     public static RepositoryContract getInstance(Context context) {

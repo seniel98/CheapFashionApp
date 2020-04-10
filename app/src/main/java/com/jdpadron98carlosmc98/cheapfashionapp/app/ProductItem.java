@@ -9,6 +9,7 @@ public class ProductItem {
     public String picture;
     public UserData userData;
     public String detail;
+    public Boolean liked;
 
     /**
      * Constructor para las imagenes de sample
@@ -19,17 +20,26 @@ public class ProductItem {
      * @param name
      * @param userData
      */
-    public ProductItem(int id, int drawable, String price, String name, UserData userData, String detail) {
+    public ProductItem(int id, int drawable, String price, String name, UserData userData, String detail, boolean liked) {
         this.id = id;
         this.drawable = drawable;
         this.price = price;
         this.name = name;
         this.userData = userData;
         this.detail = detail;
+        this.liked = liked;
     }
 
     public ProductItem() {
 
+    }
+
+    public Boolean getLiked() {
+        return liked;
+    }
+
+    public void setLiked(Boolean liked) {
+        this.liked = liked;
     }
 
     public String getDetail() {

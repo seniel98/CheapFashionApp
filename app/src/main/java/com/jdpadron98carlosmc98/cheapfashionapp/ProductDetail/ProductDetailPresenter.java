@@ -2,6 +2,8 @@ package com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail;
 
 import android.util.Log;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
+
 import java.lang.ref.WeakReference;
 
 public class ProductDetailPresenter implements ProductDetailContract.Presenter {
@@ -82,6 +84,19 @@ public class ProductDetailPresenter implements ProductDetailContract.Presenter {
     @Override
     public void initDialog() {
         view.get().selectContact(state);
+    }
+
+    @Override
+    public void likeButtonPressed() {
+        ProductItem item = state.item;
+        if(state.item.liked){
+            view.get().setLikedButtonDisabled();
+            item.liked = false;
+        }else if(!state.item.liked){
+            view.get().setLikeButtonEnabled();
+            item.liked = true;
+        }
+        state.item = item;
     }
 
     @Override

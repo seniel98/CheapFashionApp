@@ -52,6 +52,13 @@ public class ProductDetailActivity
                 presenter.initDialog();
             }
         });
+
+        productLikeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.likeButtonPressed();
+            }
+        });
     }
 
     private void setProductDetailLayout() {
@@ -86,6 +93,16 @@ public class ProductDetailActivity
             }
         });
         builder.show();
+    }
+
+    @Override
+    public void setLikedButtonDisabled() {
+        productLikeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_border_24dp));
+    }
+
+    @Override
+    public void setLikeButtonEnabled() {
+        productLikeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_24px));
     }
 
     public void sendEmail(ProductDetailViewModel viewModel){
@@ -159,9 +176,16 @@ public class ProductDetailActivity
         productPrice.setText(item.getPrice());
         productDetail.setText(item.getDetail());
         productName.setText(item.getName());
-
+        setImageFloatingButton(item.liked);
     }
 
+    private void setImageFloatingButton(boolean liked){
+        if(liked){
+            setLikeButtonEnabled();
+        }else{
+            setLikedButtonDisabled();
+        }
+    }
     @Override
     public void injectPresenter(ProductDetailContract.Presenter presenter) {
         this.presenter = presenter;

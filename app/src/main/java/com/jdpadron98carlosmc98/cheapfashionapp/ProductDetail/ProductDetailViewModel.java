@@ -7,4 +7,5 @@ public class ProductDetailViewModel {
     // put the view state here
     public String data;
     public ProductItem item;
+
 }
