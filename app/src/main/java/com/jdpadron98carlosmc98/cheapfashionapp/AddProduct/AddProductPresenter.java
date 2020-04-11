@@ -1,6 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.AddProduct;
 
 import android.util.Log;
+import android.widget.ImageView;
 
 import java.lang.ref.WeakReference;
 
@@ -27,7 +28,7 @@ public class AddProductPresenter implements AddProductContract.Presenter {
         }
 
         // use passed state if is necessary
-        AddProductState savedState = router.getStateFromPreviousScreen();
+        AddProductState savedState = router.getAddProductState();
         if (savedState != null) {
 
             // update the model if is necessary
@@ -38,9 +39,17 @@ public class AddProductPresenter implements AddProductContract.Presenter {
     @Override
     public void onRestart() {
         // Log.e(TAG, "onRestart()");
+        AddProductState savedState = router.getAddProductState();
+        state = savedState;
+        if (savedState != null) {
 
-        // update the model if is necessary
+            // update the model if is necessary
+            view.get().onUpdateImage(state);
+
+//            model.onDataFromPreviousScreen(savedState.data);
+        }
 //        model.onRestartScreen(state.data);
+
     }
 
     @Override
@@ -48,15 +57,14 @@ public class AddProductPresenter implements AddProductContract.Presenter {
         // Log.e(TAG, "onResume()");
 
         // use passed state if is necessary
-        AddProductState savedState = router.getStateFromNextScreen();
+        AddProductState savedState = router.getAddProductState();
         if (savedState != null) {
-
+            state.image = savedState.image;
             // update the model if is necessary
 //            model.onDataFromNextScreen(savedState.data);
         }
 
         // call the model and update the state
-//        state.data = model.getStoredData();
 
         // update the view
         view.get().onDataUpdated(state);
@@ -76,6 +84,12 @@ public class AddProductPresenter implements AddProductContract.Presenter {
     @Override
     public void onDestroy() {
         // Log.e(TAG, "onDestroy()");
+    }
+
+    @Override
+    public void saveImage(ImageView addProductImage) {
+        state.image = addProductImage;
+        router.saveState(state);
     }
 
     @Override

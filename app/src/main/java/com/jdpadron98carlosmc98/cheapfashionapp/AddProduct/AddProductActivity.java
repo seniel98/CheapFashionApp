@@ -111,6 +111,7 @@ public class AddProductActivity
                 addProductImage.setImageURI(selectedImage);
             }
         }
+        presenter.saveImage(addProductImage);
     }
 
 
@@ -167,6 +168,11 @@ public class AddProductActivity
 
         // deal with the data
         //((TextView) findViewById(R.id.data)).setText(viewModel.data);
+    }
+
+    @Override
+    public void onUpdateImage(AddProductViewModel viewModel) {
+        addProductImage.setImageDrawable(viewModel.image.getDrawable());
     }
 
     @Override
