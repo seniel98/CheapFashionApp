@@ -34,6 +34,16 @@ public class AddProductRouter implements AddProductContract.Router {
     }
 
     @Override
+    public void saveState(AddProductState state) {
+        mediator.setAddProductState(state);
+    }
+
+    @Override
+    public AddProductState getAddProductState() {
+        return mediator.getAddProductState();
+    }
+
+    @Override
     public AddProductState getStateFromPreviousScreen() {
         return mediator.getPreviousAddProductScreenState();
     }

@@ -1,5 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.AddProduct;
 
+import android.widget.ImageView;
+
 import java.lang.ref.WeakReference;
 
 public interface AddProductContract {
@@ -8,6 +10,8 @@ public interface AddProductContract {
         void injectPresenter(Presenter presenter);
 
         void onDataUpdated(AddProductViewModel viewModel);
+
+        void onUpdateImage(AddProductViewModel viewModel);
     }
 
     interface Presenter {
@@ -28,6 +32,8 @@ public interface AddProductContract {
         void onPause();
 
         void onDestroy();
+
+        void saveImage(ImageView addProductImage);
     }
 
     interface Model {
@@ -38,6 +44,7 @@ public interface AddProductContract {
         void onRestartScreen(String data);
 
         void onDataFromPreviousScreen(String data);
+
     }
 
     interface Router {
@@ -50,5 +57,9 @@ public interface AddProductContract {
         AddProductState getStateFromNextScreen();
 
         void passStateToPreviousScreen(AddProductState state);
+
+        void saveState(AddProductState state);
+
+        AddProductState getAddProductState();
     }
 }
