@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Cheap Fashion</string>
 
+    <string name="emptyText"></string>
     <string name="emailLoginHint">Email</string>
     <string name="emailForgotPassHint">Email</string>
     <string name="emailSingUpHint">Email</string>

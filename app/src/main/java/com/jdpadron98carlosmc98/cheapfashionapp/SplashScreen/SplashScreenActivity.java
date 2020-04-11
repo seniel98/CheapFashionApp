@@ -18,14 +18,15 @@ public class SplashScreenActivity
 
     private SplashScreenContract.Presenter presenter;
 
-    private static int SPLASH_TIMEOUT = 1500; //1 seconds
+    private static int SPLASH_TIMEOUT = 1500; //1'5 seconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        startAnimations();
+        //Deshalibitada la animacion para ejecutar los tests
+        //startAnimations();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
