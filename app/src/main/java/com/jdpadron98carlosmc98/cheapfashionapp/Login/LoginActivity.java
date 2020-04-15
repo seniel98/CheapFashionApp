@@ -2,12 +2,12 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Login;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 
@@ -18,7 +18,7 @@ public class LoginActivity
 
     private LoginContract.Presenter presenter;
     private TextView signUpText, fashionLabelText, forgotPass;
-    private EditText emailText, passText;
+    private TextInputEditText emailText, passText;
     private TextInputLayout emailTextInputLayout, passTextInputLayout;
     private MaterialButton loginButton;
 
@@ -31,6 +31,8 @@ public class LoginActivity
         setUpLoginLayout();
         onSignUpText();
         // do the setup
+
+        checkErrors();
         LoginScreen.configure(this);
     }
 
@@ -71,7 +73,7 @@ public class LoginActivity
         });
     }
 
-    public void onForgotPassText(View view){
+    public void onForgotPassText(View view) {
         presenter.goToForgotPasswordRouter();
     }
 
@@ -79,6 +81,29 @@ public class LoginActivity
     protected void onResume() {
         super.onResume();
 
+        presenter.onResume();
+
+    }
+
+
+    public void clearInputFocus() {
+        emailTextInputLayout.clearFocus();
+        passTextInputLayout.clearFocus();
+    }
+
+    public void cleanErrorInputs() {
+        cleanEmailError();
+        cleanPassError();
+    }
+
+    private void cleanEmailError() {
+        emailTextInputLayout.setError(null);
+        emailTextInputLayout.setErrorEnabled(false);
+    }
+
+    private void cleanPassError() {
+        passTextInputLayout.setError(null);
+        passTextInputLayout.setErrorEnabled(false);
     }
 
     @Override
@@ -92,6 +117,55 @@ public class LoginActivity
     }
 
     public void onLoginClicked(View view) {
-        presenter.goToHomeRouter();
+        String emailStr = emailText.getText().toString();
+        String passStr = passText.getText().toString();
+        presenter.checkLogin(emailStr, passStr);
+        //presenter.goToHomeRouter();
     }
+
+    /**
+     * Metodo que mediante la comprobacion de los valores recibidos por parametros actualiza el layout
+     *
+     * @param value
+     */
+    @Override
+    public void setErrorLayoutInputs(int value) {
+        switch (value) {
+            case 0:
+                emailTextInputLayout.setError(getResources().getString(R.string.emailLoginError));
+                break;
+            case 1:
+                passTextInputLayout.setError(getResources().getString(R.string.passwordLoginError));
+                break;
+            case 2:
+                emailTextInputLayout.setError(getResources().getString(R.string.emailLoginError));
+                passTextInputLayout.setError(getResources().getString(R.string.passwordLoginError));
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void checkErrors() {
+        emailText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    cleanEmailError();
+
+                }
+            }
+        });
+
+        passText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    cleanPassError();
+                }
+            }
+        });
+    }
+
+
 }

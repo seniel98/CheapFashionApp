@@ -6,6 +6,12 @@ public interface LoginContract {
 
     interface View {
         void injectPresenter(Presenter presenter);
+
+        void setErrorLayoutInputs(int value);
+
+        void cleanErrorInputs();
+
+        void clearInputFocus();
     }
 
     interface Presenter {
@@ -20,6 +26,10 @@ public interface LoginContract {
         void goToForgotPasswordRouter();
 
         void goToHomeRouter();
+
+        void checkLogin(String emailStr, String passStr);
+
+        void onResume();
     }
 
     interface Model {

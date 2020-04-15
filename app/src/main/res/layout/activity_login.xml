@@ -30,58 +30,69 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailLoginTextInputLayout"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="72dp"
-            android:background="@drawable/input_text_round"
-            android:elevation="4dp"
-            app:errorEnabled="true">
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="56dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/input_text_round">
 
-            <EditText
-                android:id="@+id/emailLoginText"
-                android:layout_width="330dp"
-                android:layout_height="30dp"
-                android:background="@drawable/input_text_round"
-                android:drawableEnd="@drawable/ic_mail_24px"
-                android:drawableTint="@color/backgroundColor"
-                android:fontFamily="@font/source_sans_pro_bold"
-                android:hint="@string/emailLoginHint"
-                android:inputType="textEmailAddress"
-                android:paddingStart="8dp"
-                android:paddingTop="4dp"
-                android:paddingEnd="8dp"
-                tools:text="@string/emailSingUpHint" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailLoginTextInputLayout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorTextAppearance="@style/error_appearance"
+                android:layout_gravity="center"
+                android:elevation="4dp">
 
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passLoginTextInputLayout"
-            android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailLoginText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_mail_24px"
+                    android:drawableTint="@color/backgroundColor"
+                    android:fontFamily="@font/source_sans_pro_bold"
+                    android:hint="@string/emailLoginHint"
+                    android:inputType="textEmailAddress"
+                    tools:text="@string/emailSingUpHint" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="36dp"
-            android:background="@drawable/input_text_round"
-            android:elevation="4dp"
-            app:passwordToggleEnabled="true">
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/input_text_round">
 
-            <EditText
-                android:id="@+id/passLoginText"
-                android:layout_width="330dp"
-                android:layout_height="50dp"
-                android:background="@drawable/input_text_round"
-                android:fontFamily="@font/source_sans_pro_bold"
-                android:hint="@string/passLoginHint"
-                android:inputType="textPassword"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingBottom="6dp"
-                tools:text="@string/passSignUpHint" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passLoginTextInputLayout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:elevation="4dp"
+                app:errorTextAppearance="@style/error_appearance"
+                app:passwordToggleEnabled="true">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passLoginText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro_bold"
+                    android:hint="@string/passLoginHint"
+                    android:inputType="textPassword"
+                    tools:text="@string/passSignUpHint" />
 
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -116,6 +127,7 @@
             android:layout_margin="16dp"
             android:elevation="6dp"
             android:fontFamily="@font/source_sans_pro_bold"
+            android:onClick="onLoginClicked"
             android:paddingStart="75dp"
             android:paddingTop="10dp"
             android:paddingEnd="75dp"
@@ -126,7 +138,6 @@
             android:textSize="18sp"
             app:backgroundTint="@color/white"
             app:cornerRadius="20dp"
-            android:onClick="onLoginClicked"
             app:icon="@drawable/ic_input_24px"
             app:iconTint="@color/backgroundColor"
             tools:text="@string/loginButtonLabel" />
