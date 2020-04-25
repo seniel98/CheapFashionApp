@@ -1,13 +1,12 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.MyProducts;
 
-import java.lang.ref.WeakReference;
-
 import androidx.fragment.app.FragmentActivity;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.Repository;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
+import java.lang.ref.WeakReference;
 
 public class MyProductsScreen {
 
@@ -17,7 +16,7 @@ public class MyProductsScreen {
                 new WeakReference<>((FragmentActivity) view);
 
 
-        AppMediator mediator = (AppMediator) context.get().getApplication();
+        AppMediator mediator = AppMediator.getInstance();
         MyProductsState state = mediator.getMyProductsState();
         RepositoryContract repository = Repository.getInstance(context.get());
 

@@ -52,6 +52,11 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
 
     @Override
+    public void onBackPressed() {
+        view.get().goToHome();
+    }
+
+    @Override
     public void injectView(WeakReference<ProfileContract.View> view) {
         this.view = view;
     }
@@ -67,27 +72,27 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     }
 
     @Override
-    public void goToFavoritesRouter() {
-        router.goToFavorites();
+    public void goToFavorites() {
+        view.get().goToFavorites();
     }
 
     @Override
-    public void goToMyProductsRouter() {
-        router.goToMyProducts();
+    public void goToMyProducts() {
+        view.get().goToMyProducts();
     }
 
     @Override
-    public void goToHomeRouter() {
-        router.goToHome();
+    public void goToHome() {
+        view.get().goToHome();
     }
 
     @Override
     public void callLogout() {
-        router.goToLogin();
+        view.get().goToLogin();
     }
 
     @Override
     public void goToChangePass() {
-        router.goChangePass();
+        view.get().goChangePass();
     }
 }

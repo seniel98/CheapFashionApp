@@ -16,7 +16,7 @@ public class ProductDetailScreen {
 
         String data = context.get().getString(R.string.app_name);
 
-        AppMediator mediator = (AppMediator) context.get().getApplication();
+        AppMediator mediator = AppMediator.getInstance();
         ProductDetailState state = mediator.getProductDetailState();
 
         ProductDetailContract.Router router = new ProductDetailRouter(mediator);

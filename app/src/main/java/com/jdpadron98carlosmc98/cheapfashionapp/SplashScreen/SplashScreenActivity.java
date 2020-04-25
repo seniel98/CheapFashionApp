@@ -1,5 +1,6 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
@@ -9,7 +10,9 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 
 public class SplashScreenActivity
         extends AppCompatActivity implements SplashScreenContract.View {
@@ -30,12 +33,14 @@ public class SplashScreenActivity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                presenter.goToRouterLogin();
+                presenter.goToLogin();
             }
         }, SPLASH_TIMEOUT);
 
 
         // do the setup
+        AppMediator.resetInstance();
+
         SplashScreenScreen.configure(this);
     }
 
@@ -43,6 +48,14 @@ public class SplashScreenActivity
     protected void onResume() {
         super.onResume();
 
+    }
+
+    @Override
+    public void goToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 

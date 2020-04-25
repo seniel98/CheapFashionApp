@@ -1,7 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.MyProducts;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.jdpadron98carlosmc98.cheapfashionapp.AddProduct.AddProductActivity;
+import com.jdpadron98carlosmc98.cheapfashionapp.Favorite.FavoriteActivity;
+import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeActivity;
+import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginActivity;
+import com.jdpadron98carlosmc98.cheapfashionapp.Profile.ProfileActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 import java.util.List;
@@ -43,6 +49,8 @@ public class MyProductsActivity
 
         initLayoutComponents();
 
+        AppMediator.resetInstance();
+
         MyProductsScreen.configure(this);
 
         if (savedInstanceState == null) {
@@ -60,7 +68,7 @@ public class MyProductsActivity
                 ProductItem item = (ProductItem) view.getTag();
                 presenter.selectProduct(item);
             }
-        },list);
+        }, list);
 
         recyclerView.setAdapter(myProductsAdapter);
 
@@ -68,7 +76,6 @@ public class MyProductsActivity
         initBottomNavMenu();
 
         bottomNavigationView.getMenu().getItem(2).setChecked(true);
-
 
 
         addProductButton.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +100,7 @@ public class MyProductsActivity
         recyclerView = findViewById(R.id.myProductsProductRecyclerView);
     }
 
-    private void logoutDialog(){
+    private void logoutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Logout")
                 .setMessage("Are you sure?")
@@ -119,13 +126,13 @@ public class MyProductsActivity
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_menu_liked:
-                        presenter.goToFavoritesRouter();
+                        presenter.goToFavorites();
                         break;
                     case R.id.nav_menu_profile:
-                        presenter.goToProfileRouter();
+                        presenter.goToProfile();
                         break;
                     case R.id.nav_menu_market:
-                        presenter.goToHomeRouter();
+                        presenter.goToHome();
                         break;
                     case R.id.nav_menu_logout:
                         logoutDialog();
@@ -135,38 +142,11 @@ public class MyProductsActivity
                 return false;
             }
         });
-        /*BottomNavigationView.OnNavigationItemSelectedListener navListener =
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    //Checks which item is selected to then call presenter method
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.nav_menu_liked:
-                                presenter.goToFavoritesRouter();
-                                break;
-                            case R.id.nav_menu_market:
-                                presenter.goToHomeRouter();
-                                break;
-                            case R.id.nav_menu_profile:
-                                presenter.goToProfileRouter();
-                                break;
-                            case R.id.nav_menu_logout:
-                                presenter.callLogout();
-                                break;
-                        }
-                        return true;
-                    }
-
-                };
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);*/
     }
 
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
         presenter.onBackPressed();
     }
 
@@ -200,5 +180,45 @@ public class MyProductsActivity
     @Override
     public void injectPresenter(MyProductsContract.Presenter presenter) {
         this.presenter = presenter;
+    }
+
+
+    @Override
+    public void goToFavorites() {
+        Intent intent = new Intent(this, FavoriteActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void goToHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void goToProfile() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void goToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void goAddProduct() {
+        Intent intent = new Intent(this, AddProductActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

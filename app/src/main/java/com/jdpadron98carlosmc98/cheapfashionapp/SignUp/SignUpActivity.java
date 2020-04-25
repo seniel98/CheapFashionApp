@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 
 public class SignUpActivity
         extends AppCompatActivity implements SignUpContract.View {
@@ -28,6 +29,8 @@ public class SignUpActivity
         initSignUpLayout();
         setSignUpLayout();
         // do the setup
+        AppMediator.resetInstance();
+
         SignUpScreen.configure(this);
     }
 

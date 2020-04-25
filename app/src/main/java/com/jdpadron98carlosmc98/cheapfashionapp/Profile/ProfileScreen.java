@@ -15,7 +15,7 @@ public class ProfileScreen {
         WeakReference<FragmentActivity> context =
                 new WeakReference<>((FragmentActivity) view);
 
-        AppMediator mediator = (AppMediator) context.get().getApplication();
+        AppMediator mediator = AppMediator.getInstance();
         ProfileState state = mediator.getProfileState();
         //Here we create a repository contract object
         RepositoryContract repository = Repository.getInstance(context.get());

@@ -1,7 +1,5 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.app;
 
-import android.app.Application;
-
 import com.jdpadron98carlosmc98.cheapfashionapp.AddProduct.AddProductState;
 import com.jdpadron98carlosmc98.cheapfashionapp.ChangePassword.ChangePasswordState;
 import com.jdpadron98carlosmc98.cheapfashionapp.Favorite.FavoriteState;
@@ -30,7 +28,7 @@ public class AppMediator {
     private ChangePasswordState changePasswordState;
     private ProductItem item;
 
-    private AppMediator(){
+    private AppMediator() {
         homeState = new HomeState();
         loginState = new LoginState();
         signUpState = new SignUpState();
@@ -43,14 +41,15 @@ public class AppMediator {
         myProductsState = new MyProductsState();
         changePasswordState = new ChangePasswordState();
     }
-    public static AppMediator getInstance(){
-        if (instance == null){
+
+    public static AppMediator getInstance() {
+        if (instance == null) {
             instance = new AppMediator();
         }
         return instance;
     }
 
-    public static void resetInstance(){
+    public static void resetInstance() {
         instance = null;
     }
 

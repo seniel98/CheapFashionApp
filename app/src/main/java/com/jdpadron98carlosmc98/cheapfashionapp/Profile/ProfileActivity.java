@@ -1,6 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Profile;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputLayout;
+import com.jdpadron98carlosmc98.cheapfashionapp.ChangePassword.ChangePasswordActivity;
+import com.jdpadron98carlosmc98.cheapfashionapp.Favorite.FavoriteActivity;
+import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeActivity;
+import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginActivity;
+import com.jdpadron98carlosmc98.cheapfashionapp.MyProducts.MyProductsActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 
 public class ProfileActivity
         extends AppCompatActivity implements ProfileContract.View {
@@ -37,6 +44,8 @@ public class ProfileActivity
         setUpProfileLayout();
 
         // do the setup
+        AppMediator.resetInstance();
+
         ProfileScreen.configure(this);
 
         initBottomNavMenu();
@@ -58,6 +67,11 @@ public class ProfileActivity
         super.onResume();
         // load the data
         //presenter.fetchData();
+    }
+
+    @Override
+    public void onBackPressed() {
+        presenter.onBackPressed();
     }
 
     /**
@@ -109,13 +123,13 @@ public class ProfileActivity
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_menu_liked:
-                        presenter.goToFavoritesRouter();
+                        presenter.goToFavorites();
                         break;
                     case R.id.nav_menu_stuff:
-                        presenter.goToMyProductsRouter();
+                        presenter.goToMyProducts();
                         break;
                     case R.id.nav_menu_market:
-                        presenter.goToHomeRouter();
+                        presenter.goToHome();
                         break;
                     case R.id.nav_menu_logout:
                         logoutDialog();
@@ -125,6 +139,45 @@ public class ProfileActivity
                 return false;
             }
         });
+    }
+
+    @Override
+    public void goToFavorites() {
+        Intent intent = new Intent(this, FavoriteActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void goToMyProducts() {
+        Intent intent = new Intent(this, MyProductsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void goToHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void goToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void goChangePass() {
+        Intent intent = new Intent(this, ChangePasswordActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     /*
@@ -140,4 +193,6 @@ public class ProfileActivity
     public void injectPresenter(ProfileContract.Presenter presenter) {
         this.presenter = presenter;
     }
+
+
 }

@@ -16,6 +16,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jdpadron98carlosmc98.cheapfashionapp.AddProduct.AddProductActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 public class ProductDetailActivity
@@ -38,6 +39,8 @@ public class ProductDetailActivity
         initProductDetailLayout();
         setProductDetailLayout();
         // do the setup
+        AppMediator.resetInstance();
+
         ProductDetailScreen.configure(this);
 
         if (savedInstanceState == null) {

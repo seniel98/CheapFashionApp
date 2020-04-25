@@ -25,7 +25,6 @@ public interface SignUpContract {
     }
 
     interface Router {
-        void navigateToNextScreen();
 
         void passDataToNextScreen(SignUpState state);
 

@@ -1,9 +1,5 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail;
 
-import android.util.Log;
-import android.content.Intent;
-import android.content.Context;
-
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 
 public class ProductDetailRouter implements ProductDetailContract.Router {
@@ -16,13 +12,6 @@ public class ProductDetailRouter implements ProductDetailContract.Router {
         this.mediator = mediator;
     }
 
-    @Override
-    public void navigateToNextScreen() {
-        Context context = mediator.getApplicationContext();
-        Intent intent = new Intent(context, ProductDetailActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
 
     @Override
     public void passStateToNextScreen(ProductDetailState state) {
