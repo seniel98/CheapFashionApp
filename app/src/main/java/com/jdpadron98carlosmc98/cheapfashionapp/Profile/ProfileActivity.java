@@ -44,7 +44,9 @@ public class ProfileActivity
         setUpProfileLayout();
 
         // do the setup
-        AppMediator.resetInstance();
+        if (savedInstanceState == null) {
+            AppMediator.resetInstance();
+        }
 
         ProfileScreen.configure(this);
 

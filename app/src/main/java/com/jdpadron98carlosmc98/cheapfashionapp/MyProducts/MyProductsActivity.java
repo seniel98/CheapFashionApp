@@ -49,7 +49,9 @@ public class MyProductsActivity
 
         initLayoutComponents();
 
-        AppMediator.resetInstance();
+        if(savedInstanceState == null){
+            AppMediator.resetInstance();
+        }
 
         MyProductsScreen.configure(this);
 

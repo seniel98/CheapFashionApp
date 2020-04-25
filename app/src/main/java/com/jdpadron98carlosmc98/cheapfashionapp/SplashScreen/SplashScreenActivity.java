@@ -39,7 +39,9 @@ public class SplashScreenActivity
 
 
         // do the setup
-        AppMediator.resetInstance();
+        if (savedInstanceState == null) {
+            AppMediator.resetInstance();
+        }
 
         SplashScreenScreen.configure(this);
     }

@@ -141,8 +141,6 @@ public class FavoriteActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
         presenter.onBackPressed();
     }
 

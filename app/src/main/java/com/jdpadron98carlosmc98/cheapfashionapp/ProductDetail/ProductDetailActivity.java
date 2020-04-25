@@ -39,7 +39,6 @@ public class ProductDetailActivity
         initProductDetailLayout();
         setProductDetailLayout();
         // do the setup
-        AppMediator.resetInstance();
 
         ProductDetailScreen.configure(this);
 

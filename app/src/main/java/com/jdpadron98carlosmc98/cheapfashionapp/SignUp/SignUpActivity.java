@@ -29,7 +29,9 @@ public class SignUpActivity
         initSignUpLayout();
         setSignUpLayout();
         // do the setup
-        AppMediator.resetInstance();
+        if(savedInstanceState == null){
+            AppMediator.resetInstance();
+        }
 
         SignUpScreen.configure(this);
     }
