@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:backgroundTint="@color/flotaing_button_color"
+        app:backgroundTint="@color/floating_button_color"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavViewMarket"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add" />

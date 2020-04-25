@@ -17,6 +17,28 @@ public class LoginPresenter implements LoginContract.Presenter {
 
 
     @Override
+    public void onResume() {
+
+        view.get().cleanErrorInputs();
+        view.get().clearInputFocus();
+    }
+
+    @Override
+    public void checkLogin(String emailStr, String passStr) {
+        if (emailStr.isEmpty() && passStr.isEmpty()) {
+            view.get().setErrorLayoutInputs(2);
+        } else if (emailStr.isEmpty()) {
+            view.get().setErrorLayoutInputs(0);
+        } else if (passStr.isEmpty()) {
+            view.get().setErrorLayoutInputs(1);
+        } else{
+            //view.get().enableProgressBar();
+            //callModel
+            goToHomeRouter();
+        }
+    }
+
+    @Override
     public void injectView(WeakReference<LoginContract.View> view) {
         this.view = view;
     }

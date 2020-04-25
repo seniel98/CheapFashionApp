@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1098844796934",
+    "firebase_url": "https://cheap-fashion-app.firebaseio.com",
+    "project_id": "cheap-fashion-app",
+    "storage_bucket": "cheap-fashion-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098844796934:android:62bb0e2565a9e39a716b87",
+        "android_client_info": {
+          "package_name": "com.jdpadron98carlosmc98.cheapfashionapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1098844796934-cob8mnn71hdkjbs68la68pntpu357u3p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7SmUY-eKN3_yD2Aslygh5N02_T5-qjYA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1098844796934-cob8mnn71hdkjbs68la68pntpu357u3p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

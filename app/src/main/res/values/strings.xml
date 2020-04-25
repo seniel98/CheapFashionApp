@@ -39,5 +39,7 @@
     <string name="homeProductNameText">Ropa 1</string>
     <string name="homeProductPriceText"><b>Precio 1</b></string>
 
+    <string name="emailLoginError">Email must not be empty</string>
+    <string name="passwordLoginError">Password must not be empty</string>
 
 </resources>
