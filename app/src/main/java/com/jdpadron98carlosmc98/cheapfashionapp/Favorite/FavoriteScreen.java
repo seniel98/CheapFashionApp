@@ -17,7 +17,7 @@ public class FavoriteScreen {
                 new WeakReference<>((FragmentActivity) view);
 
 
-        AppMediator mediator = (AppMediator) context.get().getApplication();
+        AppMediator mediator = AppMediator.getInstance();
         FavoriteState state = mediator.getFavoriteState();
         RepositoryContract repository = Repository.getInstance(context.get());
 

@@ -50,6 +50,10 @@ public class AppMediator {
         return instance;
     }
 
+    public static void resetInstance(){
+        instance = null;
+    }
+
 
     public void setChangePasswordState(ChangePasswordState changePasswordState) {
         this.changePasswordState = changePasswordState;

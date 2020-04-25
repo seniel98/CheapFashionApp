@@ -12,6 +12,9 @@ public interface AddProductContract {
         void onDataUpdated(AddProductViewModel viewModel);
 
         void onUpdateImage(AddProductViewModel viewModel);
+
+        void navigateToNextScreen();
+
     }
 
     interface Presenter {
@@ -48,7 +51,6 @@ public interface AddProductContract {
     }
 
     interface Router {
-        void navigateToNextScreen();
 
         void passStateToNextScreen(AddProductState state);
 

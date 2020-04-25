@@ -16,7 +16,7 @@ public class ChangePasswordScreen {
 
         String data = context.get().getString(R.string.app_name);
 
-        AppMediator mediator = (AppMediator) context.get().getApplication();
+        AppMediator mediator = AppMediator.getInstance();
         ChangePasswordState state = mediator.getChangePasswordState();
 
         ChangePasswordContract.Router router = new ChangePasswordRouter(mediator);

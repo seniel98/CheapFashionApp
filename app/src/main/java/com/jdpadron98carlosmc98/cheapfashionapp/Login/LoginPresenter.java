@@ -55,16 +55,16 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void goToHomeRouter() {
-        router.goToHome();
+        view.get().goToHome();
     }
 
     @Override
     public void goToSignUpRouter() {
-        router.goToSignUp();
+        view.get().goToSignUp();
     }
 
     @Override
     public void goToForgotPasswordRouter() {
-        router.goToForgotPassword();
+        view.get().goToForgotPassword();
     }
 }

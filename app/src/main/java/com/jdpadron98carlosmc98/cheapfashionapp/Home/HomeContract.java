@@ -13,6 +13,21 @@ public interface HomeContract {
         void onDataUpdated(HomeViewModel viewModel);
 
         void fillArrayList(HomeViewModel viewModel);
+
+        void goToFavorites();
+
+        void goToMyProducts();
+
+        void goToProfile();
+
+        void goToLogin();
+
+        void goAddProduct();
+
+        void goToDetail();
+
+        void navigateToNextScreen();
+
     }
 
     interface Presenter {
@@ -36,11 +51,11 @@ public interface HomeContract {
 
         void selectProduct(ProductItem item);
 
-        void goToFavoritesRouter();
+        void goToFavorites();
 
-        void goToMyProductsRouter();
+        void goToMyProducts();
 
-        void goToProfileRouter();
+        void goToProfile();
 
         void callLogout();
 
@@ -62,7 +77,6 @@ public interface HomeContract {
     }
 
     interface Router {
-        void navigateToNextScreen();
 
         void passStateToNextScreen(HomeState state);
 
@@ -72,16 +86,6 @@ public interface HomeContract {
 
         void passStateToPreviousScreen(HomeState state);
 
-        void goToFavorites();
 
-        void goToMyProducts();
-
-        void goToProfile();
-
-        void goToLogin();
-
-        void goAddProduct();
-
-        void goToDetail();
     }
 }

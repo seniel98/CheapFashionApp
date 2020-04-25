@@ -1,5 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Login;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -9,7 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword.ForgotPasswordActivity;
+import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
+import com.jdpadron98carlosmc98.cheapfashionapp.SignUp.SignUpActivity;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 
 public class LoginActivity
         extends AppCompatActivity implements LoginContract.View {
@@ -33,6 +39,10 @@ public class LoginActivity
         // do the setup
 
         checkErrors();
+
+        if(savedInstanceState == null){
+            AppMediator.resetInstance();
+        }
         LoginScreen.configure(this);
     }
 
@@ -104,6 +114,33 @@ public class LoginActivity
     private void cleanPassError() {
         passTextInputLayout.setError(null);
         passTextInputLayout.setErrorEnabled(false);
+    }
+
+    @Override
+    public void goToSignUp() {
+        Intent intent = new Intent(this, SignUpActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void goToForgotPassword() {
+        Intent intent = new Intent(this, ForgotPasswordActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void navigateToNextScreen() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void goToHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override

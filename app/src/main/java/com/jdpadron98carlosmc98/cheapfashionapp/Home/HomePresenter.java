@@ -101,7 +101,7 @@ public class HomePresenter implements HomeContract.Presenter {
     public void selectProduct(ProductItem item) {
         state.item = item;
         router.passStateToNextScreen(state);
-        router.goToDetail();
+        view.get().goToDetail();
 
     }
 
@@ -111,28 +111,28 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public void goToFavoritesRouter() {
-        router.goToFavorites();
+    public void goToFavorites() {
+        view.get().goToFavorites();
     }
 
     @Override
-    public void goToMyProductsRouter() {
-        router.goToMyProducts();
+    public void goToMyProducts() {
+        view.get().goToMyProducts();
     }
 
     @Override
-    public void goToProfileRouter() {
-        router.goToProfile();
+    public void goToProfile() {
+        view.get().goToProfile();
     }
 
     @Override
     public void callLogout() {
-        router.goToLogin();
+        view.get().goToLogin();
     }
 
     @Override
     public void goToAddProduct() {
-        router.goAddProduct();
+        view.get().goAddProduct();
     }
 
     @Override

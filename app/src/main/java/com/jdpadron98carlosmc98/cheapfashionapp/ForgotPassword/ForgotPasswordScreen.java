@@ -15,7 +15,7 @@ public class ForgotPasswordScreen {
         WeakReference<FragmentActivity> context =
                 new WeakReference<>((FragmentActivity) view);
 
-        AppMediator mediator = (AppMediator) context.get().getApplication();
+        AppMediator mediator = AppMediator.getInstance();
         ForgotPasswordState state = mediator.getForgotPasswordState();
         //Here we create a repository contract object
         RepositoryContract repository = Repository.getInstance(context.get());
