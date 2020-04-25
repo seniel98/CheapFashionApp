@@ -7,6 +7,8 @@ public interface ForgotPasswordContract {
     interface View {
         void injectPresenter(Presenter presenter);
 
+        void navigateToNextScreen();
+
        // void displayData(ForgotPasswordViewModel viewModel);
     }
 
@@ -25,7 +27,6 @@ public interface ForgotPasswordContract {
     }
 
     interface Router {
-        void navigateToNextScreen();
 
         void passDataToNextScreen(ForgotPasswordState state);
 

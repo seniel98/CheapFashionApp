@@ -15,7 +15,7 @@ public class LoginScreen {
         WeakReference<FragmentActivity> context =
                 new WeakReference<>((FragmentActivity) view);
 
-        AppMediator mediator = (AppMediator) context.get().getApplication();
+        AppMediator mediator = AppMediator.getInstance();
         LoginState state = mediator.getLoginState();
         //Here we create a repository contract object
         RepositoryContract repository = Repository.getInstance(context.get());

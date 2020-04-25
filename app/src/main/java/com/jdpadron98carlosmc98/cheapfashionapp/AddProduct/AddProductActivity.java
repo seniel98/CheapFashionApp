@@ -2,6 +2,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.AddProduct;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,6 +24,7 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 
 public class AddProductActivity
         extends AppCompatActivity implements AddProductContract.View {
@@ -48,6 +50,9 @@ public class AddProductActivity
         initLayoutData();
         askPermission(Manifest.permission.READ_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE);
 
+        if(savedInstanceState == null){
+            AppMediator.resetInstance();
+        }
         // do the setup
         AddProductScreen.configure(this);
 
@@ -168,6 +173,13 @@ public class AddProductActivity
 
         // deal with the data
         //((TextView) findViewById(R.id.data)).setText(viewModel.data);
+    }
+
+    @Override
+    public void navigateToNextScreen() {
+        Intent intent = new Intent(this, AddProductActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override

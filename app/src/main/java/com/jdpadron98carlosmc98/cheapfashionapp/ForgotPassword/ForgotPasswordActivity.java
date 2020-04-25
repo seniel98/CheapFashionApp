@@ -1,5 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 
@@ -8,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 
 public class ForgotPasswordActivity
         extends AppCompatActivity implements ForgotPasswordContract.View {
@@ -29,7 +32,9 @@ public class ForgotPasswordActivity
         //---------------------------------------------//
         initLoginLayout();
         setUpLoginLayout();
-
+        if(savedInstanceState == null){
+            AppMediator.resetInstance();
+        }
         // do the setup
         ForgotPasswordScreen.configure(this);
     }
@@ -66,7 +71,11 @@ public class ForgotPasswordActivity
 
         // deal with the data
     }*/
-
+@Override
+public void navigateToNextScreen() {
+    Intent intent = new Intent(this, ForgotPasswordActivity.class);
+    startActivity(intent);
+}
     @Override
     public void injectPresenter(ForgotPasswordContract.Presenter presenter) {
         this.presenter = presenter;

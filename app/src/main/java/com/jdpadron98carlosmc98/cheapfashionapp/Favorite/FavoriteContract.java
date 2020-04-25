@@ -14,6 +14,18 @@ public interface FavoriteContract {
 
         void fillArrayList(FavoriteViewModel viewModel);
 
+        void navigateToNextScreen();
+
+        void goToHome();
+
+        void goToMyProducts();
+
+        void goToProfile();
+
+        void goToLogin();
+
+        void goToDetail();
+
     }
 
     interface Presenter {
@@ -37,11 +49,11 @@ public interface FavoriteContract {
 
         void selectProductData(ProductItem item);
 
-        void goToHomeRouter();
+        void goToHome();
 
-        void goToMyProductsRouter();
+        void goToMyProducts();
 
-        void goToProfileRouter();
+        void goToProfile();
 
         void callLogout();
 
@@ -63,7 +75,6 @@ public interface FavoriteContract {
     }
 
     interface Router {
-        void navigateToNextScreen();
 
         void passStateToNextScreen(FavoriteState state);
 
@@ -73,14 +84,6 @@ public interface FavoriteContract {
 
         void passStateToPreviousScreen(FavoriteState state);
 
-        void goToHome();
 
-        void goToMyProducts();
-
-        void goToProfile();
-
-        void goToLogin();
-
-        void goToDetail();
     }
 }

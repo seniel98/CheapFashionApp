@@ -19,13 +19,6 @@ public class LoginRouter implements LoginContract.Router {
     }
 
     @Override
-    public void navigateToNextScreen() {
-        Context context = mediator.getApplicationContext();
-        Intent intent = new Intent(context, LoginActivity.class);
-        context.startActivity(intent);
-    }
-
-    @Override
     public void passDataToNextScreen(LoginState state) {
         mediator.setLoginState(state);
     }
@@ -36,27 +29,5 @@ public class LoginRouter implements LoginContract.Router {
         return state;
     }
 
-    @Override
-    public void goToSignUp() {
-        Context context = mediator.getApplicationContext();
-        Intent intent = new Intent(context, SignUpActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
 
-    @Override
-    public void goToForgotPassword() {
-        Context context = mediator.getApplicationContext();
-        Intent intent = new Intent(context, ForgotPasswordActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
-
-    @Override
-    public void goToHome() {
-        Context context = mediator.getApplicationContext();
-        Intent intent = new Intent(context, HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
 }

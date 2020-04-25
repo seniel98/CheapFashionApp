@@ -2,6 +2,8 @@ package com.jdpadron98carlosmc98.cheapfashionapp.ChangePassword;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 
 public class ChangePasswordActivity
         extends AppCompatActivity implements ChangePasswordContract.View {
@@ -31,6 +34,9 @@ public class ChangePasswordActivity
         initLoginLayout();
         setUpLoginLayout();
         // do the setup
+        if(savedInstanceState == null){
+            AppMediator.resetInstance();
+        }
         ChangePasswordScreen.configure(this);
 
         if (savedInstanceState == null) {
@@ -89,7 +95,12 @@ public class ChangePasswordActivity
         // deal with the data
 //        ((TextView) findViewById(R.id.data)).setText(viewModel.data);
     }
-
+    @Override
+    public void navigateToNextScreen() {
+        Intent intent = new Intent(this, ChangePasswordActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
     @Override
     public void injectPresenter(ChangePasswordContract.Presenter presenter) {
         this.presenter = presenter;

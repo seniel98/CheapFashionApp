@@ -8,6 +8,9 @@ public interface ChangePasswordContract {
         void injectPresenter(Presenter presenter);
 
         void onDataUpdated(ChangePasswordViewModel viewModel);
+
+        void navigateToNextScreen();
+
     }
 
     interface Presenter {
@@ -41,7 +44,6 @@ public interface ChangePasswordContract {
     }
 
     interface Router {
-        void navigateToNextScreen();
 
         void passStateToNextScreen(ChangePasswordState state);
 

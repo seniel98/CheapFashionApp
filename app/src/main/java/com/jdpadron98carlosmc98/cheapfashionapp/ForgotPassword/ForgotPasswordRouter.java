@@ -15,12 +15,7 @@ public class ForgotPasswordRouter implements ForgotPasswordContract.Router {
         this.mediator = mediator;
     }
 
-    @Override
-    public void navigateToNextScreen() {
-        Context context = mediator.getApplicationContext();
-        Intent intent = new Intent(context, ForgotPasswordActivity.class);
-        context.startActivity(intent);
-    }
+
 
     @Override
     public void passDataToNextScreen(ForgotPasswordState state) {

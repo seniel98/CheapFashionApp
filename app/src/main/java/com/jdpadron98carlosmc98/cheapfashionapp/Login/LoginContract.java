@@ -12,6 +12,15 @@ public interface LoginContract {
         void cleanErrorInputs();
 
         void clearInputFocus();
+
+        void goToSignUp();
+
+        void goToForgotPassword();
+
+        void goToHome();
+
+        void navigateToNextScreen();
+
     }
 
     interface Presenter {
@@ -36,16 +45,11 @@ public interface LoginContract {
     }
 
     interface Router {
-        void navigateToNextScreen();
 
         void passDataToNextScreen(LoginState state);
 
         LoginState getDataFromPreviousScreen();
 
-        void goToSignUp();
 
-        void goToForgotPassword();
-
-        void goToHome();
     }
 }

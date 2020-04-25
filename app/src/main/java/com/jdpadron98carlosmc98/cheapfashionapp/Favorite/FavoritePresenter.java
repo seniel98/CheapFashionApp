@@ -93,6 +93,7 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
     @Override
     public void onBackPressed() {
         // Log.e(TAG, "onBackPressed()");
+        view.get().goToHome();
     }
 
     @Override
@@ -109,27 +110,27 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
     public void selectProductData(ProductItem item) {
         state.item = item;
         router.passStateToNextScreen(state);
-        router.goToDetail();
+        view.get().goToDetail();
     }
 
     @Override
-    public void goToHomeRouter() {
-        router.goToHome();
+    public void goToHome() {
+        view.get().goToHome();
     }
 
     @Override
-    public void goToMyProductsRouter() {
-        router.goToMyProducts();
+    public void goToMyProducts() {
+        view.get().goToMyProducts();
     }
 
     @Override
-    public void goToProfileRouter() {
-        router.goToProfile();
+    public void goToProfile() {
+        view.get().goToProfile();
     }
 
     @Override
     public void callLogout() {
-        router.goToLogin();
+        view.get().goToLogin();
     }
 
     @Override

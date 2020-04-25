@@ -17,7 +17,7 @@ public class HomeScreen {
                 new WeakReference<>((FragmentActivity) view);
 
 
-        AppMediator mediator = (AppMediator) context.get().getApplication();
+        AppMediator mediator = AppMediator.getInstance();
         HomeState state = mediator.getHomeState();
         RepositoryContract repository = Repository.getInstance(context.get());
 
