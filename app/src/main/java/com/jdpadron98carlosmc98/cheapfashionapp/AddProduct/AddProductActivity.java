@@ -184,7 +184,10 @@ public class AddProductActivity
 
     @Override
     public void onUpdateImage(AddProductViewModel viewModel) {
-        addProductImage.setImageDrawable(viewModel.image.getDrawable());
+        if (viewModel.image != null){
+            addProductImage.setImageDrawable(viewModel.image.getDrawable());
+        }
+
     }
 
     @Override
