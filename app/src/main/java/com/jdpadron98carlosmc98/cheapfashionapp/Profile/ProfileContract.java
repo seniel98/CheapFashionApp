@@ -8,6 +8,15 @@ public interface ProfileContract {
         void injectPresenter(Presenter presenter);
 
         //void displayData(ProfileViewModel viewModel);
+        void goToFavorites();
+
+        void goToMyProducts();
+
+        void goToHome();
+
+        void goToLogin();
+
+        void goChangePass();
     }
 
     interface Presenter {
@@ -19,15 +28,17 @@ public interface ProfileContract {
 
         //void fetchData();
 
-        void goToFavoritesRouter();
+        void goToFavorites();
 
-        void goToMyProductsRouter();
+        void goToMyProducts();
 
-        void goToHomeRouter();
+        void goToHome();
 
         void callLogout();
 
         void goToChangePass();
+
+        void onBackPressed();
     }
 
     interface Model {
@@ -35,20 +46,9 @@ public interface ProfileContract {
     }
 
     interface Router {
-        void navigateToNextScreen();
 
         void passDataToNextScreen(ProfileState state);
 
         ProfileState getDataFromPreviousScreen();
-
-        void goToFavorites();
-
-        void goToMyProducts();
-
-        void goToHome();
-
-        void goToLogin();
-
-        void goChangePass();
     }
 }

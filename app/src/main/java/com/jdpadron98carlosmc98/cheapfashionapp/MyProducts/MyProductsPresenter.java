@@ -85,6 +85,7 @@ public class MyProductsPresenter implements MyProductsContract.Presenter {
     @Override
     public void onBackPressed() {
         // Log.e(TAG, "onBackPressed()");
+        view.get().goToHome();
     }
 
     @Override
@@ -103,28 +104,28 @@ public class MyProductsPresenter implements MyProductsContract.Presenter {
     }
 
     @Override
-    public void goToFavoritesRouter() {
-        router.goToFavorites();
+    public void goToFavorites() {
+        view.get().goToFavorites();
     }
 
     @Override
-    public void goToHomeRouter() {
-        router.goToHome();
+    public void goToHome() {
+        view.get().goToHome();
     }
 
     @Override
-    public void goToProfileRouter() {
-        router.goToProfile();
+    public void goToProfile() {
+        view.get().goToProfile();
     }
 
     @Override
     public void callLogout() {
-        router.goToLogin();
+        view.get().goToLogin();
     }
 
     @Override
     public void goToAddProduct() {
-        router.goAddProduct();
+        view.get().goAddProduct();
     }
 
     @Override

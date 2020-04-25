@@ -15,7 +15,7 @@ public class SignUpScreen {
         WeakReference<FragmentActivity> context =
                 new WeakReference<>((FragmentActivity) view);
 
-        AppMediator mediator = (AppMediator) context.get().getApplication();
+        AppMediator mediator = AppMediator.getInstance();
         SignUpState state = mediator.getSignUpState();
         //Here we create a repository contract object
         RepositoryContract repository = Repository.getInstance(context.get());

@@ -6,11 +6,13 @@ public interface SplashScreenContract {
 
     interface View {
         void injectPresenter(Presenter presenter);
+
+        void goToLogin();
     }
 
     interface Presenter {
 
-        void goToRouterLogin();
+        void goToLogin();
 
         void injectView(WeakReference<View> view);
 
@@ -23,10 +25,6 @@ public interface SplashScreenContract {
     }
 
     interface Router {
-
-        void goToLogin();
-
-        void navigateToNextScreen();
 
         void passDataToNextScreen(SplashScreenState state);
 

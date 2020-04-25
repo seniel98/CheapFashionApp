@@ -13,6 +13,16 @@ public interface MyProductsContract {
         void onDataUpdated(MyProductsViewModel viewModel);
 
         void fillArrayList(MyProductsViewModel viewModel);
+
+        void goToFavorites();
+
+        void goToHome();
+
+        void goToProfile();
+
+        void goToLogin();
+
+        void goAddProduct();
     }
 
     interface Presenter {
@@ -36,11 +46,11 @@ public interface MyProductsContract {
 
         void selectProduct(ProductItem item);
 
-        void goToFavoritesRouter();
+        void goToFavorites();
 
-        void goToHomeRouter();
+        void goToHome();
 
-        void goToProfileRouter();
+        void goToProfile();
 
         void callLogout();
 
@@ -62,7 +72,6 @@ public interface MyProductsContract {
     }
 
     interface Router {
-        void navigateToNextScreen();
 
         void passStateToNextScreen(MyProductsState state);
 
@@ -72,14 +81,5 @@ public interface MyProductsContract {
 
         void passStateToPreviousScreen(MyProductsState state);
 
-        void goToFavorites();
-
-        void goToHome();
-
-        void goToProfile();
-
-        void goToLogin();
-
-        void goAddProduct();
     }
 }

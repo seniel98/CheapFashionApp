@@ -10,11 +10,11 @@ public interface ProductDetailContract {
         void onDataUpdated(ProductDetailViewModel viewModel);
 
         void displayProductData(ProductDetailState state);
-        
+
         void sendEmail(ProductDetailViewModel viewModel);
-        
+
         void callUser(ProductDetailViewModel viewModel);
-        
+
         void selectContact(ProductDetailViewModel viewModel);
 
         void setLikedButtonDisabled();
@@ -57,7 +57,6 @@ public interface ProductDetailContract {
     }
 
     interface Router {
-        void navigateToNextScreen();
 
         void passStateToNextScreen(ProductDetailState state);
 

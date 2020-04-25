@@ -17,8 +17,8 @@ public class SplashScreenPresenter implements SplashScreenContract.Presenter {
 
 
     @Override
-    public void goToRouterLogin() {
-        router.goToLogin();
+    public void goToLogin() {
+        view.get().goToLogin();
     }
 
     @Override

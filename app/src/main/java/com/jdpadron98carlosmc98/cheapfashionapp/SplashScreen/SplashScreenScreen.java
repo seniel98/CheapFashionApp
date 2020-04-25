@@ -3,8 +3,8 @@ package com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen;
 import androidx.fragment.app.FragmentActivity;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.Repository;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
 import java.lang.ref.WeakReference;
 
@@ -15,7 +15,7 @@ public class SplashScreenScreen {
         WeakReference<FragmentActivity> context =
                 new WeakReference<>((FragmentActivity) view);
 
-        AppMediator mediator = (AppMediator) context.get().getApplication();
+        AppMediator mediator = AppMediator.getInstance();
         SplashScreenState state = mediator.getSplashScreenState();
         //Here we create a repository contract object
         RepositoryContract repository = Repository.getInstance(context.get());
