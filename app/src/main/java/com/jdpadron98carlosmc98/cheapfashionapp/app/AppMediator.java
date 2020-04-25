@@ -14,8 +14,9 @@ import com.jdpadron98carlosmc98.cheapfashionapp.Profile.ProfileState;
 import com.jdpadron98carlosmc98.cheapfashionapp.SignUp.SignUpState;
 import com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen.SplashScreenState;
 
-public class AppMediator extends Application {
+public class AppMediator {
 
+    private static AppMediator instance;
     private SplashScreenState splashScreenState;
     private LoginState loginState;
     private SignUpState signUpState;
@@ -28,6 +29,27 @@ public class AppMediator extends Application {
     private MyProductsState myProductsState;
     private ChangePasswordState changePasswordState;
     private ProductItem item;
+
+    private AppMediator(){
+        homeState = new HomeState();
+        loginState = new LoginState();
+        signUpState = new SignUpState();
+        splashScreenState = new SplashScreenState();
+        forgotPasswordState = new ForgotPasswordState();
+        profileState = new ProfileState();
+        productDetailState = new ProductDetailState();
+        addProductState = new AddProductState();
+        favoriteState = new FavoriteState();
+        myProductsState = new MyProductsState();
+        changePasswordState = new ChangePasswordState();
+    }
+    public static AppMediator getInstance(){
+        if (instance == null){
+            instance = new AppMediator();
+        }
+        return instance;
+    }
+
 
     public void setChangePasswordState(ChangePasswordState changePasswordState) {
         this.changePasswordState = changePasswordState;
