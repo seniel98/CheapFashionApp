@@ -1,0 +1,94 @@
+{
+  "defaultProducts": [
+    {
+      "pid": "1",
+      "price": "10",
+      "name": "Cloth 1",
+      "picture": "https://firebasestorage.googleapis.com/v0/b/cheap-fashion-app.appspot.com/o/defaultCatalog%2Fcloth1.jpg?alt=media&token=4e570602-7465-4599-9ecb-ad64f13bfe1e",
+      "detail": "This cloth is a type of jacket. Im looking for some vendor.",
+      "userData": {
+        "uid": "1",
+        "name": "CheapFashion",
+        "email": "cheapfashion.co@gmail.com",
+        "phoneNumber": "666666666",
+        "likedProductList": {},
+        "uploadedProductList": {}
+      }
+    },
+    {
+      "pid": "2",
+      "price": "10",
+      "name": "Cloth 2",
+      "picture": "https://firebasestorage.googleapis.com/v0/b/cheap-fashion-app.appspot.com/o/defaultCatalog%2Fcloth2.jpg?alt=media&token=c0ac4383-93ae-4f78-82f2-b6e7eff0a534",
+      "detail": "This cloth is a type of blabla. Im looking for some vendor.",
+      "userData": {
+        "uid": "1",
+        "name": "CheapFashion",
+        "email": "cheapfashion.co@gmail.com",
+        "phoneNumber": "666666666",
+        "likedProductList": {},
+        "uploadedProductList": {}
+      }
+    },
+    {
+      "pid": "3",
+      "price": "10",
+      "name": "Cloth 3",
+      "picture": "https://firebasestorage.googleapis.com/v0/b/cheap-fashion-app.appspot.com/o/defaultCatalog%2Fcloth3.jpg?alt=media&token=49c744d2-8931-4fcb-9440-8f509f84c317",
+      "detail": "This cloth is a type of jacket. Im looking for some vendor.",
+      "userData": {
+        "uid": "1",
+        "name": "CheapFashion",
+        "email": "cheapfashion.co@gmail.com",
+        "phoneNumber": "666666666",
+        "likedProductList": {},
+        "uploadedProductList": {}
+      }
+    },
+    {
+      "pid": "4",
+      "price": "10",
+      "name": "Cloth 4",
+      "picture": "https://firebasestorage.googleapis.com/v0/b/cheap-fashion-app.appspot.com/o/defaultCatalog%2Fcloth4.jpg?alt=media&token=f6b572e6-fd70-4553-8b50-9de6e674c244",
+      "detail": "This cloth is a type of blabla. Im looking for some vendor.",
+      "userData": {
+        "uid": "1",
+        "name": "CheapFashion",
+        "email": "cheapfashion.co@gmail.com",
+        "phoneNumber": "666666666",
+        "likedProductList": {},
+        "uploadedProductList": {}
+      }
+    },
+    {
+      "pid": "5",
+      "price": "10",
+      "name": "Cloth 5",
+      "picture": "https://firebasestorage.googleapis.com/v0/b/cheap-fashion-app.appspot.com/o/defaultCatalog%2Fcloth5.jpg?alt=media&token=8fb4d963-805b-41b1-a393-7ec1542a7569",
+      "detail": "This cloth is a type of jacket. Im looking for some vendor.",
+      "userData": {
+        "uid": "1",
+        "name": "CheapFashion",
+        "email": "cheapfashion.co@gmail.com",
+        "phoneNumber": "666666666",
+        "likedProductList": {},
+        "uploadedProductList": {}
+      }
+    },
+    {
+      "pid": "6",
+      "price": "10",
+      "name": "Cloth 6",
+      "picture": "https://firebasestorage.googleapis.com/v0/b/cheap-fashion-app.appspot.com/o/defaultCatalog%2Fcloth6.jpg?alt=media&token=d3cc9ca4-22d0-4afd-bae9-0f78f22744b0",
+      "detail": "This cloth is a type of blabla. Im looking for some vendor.",
+      "userData": {
+        "uid": "1",
+        "name": "CheapFashion",
+        "email": "cheapfashion.co@gmail.com",
+        "phoneNumber": "666666666",
+        "likedProductList": {},
+        "uploadedProductList": {}
+      }
+    }
+  ]
+}

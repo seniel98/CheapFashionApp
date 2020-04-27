@@ -1,5 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 
+import android.util.Log;
+
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 import java.lang.ref.WeakReference;
@@ -100,6 +102,7 @@ public class HomePresenter implements HomeContract.Presenter {
     @Override
     public void selectProduct(ProductItem item) {
         state.item = item;
+        Log.e(TAG, "selectProduct.item" + state.item);
         router.passStateToNextScreen(state);
         view.get().goToDetail();
 

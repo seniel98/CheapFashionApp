@@ -1,45 +1,30 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.app;
 
+import android.graphics.Bitmap;
+import android.widget.ImageView;
+
 public class ProductItem {
 
-    public int id;
-    public int drawable; //Variable para almacenar las imagenes de prueba
+    public String id;
+    //public int drawable; //Variable para almacenar las imagenes de prueba
     public String price;
     public String name;
     public String picture;
+    public ImageView imageView;
     public UserData userData;
     public String detail;
-    public Boolean liked;
 
-    /**
-     * Constructor para las imagenes de sample
-     *
-     * @param id
-     * @param drawable
-     * @param price
-     * @param name
-     * @param userData
-     */
-    public ProductItem(int id, int drawable, String price, String name, UserData userData, String detail, boolean liked) {
+    public ProductItem(String id, String price, String name, String picture, String detail, UserData userData) {
         this.id = id;
-        this.drawable = drawable;
+        this.picture = picture;
         this.price = price;
         this.name = name;
         this.userData = userData;
         this.detail = detail;
-        this.liked = liked;
     }
 
     public ProductItem() {
 
-    }
-
-    public Boolean getLiked() {
-        return liked;
-    }
-
-    public void setLiked(Boolean liked) {
-        this.liked = liked;
     }
 
     public String getDetail() {
@@ -50,11 +35,11 @@ public class ProductItem {
         this.detail = detail;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -82,13 +67,13 @@ public class ProductItem {
         this.picture = picture;
     }
 
-    public int getDrawable() {
+ /*   public int getDrawable() {
         return drawable;
     }
 
     public void setDrawable(int drawable) {
         this.drawable = drawable;
-    }
+    }*/
 
     public UserData getUserData() {
         return userData;

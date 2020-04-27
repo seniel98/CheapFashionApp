@@ -53,7 +53,7 @@ public class HomeActivity
         initLayoutComponents();
 
         // do the setup
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             AppMediator.resetInstance();
         }
         HomeScreen.configure(this);
@@ -65,24 +65,23 @@ public class HomeActivity
             presenter.onRestart();
         }
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+     /*   recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         homeAdapter = new HomeAdapter(
                 new View.OnClickListener() {
 
                     @Override
                     public void onClick(View view) {
                         ProductItem item = (ProductItem) view.getTag();
-                        Log.e(TAG, "HomeAdapter.item" + item.getName());
+                        Log.e(TAG, "HomeAdapter.item" + item.getPicture());
                         presenter.selectProduct(item);
                     }
                 }, list);
 
-        recyclerView.setAdapter(homeAdapter);
+        recyclerView.setAdapter(homeAdapter);*/
 
         initBottomNavMenu();
 
         bottomNavigationView.getMenu().getItem(0).setChecked(true);
-
 
 
         addProductButton.setOnClickListener(new View.OnClickListener() {
@@ -207,6 +206,20 @@ public class HomeActivity
 
         // load the data
         presenter.onResume();
+
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        homeAdapter = new HomeAdapter(
+                new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        ProductItem item = (ProductItem) view.getTag();
+                        Log.e(TAG, "HomeAdapter.item" + item.getPicture());
+                        presenter.selectProduct(item);
+                    }
+                }, list);
+
+        recyclerView.setAdapter(homeAdapter);
     }
 
     @Override
