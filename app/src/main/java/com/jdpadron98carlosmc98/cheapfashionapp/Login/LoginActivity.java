@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -137,6 +138,11 @@ public class LoginActivity
     }
 
     @Override
+    public void displayData(LoginViewModel viewModel) {
+        Toast.makeText(getApplicationContext(), viewModel.message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void goToHome() {
         Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -189,7 +195,6 @@ public class LoginActivity
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     cleanEmailError();
-
                 }
             }
         });

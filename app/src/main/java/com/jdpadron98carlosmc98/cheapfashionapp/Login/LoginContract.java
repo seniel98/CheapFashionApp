@@ -1,5 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Login;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
 import java.lang.ref.WeakReference;
 
 public interface LoginContract {
@@ -21,6 +23,7 @@ public interface LoginContract {
 
         void navigateToNextScreen();
 
+        void displayData(LoginViewModel viewModel);
     }
 
     interface Presenter {
@@ -39,9 +42,12 @@ public interface LoginContract {
         void checkLogin(String emailStr, String passStr);
 
         void onResume();
+
+        void signIn(String emailStr, String passStr);
     }
 
     interface Model {
+        void signIn(String emailStr, String passStr, RepositoryContract.OnSignInCallback onSignInCallback);
     }
 
     interface Router {
