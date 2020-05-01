@@ -4,4 +4,6 @@ public class SignUpViewModel {
 
     // put the view state here
     public String data;
+
+    public String errorMessage;
 }

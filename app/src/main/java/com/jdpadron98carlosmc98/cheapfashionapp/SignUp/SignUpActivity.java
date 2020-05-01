@@ -1,7 +1,9 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.SignUp;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,6 +30,17 @@ public class SignUpActivity
         //---------------------------------------------//
         initSignUpLayout();
         setSignUpLayout();
+
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = nameText.getText().toString().trim();
+                String email = emailText.getText().toString().trim();
+                String phone = phoneText.getText().toString().trim();
+                String pass = passText.getText().toString().trim();
+                presenter.signUpClicked(name,email,phone,pass);
+            }
+        });
         // do the setup
         if(savedInstanceState == null){
             AppMediator.resetInstance();
@@ -66,7 +79,16 @@ public class SignUpActivity
 //        presenter.fetchData();
     }
 
-/*    @Override
+    @Override
+    public void showToast(String msg) {
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+    }
+
+
+
+
+
+    /*    @Override
     public void displayData(SignUpViewModel viewModel) {
         //Log.e(TAG, "displayData()");
 

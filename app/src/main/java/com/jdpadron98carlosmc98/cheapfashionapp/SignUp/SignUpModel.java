@@ -1,6 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.SignUp;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.UserData;
 
 public class SignUpModel implements SignUpContract.Model {
 
@@ -12,9 +13,9 @@ public class SignUpModel implements SignUpContract.Model {
         this.repository = repository;
     }
 
-  /*  @Override
-    public String fetchData() {
-        // Log.e(TAG, "fetchData()");
-        return "Hello";
-    }*/
+
+    @Override
+    public void signUp(UserData userData, String pass, RepositoryContract.RegisterCallback registerCallback) {
+        repository.createUser(userData, pass, registerCallback);
+    }
 }

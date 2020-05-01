@@ -5,6 +5,9 @@ import java.util.List;
 public interface RepositoryContract {
 
 
+    void createUser(UserData userData, String password, RepositoryContract.RegisterCallback registerCallback);
+
+
     List<ProductItem> getProductList();
 
     /**
@@ -20,5 +23,10 @@ public interface RepositoryContract {
         void onSignIn(boolean error);
     }
 
+
+
+    interface RegisterCallback {
+        void createUserError(boolean error, String msg);
+    }
 
 }
