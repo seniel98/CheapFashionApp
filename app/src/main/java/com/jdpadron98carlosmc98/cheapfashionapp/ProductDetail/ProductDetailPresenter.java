@@ -88,7 +88,7 @@ public class ProductDetailPresenter implements ProductDetailContract.Presenter {
 
     @Override
     public void likeButtonPressed() {
-        ProductItem item = state.item;
+      /*  ProductItem item = state.item;
         if(state.item.liked){
             view.get().setLikedButtonDisabled();
             item.liked = false;
@@ -96,7 +96,7 @@ public class ProductDetailPresenter implements ProductDetailContract.Presenter {
             view.get().setLikeButtonEnabled();
             item.liked = true;
         }
-        state.item = item;
+        state.item = item;*/
     }
 
     @Override

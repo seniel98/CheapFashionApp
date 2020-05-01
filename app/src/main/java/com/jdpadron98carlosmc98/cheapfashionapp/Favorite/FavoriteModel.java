@@ -42,10 +42,9 @@ public class FavoriteModel implements FavoriteContract.Model {
     @Override
     public List<ProductItem> getFavoriteList(List<ProductItem> list) {
         List<ProductItem> favoriteList = new ArrayList<>();
-        for(int i = 0; i<list.size(); i++){
-            if(list.get(i).liked){
-                favoriteList.add(list.get(i));
-            }
+        for (int i = 0; i < list.size(); i++) {
+            favoriteList.add(list.get(i));
+
         }
         return favoriteList;
     }

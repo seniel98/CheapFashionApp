@@ -57,11 +57,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         holder.priceProduct.setText(itemList.get(position).getPrice());
         holder.nameProduct.setText(itemList.get(position).getName());
         //Esto esta hecho solo para la version del primer Sprint
-        holder.imageProduct.setImageResource(itemList.get(position).getDrawable());
+        //holder.imageProduct.setImageResource(itemList.get(position).getDrawable());
         holder.itemView.setTag(itemList.get(position));
         holder.itemView.setOnClickListener(clickListener);
-        //loadImageFromURL(holder.imageProduct, itemList.get(position).getPicture());
-
+        loadImageFromURL(holder.imageProduct, itemList.get(position).getPicture());
+        //Insertar la imagen al producto que creamos para posteriormente tenerla en el detalle
+        itemList.get(position).imageView = holder.imageProduct;
 
     }
 
@@ -89,6 +90,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         Glide.with(imageView.getContext())
                 .load(imageURL)
                 .into(imageView);
+
     }
 }
 

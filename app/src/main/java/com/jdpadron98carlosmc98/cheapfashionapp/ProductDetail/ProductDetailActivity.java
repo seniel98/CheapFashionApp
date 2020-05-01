@@ -1,22 +1,19 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.jdpadron98carlosmc98.cheapfashionapp.AddProduct.AddProductActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 
 public class ProductDetailActivity
@@ -78,18 +75,18 @@ public class ProductDetailActivity
 
     }
 
-    public void selectContact(final ProductDetailViewModel viewModel){
-        final CharSequence[] items= {"E-mail", "Phone number", "Cancel"};
+    public void selectContact(final ProductDetailViewModel viewModel) {
+        final CharSequence[] items = {"E-mail", "Phone number", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Contact with seller");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                if(items[i].equals("E-mail")){
+                if (items[i].equals("E-mail")) {
                     sendEmail(viewModel);
-                }else if(items[i].equals("Phone number")){
+                } else if (items[i].equals("Phone number")) {
                     callUser(viewModel);
-                }else if(items[i].equals("Cancel")){
+                } else if (items[i].equals("Cancel")) {
                     dialog.dismiss();
                 }
             }
@@ -107,7 +104,7 @@ public class ProductDetailActivity
         productLikeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_24px));
     }
 
-    public void sendEmail(ProductDetailViewModel viewModel){
+    public void sendEmail(ProductDetailViewModel viewModel) {
         String emailSender = viewModel.item.getUserData().getEmail();
         String email = emailSender;
         String subject = "Im interested in one of your products";
@@ -128,7 +125,7 @@ public class ProductDetailActivity
     public void callUser(ProductDetailViewModel viewModel) {
         String phoneNumber = viewModel.item.getUserData().getPhoneNumber();
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:"+phoneNumber));
+        intent.setData(Uri.parse("tel:" + phoneNumber));
         startActivity(intent);
     }
 
@@ -173,21 +170,22 @@ public class ProductDetailActivity
     @Override
     public void displayProductData(ProductDetailState state) {
         ProductItem item = state.item;
-        productImage.setImageResource(item.getDrawable());
+        productImage.setImageDrawable(item.imageView.getDrawable());
         productSeller.setText(item.getUserData().getName());
         productPrice.setText(item.getPrice());
         productDetail.setText(item.getDetail());
         productName.setText(item.getName());
-        setImageFloatingButton(item.liked);
+        //setImageFloatingButton(item.liked);
     }
 
-    private void setImageFloatingButton(boolean liked){
-        if(liked){
+    private void setImageFloatingButton(boolean liked) {
+        if (liked) {
             setLikeButtonEnabled();
-        }else{
+        } else {
             setLikedButtonDisabled();
         }
     }
+
     @Override
     public void injectPresenter(ProductDetailContract.Presenter presenter) {
         this.presenter = presenter;
