@@ -1,5 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Profile;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
 import java.lang.ref.WeakReference;
 
 public interface ProfileContract {
@@ -17,6 +19,8 @@ public interface ProfileContract {
         void goToLogin();
 
         void goChangePass();
+
+        void showToast(String msg);
     }
 
     interface Presenter {
@@ -42,6 +46,7 @@ public interface ProfileContract {
     }
 
     interface Model {
+        void logout(RepositoryContract.OnLogoutCallback logoutCallback);
         //String fetchData();
     }
 

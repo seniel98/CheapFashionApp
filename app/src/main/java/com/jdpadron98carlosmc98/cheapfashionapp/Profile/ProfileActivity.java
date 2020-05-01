@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -182,15 +183,20 @@ public class ProfileActivity
         startActivity(intent);
     }
 
-    /*
-        @Override
-        public void displayData(ProfileViewModel viewModel) {
-            //Log.e(TAG, "displayData()");
+    @Override
+    public void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
 
-            // deal with the data
-            ((TextView) findViewById(R.id.data)).setText(viewModel.data);
-        }
-    */
+    /*
+            @Override
+            public void displayData(ProfileViewModel viewModel) {
+                //Log.e(TAG, "displayData()");
+
+                // deal with the data
+                ((TextView) findViewById(R.id.data)).setText(viewModel.data);
+            }
+        */
     @Override
     public void injectPresenter(ProfileContract.Presenter presenter) {
         this.presenter = presenter;

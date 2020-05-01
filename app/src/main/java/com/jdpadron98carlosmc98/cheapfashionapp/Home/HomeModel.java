@@ -23,6 +23,11 @@ public class HomeModel implements HomeContract.Model {
 
 
     @Override
+    public void logout(RepositoryContract.OnLogoutCallback logoutCallback) {
+        repository.logout(logoutCallback);
+    }
+
+    @Override
     public String getStoredData() {
         // Log.e(TAG, "getStoredData()");
         return "null";

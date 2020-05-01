@@ -12,7 +12,13 @@ public class ProfileModel implements ProfileContract.Model {
         this.repository = repository;
     }
 
-/*
+    @Override
+    public void logout(RepositoryContract.OnLogoutCallback logoutCallback) {
+        repository.logout(logoutCallback);
+    }
+
+
+    /*
     @Override
     public String fetchData() {
         // Log.e(TAG, "fetchData()");

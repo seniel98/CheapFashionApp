@@ -1,5 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Profile;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
 import java.lang.ref.WeakReference;
 
 public class ProfilePresenter implements ProfileContract.Presenter {
@@ -88,7 +90,17 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
     @Override
     public void callLogout() {
-        view.get().goToLogin();
+        model.logout(new RepositoryContract.OnLogoutCallback() {
+            @Override
+            public void onLogout(boolean error) {
+                if(!error){
+                    view.get().showToast("Logged out successfully!");
+                    view.get().goToLogin();
+                }else{
+
+                }
+            }
+        });
     }
 
     @Override

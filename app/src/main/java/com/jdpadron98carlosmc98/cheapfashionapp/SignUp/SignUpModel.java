@@ -15,7 +15,7 @@ public class SignUpModel implements SignUpContract.Model {
 
 
     @Override
-    public void signUp(UserData userData, String pass, RepositoryContract.RegisterCallback registerCallback) {
-        repository.createUser(userData, pass, registerCallback);
+    public void signUp(UserData userData, String pass, RepositoryContract.OnSignUpCallback OnSignUpCallback) {
+        repository.signUp(userData, pass, OnSignUpCallback);
     }
 }

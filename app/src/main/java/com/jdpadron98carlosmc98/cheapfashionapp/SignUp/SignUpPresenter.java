@@ -61,11 +61,11 @@ public class SignUpPresenter implements SignUpContract.Presenter {
 
     private void callModelToSignUp(String name, String email, String phone, String pass) {
         UserData userData = new UserData(name, email, phone, new ArrayList<String>(), new ArrayList<String>());
-        model.signUp(userData, pass, new RepositoryContract.RegisterCallback() {
+        model.signUp(userData, pass, new RepositoryContract.OnSignUpCallback() {
             @Override
-            public void createUserError(boolean error, String msg) {
+            public void onSignUp(boolean error, String msg) {
                 if (!error) {
-                    view.get().showToast("Registered successfully");
+                    view.get().showToast(msg);
                     view.get().onBackPressed();
                 } else {
                     view.get().showToast(msg);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -163,6 +164,12 @@ public class FavoriteActivity
         //Log.e(TAG, "onDataUpdated()");
         // deal with the data
 //        ((TextView) findViewById(R.id.data)).setText(viewModel.data);
+    }
+
+
+    @Override
+    public void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override

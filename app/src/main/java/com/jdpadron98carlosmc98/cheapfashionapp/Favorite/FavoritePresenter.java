@@ -3,6 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Favorite;
 import android.util.Log;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -130,7 +131,17 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
 
     @Override
     public void callLogout() {
-        view.get().goToLogin();
+        model.logout(new RepositoryContract.OnLogoutCallback() {
+            @Override
+            public void onLogout(boolean error) {
+                if(!error){
+                    view.get().showToast("Logged out successfully!");
+                    view.get().goToLogin();
+                }else{
+
+                }
+            }
+        });
     }
 
     @Override

@@ -30,7 +30,7 @@ public interface SignUpContract {
     }
 
     interface Model {
-        void signUp(UserData userData, String pass, RepositoryContract.RegisterCallback registerCallback);
+        void signUp(UserData userData, String pass, RepositoryContract.OnSignUpCallback OnSignUpCallback);
         //String fetchData();
     }
 
