@@ -5,8 +5,15 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeActivity;
@@ -35,6 +42,9 @@ public class Repository implements RepositoryContract {
     public static final String JSON_FILE = "https://cheap-fashion-app.firebaseio.com/.json";
     public static final String JSON_ROOT = "defaultProducts";
 
+    private FirebaseAuth auth;
+    private FirebaseUser user;
+    private FirebaseDatabase database;
 
     private String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
 
@@ -78,6 +88,11 @@ public class Repository implements RepositoryContract {
         productItemList.add(productItem5);
         productItemList.add(productItem6);*/
         new JsonTask().execute(JSON_FILE);
+        auth = FirebaseAuth.getInstance();
+
+        user = auth.getCurrentUser();
+
+        database = FirebaseDatabase.getInstance();
 
     }
 
@@ -85,6 +100,23 @@ public class Repository implements RepositoryContract {
     @Override
     public List<ProductItem> getProductList() {
         return productItemList;
+    }
+
+    @Override
+    public void signIn(String email, String password, final OnSignInCallback callback) {
+        auth.signInWithEmailAndPassword(email, password).
+                addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            callback.onSignIn(false);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            callback.onSignIn(true);
+                        }
+                    }
+                });
     }
 
 

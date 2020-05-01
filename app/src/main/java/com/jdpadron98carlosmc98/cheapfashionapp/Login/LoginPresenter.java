@@ -1,5 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Login;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
 import java.lang.ref.WeakReference;
 
 public class LoginPresenter implements LoginContract.Presenter {
@@ -24,6 +26,22 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
+    public void signIn(String emailStr, String passStr) {
+        model.signIn(emailStr, passStr, new RepositoryContract.OnSignInCallback() {
+            @Override
+            public void onSignIn(boolean error) {
+                if(!error){
+                    goToHomeRouter();
+                }else{
+                    viewModel.message="This user does not exist";
+                    view.get().displayData(viewModel);
+
+                }
+            }
+        });
+    }
+
+    @Override
     public void checkLogin(String emailStr, String passStr) {
         if (emailStr.isEmpty() && passStr.isEmpty()) {
             view.get().setErrorLayoutInputs(2);
@@ -34,7 +52,7 @@ public class LoginPresenter implements LoginContract.Presenter {
         } else{
             //view.get().enableProgressBar();
             //callModel
-            goToHomeRouter();
+            signIn(emailStr,passStr);
         }
     }
 
