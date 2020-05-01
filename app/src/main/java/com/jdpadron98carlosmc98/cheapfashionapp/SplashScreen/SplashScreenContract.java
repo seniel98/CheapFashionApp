@@ -1,5 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
 import java.lang.ref.WeakReference;
 
 public interface SplashScreenContract {
@@ -8,6 +10,8 @@ public interface SplashScreenContract {
         void injectPresenter(Presenter presenter);
 
         void goToLogin();
+
+        void goToHome();
     }
 
     interface Presenter {
@@ -19,9 +23,14 @@ public interface SplashScreenContract {
         void injectModel(Model model);
 
         void injectRouter(Router router);
+
+        void goToHome();
+
+        void checkSession();
     }
 
     interface Model {
+        void checkSession(RepositoryContract.OnLoggedInCallback loggedInCallback);
     }
 
     interface Router {

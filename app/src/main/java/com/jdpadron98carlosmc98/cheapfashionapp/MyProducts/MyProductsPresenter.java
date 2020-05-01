@@ -1,6 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.MyProducts;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -120,7 +121,17 @@ public class MyProductsPresenter implements MyProductsContract.Presenter {
 
     @Override
     public void callLogout() {
-        view.get().goToLogin();
+        model.logout(new RepositoryContract.OnLogoutCallback() {
+            @Override
+            public void onLogout(boolean error) {
+                if(!error){
+                    view.get().showToast("Logged out successfully!");
+                    view.get().goToLogin();
+                }else{
+
+                }
+            }
+        });
     }
 
     @Override

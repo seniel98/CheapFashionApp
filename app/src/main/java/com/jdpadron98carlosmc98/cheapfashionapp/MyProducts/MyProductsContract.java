@@ -1,6 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.MyProducts;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -23,6 +24,8 @@ public interface MyProductsContract {
         void goToLogin();
 
         void goAddProduct();
+
+        void showToast(String msg);
     }
 
     interface Presenter {
@@ -69,6 +72,8 @@ public interface MyProductsContract {
         void onDataFromPreviousScreen(String data);
 
         List<ProductItem> getListFromRepository();
+
+        void logout(RepositoryContract.OnLogoutCallback logoutCallback);
     }
 
     interface Router {

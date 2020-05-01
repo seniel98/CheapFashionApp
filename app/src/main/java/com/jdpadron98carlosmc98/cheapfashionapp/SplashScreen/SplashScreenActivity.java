@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
@@ -33,7 +34,7 @@ public class SplashScreenActivity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                presenter.goToLogin();
+                presenter.checkSession();
             }
         }, SPLASH_TIMEOUT);
 
@@ -60,6 +61,13 @@ public class SplashScreenActivity
         startActivity(intent);
     }
 
+    @Override
+    public void goToHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
     private void startAnimations() {
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);

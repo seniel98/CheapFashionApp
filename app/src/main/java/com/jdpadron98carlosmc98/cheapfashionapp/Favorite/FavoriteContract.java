@@ -1,6 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Favorite;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -26,6 +27,7 @@ public interface FavoriteContract {
 
         void goToDetail();
 
+        void showToast(String msg);
     }
 
     interface Presenter {
@@ -72,6 +74,8 @@ public interface FavoriteContract {
         List<ProductItem> getListFromRepository();
 
         List<ProductItem> getFavoriteList(List<ProductItem> list);
+
+        void logout(RepositoryContract.OnLogoutCallback logoutCallback);
     }
 
     interface Router {

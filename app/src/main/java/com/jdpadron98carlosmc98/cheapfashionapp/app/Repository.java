@@ -11,7 +11,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -43,28 +42,20 @@ public class Repository implements RepositoryContract {
     public static final String JSON_FILE = "https://cheap-fashion-app.firebaseio.com/.json";
     public static final String JSON_ROOT = "defaultProducts";
 
+    private static String passwordNotValidMessage = "Password must be at least 8 characters long with alphanumeric format";
+    private static String registeredOkMessage = "Registered successfully";
+
     private FirebaseAuth auth;
-    private FirebaseUser user;
     private FirebaseDatabase database;
-
-    private FirebaseAuth auth;
-    private FirebaseUser user;
-
-    private String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
-
-
     private StorageReference storageRef;
     private DatabaseReference usersRef;
     private DatabaseReference productsRef;
     private DatabaseReference databaseReference;
 
+    // private String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
+
+
     private List<ProductItem> productItemList = new ArrayList<>();
-   /* private UserData userData1 = new UserData("name1", "email1", "phone1");
-    private UserData userData2 = new UserData("name2", "email2", "phone2");
-    private UserData userData3 = new UserData("name3", "email3", "phone3");
-    private UserData userData4 = new UserData("name4", "email4", "phone4");
-    private UserData userData5 = new UserData("name5", "email5", "phone5");
-    private UserData userData6 = new UserData("name6", "email6", "phone6");*/
 
 
     public static RepositoryContract getInstance(Context context) {
@@ -80,8 +71,6 @@ public class Repository implements RepositoryContract {
 
         auth = FirebaseAuth.getInstance();
 
-        user = auth.getCurrentUser();
-
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         storageRef = FirebaseStorage.getInstance().getReference();
@@ -90,36 +79,84 @@ public class Repository implements RepositoryContract {
 
         productsRef = FirebaseDatabase.getInstance().getReference().child("products");
 
-  /*      productItemList.add(productItem1);
-        productItemList.add(productItem2);
-        productItemList.add(productItem3);
-        productItemList.add(productItem4);
-        productItemList.add(productItem5);
-        productItemList.add(productItem6);*/
-        new JsonTask().execute(JSON_FILE);
-        auth = FirebaseAuth.getInstance();
-
-        user = auth.getCurrentUser();
-
-        database = FirebaseDatabase.getInstance();
 
     }
 
 
     @Override
-    public void createUser(final UserData userData, String password, final RegisterCallback registerCallback) {
-        auth.createUserWithEmailAndPassword(userData.getEmail(), password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            databaseReference.child("users").child(auth.getCurrentUser().getUid()).setValue(userData);
-                            registerCallback.createUserError(false, "Registered succesfully");
-                        } else {
-                            registerCallback.createUserError(true, task.getException().getMessage());
+    public void logout(OnLogoutCallback logoutCallback) {
+        auth.signOut();
+        logoutCallback.onLogout(false);
+    }
+
+
+    @Override
+    public void isLoggedIn(OnLoggedInCallback loggedInCallback) {
+        if (auth.getCurrentUser() != null) {
+            //El usuario tiene la sesion activa
+            new JsonTask().execute(JSON_FILE);
+            loggedInCallback.onLoggedIn(true);
+        } else {
+            //El usuario no tiene la sesion activa
+            loggedInCallback.onLoggedIn(false);
+        }
+    }
+
+    @Override
+    public void signUp(final UserData userData, final String password, final OnSignUpCallback signUpCallback) {
+        if (!isPasswordValid(password)) {
+
+            signUpCallback.onSignUp(true, passwordNotValidMessage);
+
+        } else {
+            auth.createUserWithEmailAndPassword(userData.getEmail(), password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+
+                                databaseReference.child("users").child(auth.getCurrentUser().getUid()).setValue(userData);
+                                signUpCallback.onSignUp(false, registeredOkMessage);
+
+                            } else {
+
+                                signUpCallback.onSignUp(true, task.getException().getMessage());
+
+                            }
                         }
-                    }
-                });
+                    });
+        }
+
+    }
+
+
+    /**
+     * Metodo para comprobar si la contraseña cumple con los requisitos solicitados.
+     * Al menos 8 caracteres, 1 numero, 1 mayuscula, 1 minuscula
+     *
+     * @param password
+     * @return
+     */
+
+    private boolean isPasswordValid(String password) {
+        boolean valid = true;
+        //Expresion regular que hace que la contraseña deba ser alfanumerica
+        String pattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";
+        /**
+         * ^                  # incio del string
+         * (?=.*[0-9])       # Al menos un digito
+         * (?=.*[a-z])       # Al menos una minuscula
+         * (?=.*[A-Z])       # Al menos una mayuscula
+         * (?=\S+$)          # Espacios en blanco no permitidos
+         * .{8,}             # Al menos 8 caracteres
+         * $                 # final del string
+         * */
+
+        //Comprobamos si la contraseña introducida cumple con los requisitos de nuestra expresion regular
+        if (!password.matches(pattern)) {
+            valid = false;
+        }
+        return valid;
     }
 
 
@@ -135,6 +172,8 @@ public class Repository implements RepositoryContract {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            //Carga el json de firebase con los datos
+                            new JsonTask().execute(JSON_FILE);
                             // Sign in success, update UI with the signed-in user's information
                             callback.onSignIn(false);
                         } else {

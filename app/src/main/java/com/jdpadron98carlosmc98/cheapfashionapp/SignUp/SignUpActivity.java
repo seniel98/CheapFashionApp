@@ -20,6 +20,7 @@ public class SignUpActivity
     private SignUpContract.Presenter presenter;
     private TextInputLayout nameTextInputLayout, emailTextInputLayout, phoneTextInputLayout,
             passTextInputLayout;
+    private Toast toast;
     private EditText nameText, emailText, phoneText, passText;
     private MaterialButton signUpButton;
 
@@ -38,11 +39,11 @@ public class SignUpActivity
                 String email = emailText.getText().toString().trim();
                 String phone = phoneText.getText().toString().trim();
                 String pass = passText.getText().toString().trim();
-                presenter.signUpClicked(name,email,phone,pass);
+                presenter.signUpClicked(name, email, phone, pass);
             }
         });
         // do the setup
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             AppMediator.resetInstance();
         }
 
@@ -81,7 +82,14 @@ public class SignUpActivity
 
     @Override
     public void showToast(String msg) {
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        //Reiniciamos el toast para que no se generen infinitos toasts
+        if (toast != null) {
+            toast.cancel();
+        }
+        toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+        toast.show();
+
+
     }
 
 

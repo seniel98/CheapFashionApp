@@ -1,5 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
 import java.lang.ref.WeakReference;
 
 public class SplashScreenPresenter implements SplashScreenContract.Presenter {
@@ -19,6 +21,25 @@ public class SplashScreenPresenter implements SplashScreenContract.Presenter {
     @Override
     public void goToLogin() {
         view.get().goToLogin();
+    }
+
+    public void goToHome() {
+        view.get().goToHome();
+    }
+
+
+    @Override
+    public void checkSession() {
+        model.checkSession(new RepositoryContract.OnLoggedInCallback() {
+            @Override
+            public void onLoggedIn(boolean isLoggedIn) {
+                if (isLoggedIn) {
+                    view.get().goToHome();
+                } else {
+                    view.get().goToLogin();
+                }
+            }
+        });
     }
 
     @Override

@@ -18,6 +18,11 @@ public class MyProductsModel implements MyProductsContract.Model {
 
 
     @Override
+    public void logout(RepositoryContract.OnLogoutCallback logoutCallback) {
+        repository.logout(logoutCallback);
+    }
+
+    @Override
     public String getStoredData() {
         // Log.e(TAG, "getStoredData()");
         return "data";
