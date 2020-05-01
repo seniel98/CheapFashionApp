@@ -1,15 +1,22 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.app;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,29 +43,24 @@ public class Repository implements RepositoryContract {
     public static final String JSON_ROOT = "defaultProducts";
 
 
+    private FirebaseAuth auth;
+    private FirebaseUser user;
+
     private String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
 
 
+    private StorageReference storageRef;
+    private DatabaseReference usersRef;
+    private DatabaseReference productsRef;
+    private DatabaseReference databaseReference;
+
     private List<ProductItem> productItemList = new ArrayList<>();
-    private UserData userData1 = new UserData("name1", "email1", "phone1");
+   /* private UserData userData1 = new UserData("name1", "email1", "phone1");
     private UserData userData2 = new UserData("name2", "email2", "phone2");
     private UserData userData3 = new UserData("name3", "email3", "phone3");
     private UserData userData4 = new UserData("name4", "email4", "phone4");
     private UserData userData5 = new UserData("name5", "email5", "phone5");
-    private UserData userData6 = new UserData("name6", "email6", "phone6");
-
- /*   private ProductItem productItem1 = new ProductItem(0, R.drawable.cloth1, "35.00 €",
-            "Cloth 1", userData1, loremIpsum, false);
-    private ProductItem productItem2 = new ProductItem(1, R.drawable.cloth2, "36.00 €",
-            "Cloth 2", userData2, loremIpsum, false);
-    private ProductItem productItem3 = new ProductItem(2, R.drawable.cloth3, "37.00 €",
-            "Cloth 3", userData3, loremIpsum, false);
-    private ProductItem productItem4 = new ProductItem(3, R.drawable.cloth4, "38.00 €",
-            "Cloth 4", userData4, loremIpsum, false);
-    private ProductItem productItem5 = new ProductItem(4, R.drawable.cloth5, "39.00 €",
-            "Cloth 5", userData5, loremIpsum, false);
-    private ProductItem productItem6 = new ProductItem(5, R.drawable.cloth6, "40.00 €",
-            "Cloth 6", userData6, loremIpsum, false);*/
+    private UserData userData6 = new UserData("name6", "email6", "phone6");*/
 
 
     public static RepositoryContract getInstance(Context context) {
@@ -71,6 +73,19 @@ public class Repository implements RepositoryContract {
 
     private Repository(Context context) {
         this.context = context;
+
+        auth = FirebaseAuth.getInstance();
+
+        user = auth.getCurrentUser();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        storageRef = FirebaseStorage.getInstance().getReference();
+
+        usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+
+        productsRef = FirebaseDatabase.getInstance().getReference().child("products");
+
   /*      productItemList.add(productItem1);
         productItemList.add(productItem2);
         productItemList.add(productItem3);
@@ -79,6 +94,23 @@ public class Repository implements RepositoryContract {
         productItemList.add(productItem6);*/
         new JsonTask().execute(JSON_FILE);
 
+    }
+
+
+    @Override
+    public void createUser(final UserData userData, String password, final RegisterCallback registerCallback) {
+        auth.createUserWithEmailAndPassword(userData.getEmail(), password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            databaseReference.child("users").child(auth.getCurrentUser().getUid()).setValue(userData);
+                            registerCallback.createUserError(false, "Registered succesfully");
+                        } else {
+                            registerCallback.createUserError(true, task.getException().getMessage());
+                        }
+                    }
+                });
     }
 
 
@@ -126,7 +158,6 @@ public class Repository implements RepositoryContract {
     }
 
 
-
     private class JsonTask extends AsyncTask<String, String, String> {
 
         protected void onPreExecute() {
@@ -151,7 +182,7 @@ public class Repository implements RepositoryContract {
                 String line = "";
 
                 while ((line = reader.readLine()) != null) {
-                    buffer.append(line+"\n");
+                    buffer.append(line + "\n");
                     Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
 
                 }

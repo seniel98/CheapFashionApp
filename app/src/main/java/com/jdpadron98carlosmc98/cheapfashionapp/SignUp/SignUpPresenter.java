@@ -1,6 +1,10 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.SignUp;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.UserData;
+
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 public class SignUpPresenter implements SignUpContract.Presenter {
 
@@ -42,6 +46,33 @@ public class SignUpPresenter implements SignUpContract.Presenter {
         view.get().displayData(viewModel);
 
     }*/
+
+
+    @Override
+    public void signUpClicked(String name, String email, String phone, String pass) {
+        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || pass.isEmpty()) {
+
+            view.get().showToast("Fields must not be empty");
+
+        } else {
+            callModelToSignUp(name, email, phone, pass);
+        }
+    }
+
+    private void callModelToSignUp(String name, String email, String phone, String pass) {
+        UserData userData = new UserData(name, email, phone, new ArrayList<String>(), new ArrayList<String>());
+        model.signUp(userData, pass, new RepositoryContract.RegisterCallback() {
+            @Override
+            public void createUserError(boolean error, String msg) {
+                if (!error) {
+                    view.get().showToast("Registered successfully");
+                    view.get().onBackPressed();
+                } else {
+                    view.get().showToast(msg);
+                }
+            }
+        });
+    }
 
     @Override
     public void injectView(WeakReference<SignUpContract.View> view) {
