@@ -61,6 +61,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         holder.itemView.setTag(itemList.get(position));
         holder.itemView.setOnClickListener(clickListener);
         loadImageFromURL(holder.imageProduct, itemList.get(position).getPicture());
+        //Insertar la imagen al producto que creamos para posteriormente tenerla en el detalle
         itemList.get(position).imageView = holder.imageProduct;
 
     }

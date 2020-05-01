@@ -1,9 +1,9 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.app;
 
-import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 public class ProductItem {
+
 
     public String id;
     //public int drawable; //Variable para almacenar las imagenes de prueba

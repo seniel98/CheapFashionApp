@@ -214,7 +214,7 @@ public class HomeActivity
                     @Override
                     public void onClick(View view) {
                         ProductItem item = (ProductItem) view.getTag();
-                        Log.e(TAG, "HomeAdapter.item" + item.getPicture());
+                        Log.e(TAG, "HomeAdapter.item " + item.getPicture());
                         presenter.selectProduct(item);
                     }
                 }, list);

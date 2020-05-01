@@ -3,9 +3,10 @@ package com.jdpadron98carlosmc98.cheapfashionapp.app;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jdpadron98carlosmc98.cheapfashionapp.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,6 +70,7 @@ public class Repository implements RepositoryContract {
         productItemList.add(productItem5);
         productItemList.add(productItem6);*/
         loadCatalogFromJSON(loadJSONFromAsset());
+
     }
 
 
