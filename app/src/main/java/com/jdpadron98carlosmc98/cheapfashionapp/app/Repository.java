@@ -2,15 +2,21 @@ package com.jdpadron98carlosmc98.cheapfashionapp.app;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -94,7 +100,7 @@ public class Repository implements RepositoryContract {
     public void isLoggedIn(OnLoggedInCallback loggedInCallback) {
         if (auth.getCurrentUser() != null) {
             //El usuario tiene la sesion activa
-            new JsonTask().execute(JSON_FILE);
+            getJSONFromURL(); //TODO Hay que hacerlo con callback
             loggedInCallback.onLoggedIn(true);
         } else {
             //El usuario no tiene la sesion activa
@@ -173,9 +179,10 @@ public class Repository implements RepositoryContract {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             //Carga el json de firebase con los datos
-                            new JsonTask().execute(JSON_FILE);
+                            getJSONFromURL(); //TODO Hay que hacerlo con callback
                             // Sign in success, update UI with the signed-in user's information
                             callback.onSignIn(false);
+
                         } else {
                             // If sign in fails, display a message to the user.
                             callback.onSignIn(true);
@@ -190,7 +197,7 @@ public class Repository implements RepositoryContract {
      *
      * @return
      */
-    private String loadJSONFromAsset() {
+ /*   private String loadJSONFromAsset() {
         String json = null;
         try {
             InputStream is = context.getAssets().open(JSON_FILE);
@@ -202,7 +209,7 @@ public class Repository implements RepositoryContract {
         } catch (IOException error) {
         }
         return json;
-    }
+    }*/
 
 
     private boolean loadCatalogFromJSON(String json) {
@@ -223,7 +230,30 @@ public class Repository implements RepositoryContract {
     }
 
 
-    private class JsonTask extends AsyncTask<String, String, String> {
+
+    //TODO Implementar en las clases presenter y model de Login y SplashScreen el callback de este metodo
+    //@Override
+    public void getJSONFromURL() {
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, JSON_FILE, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        loadCatalogFromJSON(response.toString());
+                        //getJSONCallback.onGetJSON(false);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                //getJSONCallback.onGetJSON(true);
+            }
+        });
+        requestQueue.add(request);
+    }
+
+
+  /*  private class JsonTask extends AsyncTask<String, String, String> {
 
         protected void onPreExecute() {
             super.onPreExecute();
@@ -279,5 +309,5 @@ public class Repository implements RepositoryContract {
             super.onPostExecute(result);
             loadCatalogFromJSON(result);
         }
-    }
+    }*/
 }
