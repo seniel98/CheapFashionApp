@@ -30,6 +30,8 @@ public interface HomeContract {
         void navigateToNextScreen();
 
         void showToast(String msg);
+
+        void createRecyclerView();
     }
 
     interface Presenter {
@@ -64,6 +66,8 @@ public interface HomeContract {
         void goToAddProduct();
 
         List<ProductItem> getListFromModel();
+
+        void getDataFromRepository();
     }
 
     interface Model {
@@ -78,6 +82,8 @@ public interface HomeContract {
         void onDataFromPreviousScreen(String data);
 
         void logout(RepositoryContract.OnLogoutCallback logoutCallback);
+
+        void getDataFromRepository(RepositoryContract.OnGetJSONCallback getJSONCallback, List<ProductItem> productItemList);
     }
 
     interface Router {

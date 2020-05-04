@@ -18,6 +18,8 @@ public class HomePresenter implements HomeContract.Presenter {
     private HomeContract.Model model;
     private HomeContract.Router router;
 
+    List<ProductItem> productItemList;
+
     public HomePresenter(HomeState state) {
         this.state = state;
     }
@@ -38,10 +40,9 @@ public class HomePresenter implements HomeContract.Presenter {
             // update the model if is necessary
             // model.onDataFromPreviousScreen(savedState.data);
         }
-        //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
-        List<ProductItem> list = getListFromModel();
-        state.homeProductList = list;
-        view.get().fillArrayList(state);
+      /*  //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
+        state.homeProductList = getListFromModel();
+        view.get().fillArrayList(state);*/
     }
 
     @Override
@@ -59,10 +60,9 @@ public class HomePresenter implements HomeContract.Presenter {
             // update the model if is necessary
             // model.onDataFromPreviousScreen(savedState.data);
         }
-        //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
-        List<ProductItem> list = getListFromModel();
-        state.homeProductList = list;
-        view.get().fillArrayList(state);
+      /*  //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
+        state.homeProductList = getListFromModel();
+        view.get().fillArrayList(state);*/
     }
 
     @Override
@@ -81,9 +81,29 @@ public class HomePresenter implements HomeContract.Presenter {
 //        state.data = model.getStoredData();
 
         // update the view
-        view.get().onDataUpdated(state);
+
 
     }
+
+
+    public void getDataFromRepository() {
+        productItemList = new ArrayList<>();
+        model.getDataFromRepository(new RepositoryContract.OnGetJSONCallback() {
+            @Override
+            public void onGetJSON(boolean error) {
+                if (!error) {
+                    state.homeProductList = productItemList;
+                    view.get().fillArrayList(state);
+                    view.get().createRecyclerView();
+                } else {
+                    state.homeProductList = new ArrayList<>();
+                    view.get().fillArrayList(state);
+                    view.get().createRecyclerView();
+                }
+            }
+        }, productItemList);
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -134,10 +154,10 @@ public class HomePresenter implements HomeContract.Presenter {
         model.logout(new RepositoryContract.OnLogoutCallback() {
             @Override
             public void onLogout(boolean error) {
-                if(!error){
+                if (!error) {
                     view.get().showToast("Logged out successfully!");
                     view.get().goToLogin();
-                }else{
+                } else {
 
                 }
             }

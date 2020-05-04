@@ -205,9 +205,17 @@ public class HomeActivity
     protected void onResume() {
         super.onResume();
 
+
         // load the data
         presenter.onResume();
 
+        presenter.getDataFromRepository();
+
+
+    }
+
+    @Override
+    public void createRecyclerView(){
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         homeAdapter = new HomeAdapter(
                 new View.OnClickListener() {

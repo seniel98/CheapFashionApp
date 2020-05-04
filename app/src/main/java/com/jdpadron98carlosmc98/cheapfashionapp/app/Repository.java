@@ -1,8 +1,6 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.app;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -28,15 +26,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class Repository implements RepositoryContract {
@@ -45,8 +37,8 @@ public class Repository implements RepositoryContract {
     private Context context;
     public static String TAG = Repository.class.getSimpleName();
 
-    public static final String JSON_FILE = "https://cheap-fashion-app.firebaseio.com/.json";
-    public static final String JSON_ROOT = "defaultProducts";
+    public static final String JSON_FILE = "https://cheap-fashion-app.firebaseio.com/products/.json";
+    public static final String JSON_ROOT = "products";
 
     private static String passwordNotValidMessage = "Password must be at least 8 characters long with alphanumeric format";
     private static String registeredOkMessage = "Registered successfully";
@@ -99,8 +91,8 @@ public class Repository implements RepositoryContract {
     @Override
     public void isLoggedIn(OnLoggedInCallback loggedInCallback) {
         if (auth.getCurrentUser() != null) {
-            //El usuario tiene la sesion activa
-            getJSONFromURL(); //TODO Hay que hacerlo con callback
+      /*      //El usuario tiene la sesion activa
+            getJSONFromURL(); //TODO Hay que hacerlo con callback*/
             loggedInCallback.onLoggedIn(true);
         } else {
             //El usuario no tiene la sesion activa
@@ -147,7 +139,8 @@ public class Repository implements RepositoryContract {
     private boolean isPasswordValid(String password) {
         boolean valid = true;
         //Expresion regular que hace que la contraseña deba ser alfanumerica
-        String pattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";
+        String pattern = "^(?=.*[0-9])(?=.*[a-z]" +
+                ")(?=.*[A-Z])(?=\\S+$).{8,}$";
         /**
          * ^                  # incio del string
          * (?=.*[0-9])       # Al menos un digito
@@ -178,8 +171,8 @@ public class Repository implements RepositoryContract {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            //Carga el json de firebase con los datos
-                            getJSONFromURL(); //TODO Hay que hacerlo con callback
+                           /* //Carga el json de firebase con los datos
+                            getJSONFromURL(); //TODO Hay que hacerlo con callback*/
                             // Sign in success, update UI with the signed-in user's information
                             callback.onSignIn(false);
 
@@ -210,43 +203,44 @@ public class Repository implements RepositoryContract {
         }
         return json;
     }*/
-
-
-    private boolean loadCatalogFromJSON(String json) {
+    private boolean loadCatalogFromJSON(String json, List<ProductItem> productItemList) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         try {
             JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonArray = jsonObject.getJSONArray(JSON_ROOT);
-            if (jsonArray.length() > 0) {
-                List<ProductItem> productItems = Arrays.asList(gson.fromJson(jsonArray.toString(), ProductItem[].class));
-                productItemList.addAll(productItems);
-                Log.e(TAG, "loadCatalogFromJSON.productItem" + productItemList.get(0).name);
-                return true;
+            Iterator<String> keys = jsonObject.keys();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                JSONArray jsonArray = jsonObject.getJSONArray(key);
+                if (jsonArray.length() > 0) {
+                    List<ProductItem> productItems = Arrays.asList(gson.fromJson(jsonArray.toString(), ProductItem[].class));
+                    productItemList.addAll(productItems);
+                    Log.e(TAG, "loadCatalogFromJSON.productItem" + productItemList.get(0).name);
+                }
+
             }
+            return true;
         } catch (JSONException error) {
         }
         return false;
     }
 
 
-
-    //TODO Implementar en las clases presenter y model de Login y SplashScreen el callback de este metodo
-    //@Override
-    public void getJSONFromURL() {
+    @Override
+    public void getJSONFromURL(final OnGetJSONCallback getJSONCallback, final List<ProductItem> productItemList) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, JSON_FILE, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        loadCatalogFromJSON(response.toString());
-                        //getJSONCallback.onGetJSON(false);
+                        loadCatalogFromJSON(response.toString(), productItemList);
+                        getJSONCallback.onGetJSON(false);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                //getJSONCallback.onGetJSON(true);
+                getJSONCallback.onGetJSON(true);
             }
         });
         requestQueue.add(request);
