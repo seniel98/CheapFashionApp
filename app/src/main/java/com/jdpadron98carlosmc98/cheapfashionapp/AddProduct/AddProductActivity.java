@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -23,6 +24,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 
@@ -67,6 +69,15 @@ public class AddProductActivity
             @Override
             public void onClick(View v) {
                 selectImage();
+            }
+        });
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.addNewProduct(productEditText.getText().toString(),
+                        priceEditText.getText().toString(),
+                        descriptionEditText.getText().toString(),
+                        addProductImage);
             }
         });
     }
@@ -180,6 +191,19 @@ public class AddProductActivity
         Intent intent = new Intent(this, AddProductActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    public void goHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void displayData(AddProductViewModel viewModel) {
+        Toast.makeText(this, viewModel.message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

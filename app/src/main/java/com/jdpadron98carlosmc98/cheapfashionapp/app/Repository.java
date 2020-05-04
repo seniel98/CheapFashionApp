@@ -1,9 +1,13 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.app;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
@@ -13,14 +17,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -29,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,6 +49,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class Repository implements RepositoryContract {
 
@@ -107,6 +119,87 @@ public class Repository implements RepositoryContract {
             loggedInCallback.onLoggedIn(false);
         }
     }
+
+    @Override
+    public void addNewProduct(final String productName, final String productPrice, final String productDescription,
+                              ImageView imageView, final CreateProductEntryCallBack callback) {
+        //final UserData user = getUserDataFromFirebase();
+        final UserData[] user = new UserData[1];
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String name = dataSnapshot.child("name").getValue(String.class);
+                String email = dataSnapshot.child("email").getValue(String.class);
+                String phoneNumber = dataSnapshot.child("phoneNumber").getValue(String.class);
+                user[0] = new UserData(name,email,phoneNumber);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        byte[] data = convertImageView(imageView);
+        final StorageReference ref = storageRef.child("images/" + auth.getCurrentUser().getUid() +
+                "/" + productName + ".jpg");
+        UploadTask uploadTask = ref.putBytes(data);
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot,
+                Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                // Continue with the task to get the download URL
+                return ref.getDownloadUrl();            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if(task.isSuccessful()){
+                    Uri downloadUri = task.getResult();
+                    String url = downloadUri.toString();//Se obtiene la direccion de la imagen que se acaba de subir
+                    final String uuid = UUID.randomUUID().toString().replace("-", "");
+                    ProductItem productItem = new ProductItem(uuid, productPrice, productName, url, productDescription, user[0]);
+                    productsRef.child(auth.getCurrentUser().getUid()).child(uuid).setValue(productItem);
+                    callback.onAddNewProduct(false);
+                }
+            }
+        });
+    }
+
+    private byte[] convertImageView(ImageView imageView) {
+        imageView.setDrawingCacheEnabled(true);
+        imageView.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
+        return baos.toByteArray();
+    }
+
+//    private UserData getUserDataFromFirebase() {
+//        final UserData[] user = new UserData[1];
+//        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid());
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                String name = dataSnapshot.child("name").getValue(String.class);
+//                String email = dataSnapshot.child("email").getValue(String.class);
+//                String phoneNumber = dataSnapshot.child("phoneNumber").getValue(String.class);
+//                user[0] = new UserData(name,email,phoneNumber,new ArrayList<String>(),new ArrayList<String>());
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//        return user[0];
+//    }
 
     @Override
     public void signUp(final UserData userData, final String password, final OnSignUpCallback signUpCallback) {

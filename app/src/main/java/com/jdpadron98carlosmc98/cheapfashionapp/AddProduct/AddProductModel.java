@@ -1,15 +1,19 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.AddProduct;
 
 import android.util.Log;
+import android.widget.ImageView;
+
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
 public class AddProductModel implements AddProductContract.Model {
 
     public static String TAG = AddProductModel.class.getSimpleName();
 
     private String data;
+    private RepositoryContract repository;
 
-    public AddProductModel(String data) {
-        this.data = data;
+    public AddProductModel(RepositoryContract repository) {
+        this.repository = repository;
     }
 
     @Override
@@ -31,5 +35,10 @@ public class AddProductModel implements AddProductContract.Model {
     @Override
     public void onDataFromPreviousScreen(String data) {
         // Log.e(TAG, "onDataFromPreviousScreen()");
+    }
+
+    @Override
+    public void addProduct(String productName, String productPrice, String productDescription, ImageView imageView, RepositoryContract.CreateProductEntryCallBack createProductEntryCallBack) {
+        repository.addNewProduct(productName,productPrice,productDescription, imageView, createProductEntryCallBack);
     }
 }

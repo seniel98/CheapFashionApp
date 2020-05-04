@@ -12,12 +12,10 @@ public class UserData {
     private List<String> myProductsList;
 
 
-    public UserData(String name, String email, String phoneNumber, List<String> likedProductList, List<String> myProductsList) {
+    public UserData(String name, String email, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.likedProductList = likedProductList;
-        this.myProductsList = myProductsList;
     }
 
 
