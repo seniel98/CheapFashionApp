@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -29,8 +27,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -41,14 +39,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -126,15 +117,30 @@ public class Repository implements RepositoryContract {
     @Override
     public void addNewProduct(final String productName, final String productPrice, final String productDescription,
                               ImageView imageView, final CreateProductEntryCallBack callback) {
+
         //final UserData user = getUserDataFromFirebase();
         final UserData[] user = new UserData[1];
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid());
+        //databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid());
+        final List<ProductItem> productItems = new ArrayList<>();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.child("name").getValue(String.class);
-                String email = dataSnapshot.child("email").getValue(String.class);
-                String phoneNumber = dataSnapshot.child("phoneNumber").getValue(String.class);
+
+                //Pillamos un tipo generico segun las recomendaciones de Firebase, ver https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html
+                GenericTypeIndicator<List<ProductItem>> genericTypeIndicator = new GenericTypeIndicator<List<ProductItem>>() {
+                };
+                List<ProductItem> productList = dataSnapshot.child("products").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator);
+                //Log.e(TAG,"productList"+ dataSnapshot.child("products").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator));
+
+                if (productList != null) {
+                    productItems.addAll(productList);
+                }
+
+
+                String name = dataSnapshot.child("users").child(auth.getCurrentUser().getUid()).child("name").getValue(String.class);
+                String email = dataSnapshot.child("users").child(auth.getCurrentUser().getUid()).child("email").getValue(String.class);
+                String phoneNumber = dataSnapshot.child("users").child(auth.getCurrentUser().getUid()).child("phoneNumber").getValue(String.class);
                 user[0] = new UserData(name, email, phoneNumber);
             }
 
@@ -167,7 +173,8 @@ public class Repository implements RepositoryContract {
                     String url = downloadUri.toString();//Se obtiene la direccion de la imagen que se acaba de subir
                     final String uuid = UUID.randomUUID().toString().replace("-", "");
                     ProductItem productItem = new ProductItem(uuid, productPrice, productName, url, productDescription, user[0]);
-                    productsRef.child(auth.getCurrentUser().getUid()).child(uuid).setValue(productItem);
+                    productItems.add(productItem);
+                    productsRef.child(auth.getCurrentUser().getUid()).setValue(productItems);
                     callback.onAddNewProduct(false);
                 }
             }
@@ -179,7 +186,7 @@ public class Repository implements RepositoryContract {
         auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     callback.onForgetPassword(false);
                 }
             }
@@ -210,14 +217,14 @@ public class Repository implements RepositoryContract {
                                             callback.onChangePassword(false, "Password updated");
                                         } else {
                                             Log.d(TAG, "Error password not updated");
-                                            callback.onChangePassword(true,"Error password not updated");
+                                            callback.onChangePassword(true, "Error password not updated");
                                         }
                                     }
                                 });
                             } else {
                                 callback.onChangePassword(true, "new password is not valid");
                             }
-                        }else{
+                        } else {
                             Log.d(TAG, "Error auth failed");
                             callback.onChangePassword(true, "current password is wrong");
                         }
