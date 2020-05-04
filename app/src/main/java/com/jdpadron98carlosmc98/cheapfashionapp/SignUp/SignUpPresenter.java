@@ -60,7 +60,7 @@ public class SignUpPresenter implements SignUpContract.Presenter {
     }
 
     private void callModelToSignUp(String name, String email, String phone, String pass) {
-        UserData userData = new UserData(name, email, phone, new ArrayList<String>(), new ArrayList<String>());
+        UserData userData = new UserData(name, email, phone);
         model.signUp(userData, pass, new RepositoryContract.OnSignUpCallback() {
             @Override
             public void onSignUp(boolean error, String msg) {

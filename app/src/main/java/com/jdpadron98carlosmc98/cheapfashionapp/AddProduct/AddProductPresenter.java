@@ -3,6 +3,8 @@ package com.jdpadron98carlosmc98.cheapfashionapp.AddProduct;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
 import java.lang.ref.WeakReference;
 
 public class AddProductPresenter implements AddProductContract.Presenter {
@@ -90,6 +92,20 @@ public class AddProductPresenter implements AddProductContract.Presenter {
     public void saveImage(ImageView addProductImage) {
         state.image = addProductImage;
         router.saveState(state);
+    }
+
+    @Override
+    public void addNewProduct(String productName, String productPrice, String productDescription, ImageView addProductImage) {
+            model.addProduct(productName,productPrice,productDescription,addProductImage, new RepositoryContract.CreateProductEntryCallBack() {
+            @Override
+            public void onAddNewProduct(boolean error) {
+                if(!error){
+                    state.message="Book Added";
+                    view.get().displayData(state);
+                    view.get().goHome();
+                }
+            }
+        });
     }
 
     @Override

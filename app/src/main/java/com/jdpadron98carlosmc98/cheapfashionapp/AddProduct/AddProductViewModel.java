@@ -7,4 +7,5 @@ public class AddProductViewModel {
     // put the view state here
 //    public String data;
     public ImageView image;
+    public String message;
 }

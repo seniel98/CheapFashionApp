@@ -1,5 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.app;
 
+import android.widget.ImageView;
+
 import java.util.List;
 
 public interface RepositoryContract {
@@ -48,6 +50,23 @@ public interface RepositoryContract {
      * @param loggedInCallback
      */
     void isLoggedIn(RepositoryContract.OnLoggedInCallback loggedInCallback);
+
+
+    /**
+     * Method that add the data values to the database and storage the image into firebase Storage
+     *
+     * @param productName
+     * @param productPrice
+     * @param productDescription
+     * @param imageView
+     * @param callback
+     */
+    void addNewProduct(final String productName, final String productPrice, final String productDescription, final ImageView imageView, final RepositoryContract.CreateProductEntryCallBack callback);
+
+    interface CreateProductEntryCallBack {
+        void onAddNewProduct(boolean error);
+    }
+
 
     interface OnSignInCallback {
         void onSignIn(boolean error);
