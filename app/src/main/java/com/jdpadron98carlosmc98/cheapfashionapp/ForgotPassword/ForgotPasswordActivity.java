@@ -3,7 +3,9 @@ package com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,6 +39,13 @@ public class ForgotPasswordActivity
         }
         // do the setup
         ForgotPasswordScreen.configure(this);
+
+        sendEmailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onSendClicked(emailText.getText().toString().trim());
+            }
+        });
     }
 
 
@@ -76,6 +85,12 @@ public void navigateToNextScreen() {
     Intent intent = new Intent(this, ForgotPasswordActivity.class);
     startActivity(intent);
 }
+
+    @Override
+    public void displayResult() {
+        Toast.makeText(this, "An Email has been sent, check your inbox", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void injectPresenter(ForgotPasswordContract.Presenter presenter) {
         this.presenter = presenter;

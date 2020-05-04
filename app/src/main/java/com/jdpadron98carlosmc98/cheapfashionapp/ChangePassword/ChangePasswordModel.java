@@ -2,14 +2,17 @@ package com.jdpadron98carlosmc98.cheapfashionapp.ChangePassword;
 
 import android.util.Log;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
 public class ChangePasswordModel implements ChangePasswordContract.Model {
 
     public static String TAG = ChangePasswordModel.class.getSimpleName();
 
     private String data;
 
-    public ChangePasswordModel(String data) {
-        this.data = data;
+    private RepositoryContract repository;
+    public ChangePasswordModel(RepositoryContract repository) {
+        this.repository = repository;
     }
 
     @Override
@@ -31,5 +34,11 @@ public class ChangePasswordModel implements ChangePasswordContract.Model {
     @Override
     public void onDataFromPreviousScreen(String data) {
         // Log.e(TAG, "onDataFromPreviousScreen()");
+    }
+
+    @Override
+    public void onChangePassword(String currentPasswordText, String newPasswordText,
+                                 RepositoryContract.onChangePasswordCallback onChangePasswordCallback) {
+        repository.changePassword(currentPasswordText,newPasswordText,onChangePasswordCallback);
     }
 }

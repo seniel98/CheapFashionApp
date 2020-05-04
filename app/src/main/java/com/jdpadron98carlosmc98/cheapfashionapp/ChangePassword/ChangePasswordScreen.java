@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.Repository;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
 public class ChangePasswordScreen {
 
@@ -18,10 +20,12 @@ public class ChangePasswordScreen {
 
         AppMediator mediator = AppMediator.getInstance();
         ChangePasswordState state = mediator.getChangePasswordState();
+        RepositoryContract repository = Repository.getInstance(context.get());
+
 
         ChangePasswordContract.Router router = new ChangePasswordRouter(mediator);
         ChangePasswordContract.Presenter presenter = new ChangePasswordPresenter(state);
-        ChangePasswordContract.Model model = new ChangePasswordModel(data);
+        ChangePasswordContract.Model model = new ChangePasswordModel(repository);
         presenter.injectModel(model);
         presenter.injectRouter(router);
         presenter.injectView(new WeakReference<>(view));

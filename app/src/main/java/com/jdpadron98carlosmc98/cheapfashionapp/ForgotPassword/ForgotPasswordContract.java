@@ -1,5 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
 import java.lang.ref.WeakReference;
 
 public interface ForgotPasswordContract {
@@ -9,7 +11,9 @@ public interface ForgotPasswordContract {
 
         void navigateToNextScreen();
 
-       // void displayData(ForgotPasswordViewModel viewModel);
+        void displayResult();
+
+        // void displayData(ForgotPasswordViewModel viewModel);
     }
 
     interface Presenter {
@@ -19,11 +23,14 @@ public interface ForgotPasswordContract {
 
         void injectRouter(Router router);
 
+        void onSendClicked(String email);
+
         //void fetchData();
     }
 
     interface Model {
-       // String fetchData();
+        void onForgetPassword(String email, RepositoryContract.onForgetPasswordCallback onForgetPasswordCallback);
+        // String fetchData();
     }
 
     interface Router {

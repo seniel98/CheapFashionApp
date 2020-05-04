@@ -20,8 +20,11 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -132,7 +135,7 @@ public class Repository implements RepositoryContract {
                 String name = dataSnapshot.child("name").getValue(String.class);
                 String email = dataSnapshot.child("email").getValue(String.class);
                 String phoneNumber = dataSnapshot.child("phoneNumber").getValue(String.class);
-                user[0] = new UserData(name,email,phoneNumber);
+                user[0] = new UserData(name, email, phoneNumber);
             }
 
             @Override
@@ -154,11 +157,12 @@ public class Repository implements RepositoryContract {
                 }
 
                 // Continue with the task to get the download URL
-                return ref.getDownloadUrl();            }
+                return ref.getDownloadUrl();
+            }
         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
                     String url = downloadUri.toString();//Se obtiene la direccion de la imagen que se acaba de subir
                     final String uuid = UUID.randomUUID().toString().replace("-", "");
@@ -168,6 +172,57 @@ public class Repository implements RepositoryContract {
                 }
             }
         });
+    }
+
+    @Override
+    public void forgetPassword(String email, final onForgetPasswordCallback callback) {
+        auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    callback.onForgetPassword(false);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void changePassword(String currentPassword, final String newPassword, final onChangePasswordCallback callback) {
+        final FirebaseUser user = auth.getCurrentUser();
+        String email = auth.getCurrentUser().getEmail();
+
+        AuthCredential credential = EmailAuthProvider
+                .getCredential(email, currentPassword);
+
+// Prompt the user to re-provide their sign-in credentials
+        user.reauthenticate(credential)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            if (isPasswordValid(newPassword)) {
+
+                                user.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.d(TAG, "Password updated");
+                                            callback.onChangePassword(false, "Password updated");
+                                        } else {
+                                            Log.d(TAG, "Error password not updated");
+                                            callback.onChangePassword(true,"Error password not updated");
+                                        }
+                                    }
+                                });
+                            } else {
+                                callback.onChangePassword(true, "new password is not valid");
+                            }
+                        }else{
+                            Log.d(TAG, "Error auth failed");
+                            callback.onChangePassword(true, "current password is wrong");
+                        }
+                    }
+                });
     }
 
     private byte[] convertImageView(ImageView imageView) {
@@ -303,8 +358,6 @@ public class Repository implements RepositoryContract {
         }
         return json;
     }*/
-
-
     private boolean loadCatalogFromJSON(String json) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
@@ -321,7 +374,6 @@ public class Repository implements RepositoryContract {
         }
         return false;
     }
-
 
 
     //TODO Implementar en las clases presenter y model de Login y SplashScreen el callback de este metodo

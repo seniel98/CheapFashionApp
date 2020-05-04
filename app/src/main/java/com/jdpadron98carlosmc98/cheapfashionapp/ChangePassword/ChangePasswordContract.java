@@ -1,5 +1,9 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.ChangePassword;
 
+import android.widget.EditText;
+
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
 import java.lang.ref.WeakReference;
 
 public interface ChangePasswordContract {
@@ -11,6 +15,9 @@ public interface ChangePasswordContract {
 
         void navigateToNextScreen();
 
+        void displayResult(ChangePasswordViewModel viewModel);
+
+        void onBackPressed();
     }
 
     interface Presenter {
@@ -31,6 +38,8 @@ public interface ChangePasswordContract {
         void onPause();
 
         void onDestroy();
+
+        void onSaveClicked(String currentPasswordText, String newPasswordText);
     }
 
     interface Model {
@@ -41,6 +50,8 @@ public interface ChangePasswordContract {
         void onRestartScreen(String data);
 
         void onDataFromPreviousScreen(String data);
+
+        void onChangePassword(String currentPasswordText, String newPasswordText, RepositoryContract.onChangePasswordCallback onChangePasswordCallback);
     }
 
     interface Router {

@@ -1,6 +1,9 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.ChangePassword;
 
 import android.util.Log;
+import android.widget.EditText;
+
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
 import java.lang.ref.WeakReference;
 
@@ -76,6 +79,21 @@ public class ChangePasswordPresenter implements ChangePasswordContract.Presenter
     @Override
     public void onDestroy() {
         // Log.e(TAG, "onDestroy()");
+    }
+
+    @Override
+    public void onSaveClicked(String currentPasswordText, String newPasswordText) {
+        model.onChangePassword(currentPasswordText, newPasswordText, new RepositoryContract.onChangePasswordCallback() {
+
+            @Override
+            public void onChangePassword(boolean error, String message) {
+                state.message = message;
+                view.get().displayResult(state);
+                if(!error){
+                    view.get().onBackPressed();
+                }
+            }
+        });
     }
 
     @Override
