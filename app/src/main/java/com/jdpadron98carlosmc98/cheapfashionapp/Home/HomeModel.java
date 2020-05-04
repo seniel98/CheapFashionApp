@@ -17,6 +17,11 @@ public class HomeModel implements HomeContract.Model {
     }
 
 
+    @Override
+    public void getDataFromRepository(RepositoryContract.OnGetJSONCallback getJSONCallback, List<ProductItem> productItemList) {
+        repository.getJSONFromURL(getJSONCallback, productItemList);
+    }
+
     public List<ProductItem> getListFromRepository() {
         return repository.getProductList();
     }
