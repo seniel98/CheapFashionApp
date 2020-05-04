@@ -91,8 +91,7 @@ public class Repository implements RepositoryContract {
     @Override
     public void isLoggedIn(OnLoggedInCallback loggedInCallback) {
         if (auth.getCurrentUser() != null) {
-      /*      //El usuario tiene la sesion activa
-            getJSONFromURL(); //TODO Hay que hacerlo con callback*/
+            //El usuario tiene la sesion activa
             loggedInCallback.onLoggedIn(true);
         } else {
             //El usuario no tiene la sesion activa
@@ -171,8 +170,6 @@ public class Repository implements RepositoryContract {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                           /* //Carga el json de firebase con los datos
-                            getJSONFromURL(); //TODO Hay que hacerlo con callback*/
                             // Sign in success, update UI with the signed-in user's information
                             callback.onSignIn(false);
 
