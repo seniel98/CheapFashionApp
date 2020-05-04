@@ -8,6 +8,14 @@ public interface RepositoryContract {
     List<ProductItem> getProductList();
 
     /**
+     *  Cogemos el archivo JSON desde la url de Firebase mediante el uso de la libreria Volley.
+     *  Esta forma es mucho mas rapida y eficaz que mediante el uso de Async Task.
+     * @param getJSONCallback
+     */
+
+   // void getJSONFromURL(OnGetJSONCallback getJSONCallback);
+
+    /**
      * Metodo que registra un usuario en la aplicacion
      *
      * @param userData
@@ -29,12 +37,14 @@ public interface RepositoryContract {
 
     /**
      * Metodo para cerrar la sesion de la apliacion
+     *
      * @param logoutCallback
      */
     void logout(RepositoryContract.OnLogoutCallback logoutCallback);
 
     /**
      * Metodo para comprobar si el usuario tiene la sesion activa
+     *
      * @param loggedInCallback
      */
     void isLoggedIn(RepositoryContract.OnLoggedInCallback loggedInCallback);
@@ -48,12 +58,16 @@ public interface RepositoryContract {
         void onSignUp(boolean error, String msg);
     }
 
-    interface OnLogoutCallback{
+    interface OnLogoutCallback {
         void onLogout(boolean error);
     }
 
-    interface OnLoggedInCallback{
+    interface OnLoggedInCallback {
         void onLoggedIn(boolean isLoggedIn);
+    }
+
+    interface OnGetJSONCallback {
+        void onGetJSON(boolean error);
     }
 
 }

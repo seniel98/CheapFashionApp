@@ -41,6 +41,8 @@ public class LoginPresenter implements LoginContract.Presenter {
         });
     }
 
+
+
     @Override
     public void checkLogin(String emailStr, String passStr) {
         if (emailStr.isEmpty() && passStr.isEmpty()) {
