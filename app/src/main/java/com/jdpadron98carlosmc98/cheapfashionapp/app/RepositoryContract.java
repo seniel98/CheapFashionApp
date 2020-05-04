@@ -63,6 +63,7 @@ public interface RepositoryContract {
      */
     void addNewProduct(final String productName, final String productPrice, final String productDescription, final ImageView imageView, final RepositoryContract.CreateProductEntryCallBack callback);
 
+    void forgetPassword(String email, RepositoryContract.onForgetPasswordCallback callback);
 
     /**
      * Method that change current password with a new one
@@ -77,6 +78,9 @@ public interface RepositoryContract {
         void onChangePassword(boolean error, String message);
     }
 
+    interface onForgetPasswordCallback {
+        void onForgetPassword(boolean error);
+    }
 
     interface CreateProductEntryCallBack {
         void onAddNewProduct(boolean error);

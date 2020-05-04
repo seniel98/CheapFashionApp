@@ -12,6 +12,11 @@ public class ForgotPasswordModel implements ForgotPasswordContract.Model {
         this.repository = repository;
     }
 
+    @Override
+    public void onForgetPassword(String email, RepositoryContract.onForgetPasswordCallback onForgetPasswordCallback) {
+        repository.forgetPassword(email,onForgetPasswordCallback);
+    }
+
   /*  @Override
     public String fetchData() {
         // Log.e(TAG, "fetchData()");

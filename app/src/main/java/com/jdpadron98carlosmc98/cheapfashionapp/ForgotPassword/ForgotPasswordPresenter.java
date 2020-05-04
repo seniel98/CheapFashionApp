@@ -1,5 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
 import java.lang.ref.WeakReference;
 
 public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter {
@@ -56,5 +58,17 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
     @Override
     public void injectRouter(ForgotPasswordContract.Router router) {
         this.router = router;
+    }
+
+    @Override
+    public void onSendClicked(String email) {
+        model.onForgetPassword(email, new RepositoryContract.onForgetPasswordCallback() {
+            @Override
+            public void onForgetPassword(boolean error) {
+                if(!error){
+                    view.get().displayResult();
+                }
+            }
+        });
     }
 }

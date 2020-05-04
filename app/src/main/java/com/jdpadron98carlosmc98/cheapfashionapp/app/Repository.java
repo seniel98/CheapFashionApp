@@ -175,6 +175,18 @@ public class Repository implements RepositoryContract {
     }
 
     @Override
+    public void forgetPassword(String email, final onForgetPasswordCallback callback) {
+        auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    callback.onForgetPassword(false);
+                }
+            }
+        });
+    }
+
+    @Override
     public void changePassword(String currentPassword, final String newPassword, final onChangePasswordCallback callback) {
         final FirebaseUser user = auth.getCurrentUser();
         String email = auth.getCurrentUser().getEmail();
