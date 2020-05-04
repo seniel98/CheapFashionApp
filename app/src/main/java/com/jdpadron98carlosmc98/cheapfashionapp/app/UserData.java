@@ -19,6 +19,10 @@ public class UserData {
     }
 
 
+    public UserData(){
+
+    }
+
     public List<String> getLikedProductList() {
         return likedProductList;
     }
