@@ -2,13 +2,11 @@ package com.jdpadron98carlosmc98.cheapfashionapp.ChangePassword;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
+import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
@@ -23,7 +21,7 @@ public class ChangePasswordActivity
     private ChangePasswordContract.Presenter presenter;
     private TextInputLayout newPasswordTextInputLayout, repeatPasswordTextInputLayout;
 
-    private EditText newPasswordText, repeatPasswordText;
+    private EditText currentPasswordText, newPasswordText;
     private MaterialButton changePasswordButton;
 
     @Override
@@ -45,6 +43,13 @@ public class ChangePasswordActivity
         } else {
             presenter.onRestart();
         }
+        changePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onSaveClicked(currentPasswordText.getText().toString().trim(),
+                        newPasswordText.getText().toString().trim());
+            }
+        });
     }
 
     private void setUpLoginLayout() {
@@ -53,9 +58,9 @@ public class ChangePasswordActivity
 
     private void initLoginLayout() {
         newPasswordTextInputLayout = findViewById(R.id.newPasswordChangePasswordTextInputLayout);
-        newPasswordText = findViewById(R.id.newPasswordChangePasswordText);
+        currentPasswordText = findViewById(R.id.currentPasswordChangePasswordText);
         changePasswordButton = findViewById(R.id.changePassButton);
-        repeatPasswordText = findViewById(R.id.repeatPasswordChangePasswordText);
+        newPasswordText = findViewById(R.id.newPasswordChangePasswordText);
         repeatPasswordTextInputLayout = findViewById(R.id.repeatPasswordChangePasswordTextInputLayout);
     }
 
@@ -101,6 +106,12 @@ public class ChangePasswordActivity
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+    @Override
+    public void displayResult(ChangePasswordViewModel viewModel) {
+        Toast.makeText(this, viewModel.message, Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void injectPresenter(ChangePasswordContract.Presenter presenter) {
         this.presenter = presenter;

@@ -22,8 +22,8 @@
     <string name="stuff_bottom_nav_menu">Stuff</string>
     <string name="profile_bottom_nav_menu">Profile</string>
     <string name="logout_bottom_nav_menu">Logout</string>
-    <string name="newPasswordChangePasswordHint">New Password</string>
-    <string name="repeatPasswordChangePasswordHint">Repeat Password</string>
+    <string name="newPasswordChangePasswordHint">Current Password</string>
+    <string name="repeatPasswordChangePasswordHint">New Password</string>
     <string name="changePasswordButtonLabel">Save</string>
     <string name="productNameProductDetailText">Producto1</string>
     <string name="productPriceProductDetailText">20,00$</string>
