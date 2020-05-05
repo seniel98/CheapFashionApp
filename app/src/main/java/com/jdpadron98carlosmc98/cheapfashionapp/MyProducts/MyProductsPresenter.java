@@ -4,6 +4,7 @@ import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyProductsPresenter implements MyProductsContract.Presenter {
@@ -18,6 +19,9 @@ public class MyProductsPresenter implements MyProductsContract.Presenter {
     public MyProductsPresenter(MyProductsState state) {
         this.state = state;
     }
+
+
+    private List<ProductItem> myProductsItemList;
 
     @Override
     public void onStart() {
@@ -36,9 +40,9 @@ public class MyProductsPresenter implements MyProductsContract.Presenter {
             //model.onDataFromPreviousScreen(savedState.data);
         }
         //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
-        List<ProductItem> list = getListFromModel();
+  /*      List<ProductItem> list = getListFromModel();
         state.list = list;
-        view.get().fillArrayList(state);
+        view.get().fillArrayList(state);*/
     }
 
     @Override
@@ -56,9 +60,9 @@ public class MyProductsPresenter implements MyProductsContract.Presenter {
             //model.onDataFromPreviousScreen(savedState.data);
         }
         //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
-        List<ProductItem> list = getListFromModel();
+       /* List<ProductItem> list = getListFromModel();
         state.list = list;
-        view.get().fillArrayList(state);
+        view.get().fillArrayList(state);*/
         // update the model if is necessary
         //model.onRestartScreen(state.data);
     }
@@ -124,14 +128,33 @@ public class MyProductsPresenter implements MyProductsContract.Presenter {
         model.logout(new RepositoryContract.OnLogoutCallback() {
             @Override
             public void onLogout(boolean error) {
-                if(!error){
+                if (!error) {
                     view.get().showToast("Logged out successfully!");
                     view.get().goToLogin();
-                }else{
+                } else {
 
                 }
             }
         });
+    }
+
+    @Override
+    public void getDataFromRepository() {
+        myProductsItemList = new ArrayList<>();
+        model.getDataFromRepository(new RepositoryContract.OnGetMyProductsJSONCallback() {
+            @Override
+            public void onGetJSON(boolean error) {
+                if (!error) {
+                    state.myProductsList = myProductsItemList;
+                    view.get().fillArrayList(state);
+                    view.get().createRecyclerView();
+                } else {
+                    state.myProductsList = new ArrayList<>();
+                    view.get().fillArrayList(state);
+                    view.get().createRecyclerView();
+                }
+            }
+        }, myProductsItemList);
     }
 
     @Override

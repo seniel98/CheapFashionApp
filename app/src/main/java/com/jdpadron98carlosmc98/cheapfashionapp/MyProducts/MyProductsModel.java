@@ -23,6 +23,11 @@ public class MyProductsModel implements MyProductsContract.Model {
     }
 
     @Override
+    public void getDataFromRepository(RepositoryContract.OnGetMyProductsJSONCallback myProductsJSONCallback, List<ProductItem> myProductsItemList) {
+        repository.getMyProductsJSONFromURL(myProductsJSONCallback,myProductsItemList);
+    }
+
+    @Override
     public String getStoredData() {
         // Log.e(TAG, "getStoredData()");
         return "data";
