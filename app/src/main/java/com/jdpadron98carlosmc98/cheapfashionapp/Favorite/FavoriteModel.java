@@ -25,6 +25,11 @@ public class FavoriteModel implements FavoriteContract.Model {
     }
 
     @Override
+    public void getDataFromRepository(RepositoryContract.GetFavoriteJSONCallback getFavoriteJSONCallback, List<ProductItem> productItems) {
+        repository.getFavoriteJSONFromURL(getFavoriteJSONCallback, productItems);
+    }
+
+    @Override
     public String getStoredData() {
         // Log.e(TAG, "getStoredData()");
         return "data";

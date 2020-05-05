@@ -76,6 +76,23 @@ public interface RepositoryContract {
      */
     void changePassword(String currentPassword, String newPassword, RepositoryContract.onChangePasswordCallback callback);
 
+    /**
+     * Method that add the data values to the database and storage the image into firebase Storage
+     *
+     * @param productItem
+     * @param callback
+     */
+    void addFavoriteProduct(ProductItem productItem, final RepositoryContract.CreateFavoriteProductEntryCallBack callback);
+
+     void getFavoriteJSONFromURL(final GetFavoriteJSONCallback getFavoriteJSONCallback, final List<ProductItem> favoriteItemList);
+
+     interface GetFavoriteJSONCallback{
+         void onGetFavoriteJSONCallback(boolean error);
+     }
+        interface CreateFavoriteProductEntryCallBack {
+        void onAddFavoriteProduct(boolean error);
+     }
+
     interface onChangePasswordCallback {
         void onChangePassword(boolean error, String message);
     }

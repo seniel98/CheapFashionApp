@@ -28,6 +28,8 @@ public interface FavoriteContract {
         void goToDetail();
 
         void showToast(String msg);
+        
+        void createRecyclerView();
     }
 
     interface Presenter {
@@ -76,6 +78,8 @@ public interface FavoriteContract {
         List<ProductItem> getFavoriteList(List<ProductItem> list);
 
         void logout(RepositoryContract.OnLogoutCallback logoutCallback);
+
+        void getDataFromRepository(RepositoryContract.GetFavoriteJSONCallback getFavoriteJSONCallback, List<ProductItem> productItems);
     }
 
     interface Router {

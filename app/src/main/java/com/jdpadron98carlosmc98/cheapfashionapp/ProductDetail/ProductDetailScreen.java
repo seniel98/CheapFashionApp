@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.Repository;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
 public class ProductDetailScreen {
 
@@ -18,10 +20,12 @@ public class ProductDetailScreen {
 
         AppMediator mediator = AppMediator.getInstance();
         ProductDetailState state = mediator.getProductDetailState();
+        RepositoryContract repository = Repository.getInstance(context.get());
+
 
         ProductDetailContract.Router router = new ProductDetailRouter(mediator);
         ProductDetailContract.Presenter presenter = new ProductDetailPresenter(state);
-        ProductDetailContract.Model model = new ProductDetailModel(data);
+        ProductDetailContract.Model model = new ProductDetailModel(repository);
         presenter.injectModel(model);
         presenter.injectRouter(router);
         presenter.injectView(new WeakReference<>(view));
