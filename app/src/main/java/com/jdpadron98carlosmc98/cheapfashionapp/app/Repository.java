@@ -487,6 +487,7 @@ public class Repository implements RepositoryContract {
         }
         return false;
     }
+
     @Override
     public void getMyProductsJSONFromURL(final OnGetMyProductsJSONCallback getMyProductsJSONCallback, final List<ProductItem> myProductItemList) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
@@ -522,6 +523,15 @@ public class Repository implements RepositoryContract {
                 userData.setPhoneNumber(phoneNumber);
                 getUserProfileData.onGetProfileData(false);
             }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                getUserProfileData.onGetProfileData(true);
+            }
+        });
+    }
+
+
     @Override
     public void getFavoriteJSONFromURL(final GetFavoriteJSONCallback getFavoriteJSONCallback, final List<ProductItem> favoriteItemList) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
@@ -540,14 +550,6 @@ public class Repository implements RepositoryContract {
             }
         });
         requestQueue.add(request);
-    }
-  /*  private class JsonTask extends AsyncTask<String, String, String> {
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                getUserProfileData.onGetProfileData(true);
-            }
-        });
     }
 
     /*  private class JsonTask extends AsyncTask<String, String, String> {

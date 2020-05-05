@@ -87,13 +87,13 @@ public interface RepositoryContract {
 
     /**
      * Metodo para coger los datos del perfil del usuario.
+     *
      * @param userData
      * @param getUserProfileDataCallback
      */
     void getUserProfileData(final UserData userData, final OnGetUserProfileDataCallback getUserProfileDataCallback);
 
 
-     interface onChangePasswordCallback {
     /**
      * Method that add the data values to the database and storage the image into firebase Storage
      *
@@ -102,14 +102,15 @@ public interface RepositoryContract {
      */
     void addFavoriteProduct(ProductItem productItem, final RepositoryContract.CreateFavoriteProductEntryCallBack callback);
 
-     void getFavoriteJSONFromURL(final GetFavoriteJSONCallback getFavoriteJSONCallback, final List<ProductItem> favoriteItemList);
+    void getFavoriteJSONFromURL(final GetFavoriteJSONCallback getFavoriteJSONCallback, final List<ProductItem> favoriteItemList);
 
-     interface GetFavoriteJSONCallback{
-         void onGetFavoriteJSONCallback(boolean error);
-     }
-        interface CreateFavoriteProductEntryCallBack {
+    interface GetFavoriteJSONCallback {
+        void onGetFavoriteJSONCallback(boolean error);
+    }
+
+    interface CreateFavoriteProductEntryCallBack {
         void onAddFavoriteProduct(boolean error);
-     }
+    }
 
     interface onChangePasswordCallback {
         void onChangePassword(boolean error, String message);
