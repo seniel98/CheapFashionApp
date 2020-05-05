@@ -3,6 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail;
 import android.util.Log;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
 
 import java.lang.ref.WeakReference;
 
@@ -97,6 +98,17 @@ public class ProductDetailPresenter implements ProductDetailContract.Presenter {
             item.liked = true;
         }
         state.item = item;*/
+      ProductItem item = state.item;
+      model.addProductToFavorite(item, new RepositoryContract.CreateFavoriteProductEntryCallBack() {
+          @Override
+          public void onAddFavoriteProduct(boolean error) {
+            if (!error){
+                view.get().setLikeButtonEnabled();
+            }else{
+                view.get().setLikedButtonDisabled();
+            }
+          }
+      });
     }
 
     @Override

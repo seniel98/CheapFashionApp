@@ -5,7 +5,7 @@ import android.widget.ImageView;
 public class ProductItem {
 
 
-    public String id;
+    public String pid;
     //public int drawable; //Variable para almacenar las imagenes de prueba
     public String price;
     public String name;
@@ -14,8 +14,8 @@ public class ProductItem {
     public UserData userData;
     public String detail;
 
-    public ProductItem(String id, String price, String name, String picture, String detail, UserData userData) {
-        this.id = id;
+    public ProductItem(String pid, String price, String name, String picture, String detail, UserData userData) {
+        this.pid = pid;
         this.picture = picture;
         this.price = price;
         this.name = name;
@@ -35,12 +35,12 @@ public class ProductItem {
         this.detail = detail;
     }
 
-    public String getId() {
-        return id;
+    public String getPid() {
+        return pid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 
     public String getPrice() {

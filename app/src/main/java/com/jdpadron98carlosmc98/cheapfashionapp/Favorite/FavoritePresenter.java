@@ -17,7 +17,7 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
     private FavoriteState state;
     private FavoriteContract.Model model;
     private FavoriteContract.Router router;
-
+    private List<ProductItem> productItems;
     public FavoritePresenter(FavoriteState state) {
         this.state = state;
     }
@@ -39,10 +39,10 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
             //model.onDataFromPreviousScreen(savedState.data);
         }
         //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
-        List<ProductItem> list = getListFromModel();
-        List<ProductItem> favoriteList = model.getFavoriteList(list);
-        state.productItems = favoriteList;
-        view.get().fillArrayList(state);
+//        List<ProductItem> list = getListFromModel();
+//        List<ProductItem> favoriteList = model.getFavoriteList(list);
+//        state.productItems = favoriteList;
+//        view.get().fillArrayList(state);
     }
 
     @Override
@@ -60,10 +60,10 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
             //model.onDataFromPreviousScreen(savedState.data);
         }
         //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
-        List<ProductItem> list = getListFromModel();
-        List<ProductItem> favoriteList = model.getFavoriteList(list);
-        state.productItems = favoriteList;
-        view.get().fillArrayList(state);
+//        List<ProductItem> list = getListFromModel();
+//        List<ProductItem> favoriteList = model.getFavoriteList(list);
+//        state.productItems = favoriteList;
+//        view.get().fillArrayList(state);
         // update the model if is necessary
         //model.onRestartScreen(state.data);
     }
@@ -80,15 +80,33 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
             model.onDataFromNextScreen(savedState.data);
         }
 
+        getDataFromRepository();
         // call the model and update the state
 //        state.data = model.getStoredData();
 
         // update the view
-        List<ProductItem> favoriteList = model.getFavoriteList(state.productItems);
-        state.productItems = favoriteList;
-        view.get().fillArrayList(state);
+//        List<ProductItem> favoriteList = model.getFavoriteList(state.productItems);
+//        state.productItems = favoriteList;
+//        view.get().fillArrayList(state);
 
 
+    }
+    public void getDataFromRepository() {
+        productItems = new ArrayList<>();
+        model.getDataFromRepository(new RepositoryContract.GetFavoriteJSONCallback() {
+            @Override
+            public void onGetFavoriteJSONCallback(boolean error) {
+                if (!error) {
+                    state.productItems = productItems;
+                    view.get().fillArrayList(state);
+                    view.get().createRecyclerView();
+                } else {
+                    state.productItems = new ArrayList<>();
+                    view.get().fillArrayList(state);
+                    view.get().createRecyclerView();
+                }
+            }
+        }, productItems);
     }
 
     @Override

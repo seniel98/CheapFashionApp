@@ -77,6 +77,9 @@ public class FavoriteActivity
         // load the data
         presenter.onResume();
 
+    }
+
+    public void createRecyclerView(){
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         listAdapter = new FavoriteAdapter(new View.OnClickListener() {
 

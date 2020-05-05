@@ -2,14 +2,19 @@ package com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail;
 
 import android.util.Log;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.Repository;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
 public class ProductDetailModel implements ProductDetailContract.Model {
 
     public static String TAG = ProductDetailModel.class.getSimpleName();
 
     private String data;
+    private RepositoryContract repository;
 
-    public ProductDetailModel(String data) {
-        this.data = data;
+    public ProductDetailModel(RepositoryContract repository) {
+        this.repository = repository;
     }
 
     @Override
@@ -31,5 +36,10 @@ public class ProductDetailModel implements ProductDetailContract.Model {
     @Override
     public void onDataFromPreviousScreen(String data) {
         // Log.e(TAG, "onDataFromPreviousScreen()");
+    }
+
+    @Override
+    public void addProductToFavorite(ProductItem item, RepositoryContract.CreateFavoriteProductEntryCallBack createFavoriteProductEntryCallBack) {
+        repository.addFavoriteProduct(item,createFavoriteProductEntryCallBack);
     }
 }

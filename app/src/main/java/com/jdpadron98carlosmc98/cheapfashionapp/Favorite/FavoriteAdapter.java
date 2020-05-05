@@ -57,8 +57,9 @@ public class FavoriteAdapter
         holder.priceProduct.setText(itemList.get(position).getPrice());
         holder.nameProduct.setText(itemList.get(position).getName());
         //Esto esta hecho solo para la version del primer Sprint
-        //holder.imageProduct.setImageResource(itemList.get(position).getDrawable());
-        //loadImageFromURL(holder.imageProduct, itemList.get(position).getPicture());
+        loadImageFromURL(holder.imageProduct, itemList.get(position).getPicture());
+        //Insertar la imagen al producto que creamos para posteriormente tenerla en el detalle
+        itemList.get(position).imageView = holder.imageProduct;
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+
 import java.lang.ref.WeakReference;
 
 public interface ProductDetailContract {
@@ -54,6 +57,8 @@ public interface ProductDetailContract {
         void onRestartScreen(String data);
 
         void onDataFromPreviousScreen(String data);
+
+        void addProductToFavorite(ProductItem item, RepositoryContract.CreateFavoriteProductEntryCallBack createFavoriteProductEntryCallBack);
     }
 
     interface Router {

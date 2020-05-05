@@ -54,6 +54,8 @@ public class Repository implements RepositoryContract {
 
     public static final String JSON_FILE = "https://cheap-fashion-app.firebaseio.com/products/.json";
     public static final String JSON_ROOT = "products";
+    public static final String JSON_FAVORITE = "https://cheap-fashion-app.firebaseio.com/favorite/.json";
+
 
     private static String passwordNotValidMessage = "Password must be at least 8 characters long with alphanumeric format";
     private static String registeredOkMessage = "Registered successfully";
@@ -63,6 +65,7 @@ public class Repository implements RepositoryContract {
     private StorageReference storageRef;
     private DatabaseReference usersRef;
     private DatabaseReference productsRef;
+    private DatabaseReference favoriteRef;
     private DatabaseReference databaseReference;
 
     // private String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
@@ -92,6 +95,7 @@ public class Repository implements RepositoryContract {
 
         productsRef = FirebaseDatabase.getInstance().getReference().child("products");
 
+        favoriteRef = FirebaseDatabase.getInstance().getReference().child("favoriteProducts");
 
     }
 
@@ -230,6 +234,49 @@ public class Repository implements RepositoryContract {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void addFavoriteProduct(final ProductItem productItem, final CreateFavoriteProductEntryCallBack callback) {
+        final List<ProductItem> favoriteProducts = new ArrayList<>();
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //Pillamos un tipo generico segun las recomendaciones de Firebase, ver https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html
+                GenericTypeIndicator<List<ProductItem>> genericTypeIndicator = new GenericTypeIndicator<List<ProductItem>>() {
+                };
+                List<ProductItem> productList = dataSnapshot.child("favorite").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator);
+                //Log.e(TAG,"productList"+ dataSnapshot.child("products").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator));
+
+                if (productList != null) {
+                    favoriteProducts.addAll(productList);
+                }
+
+                ProductItem favorite = new ProductItem(productItem.pid, productItem.price, productItem.name,
+                        productItem.picture, productItem.detail, productItem.userData);
+                if (favoriteProducts.size() == 0) {
+                    favoriteProducts.add(favorite);
+                    databaseReference.child("favorite").child(auth.getCurrentUser().getUid()).setValue(favoriteProducts);
+                    callback.onAddFavoriteProduct(false);
+                } else {
+                    for (ProductItem product : favoriteProducts) {
+                        if (product.getPid().equals(favorite.pid)) {
+                            callback.onAddFavoriteProduct(true);
+                            return;
+                        }
+                    }
+                    favoriteProducts.add(favorite);
+                    databaseReference.child("favorite").child(auth.getCurrentUser().getUid()).setValue(favoriteProducts);
+                    callback.onAddFavoriteProduct(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private byte[] convertImageView(ImageView imageView) {
@@ -424,6 +471,22 @@ public class Repository implements RepositoryContract {
         requestQueue.add(request);
     }
 
+    private boolean loadFavoriteProductsFromJSON(String json, String key, List<ProductItem> productFavoriteList) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray jsonArray = jsonObject.getJSONArray(key);
+            if (jsonArray.length() > 0) {
+                List<ProductItem> productItems = Arrays.asList(gson.fromJson(jsonArray.toString(), ProductItem[].class));
+                productFavoriteList.addAll(productItems);
+                Log.e(TAG, "loadCatalogFromJSON.productItem" + productFavoriteList.get(0).name);
+            }
+            return true;
+        } catch (JSONException error) {
+        }
+        return false;
+    }
     @Override
     public void getMyProductsJSONFromURL(final OnGetMyProductsJSONCallback getMyProductsJSONCallback, final List<ProductItem> myProductItemList) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
@@ -459,6 +522,26 @@ public class Repository implements RepositoryContract {
                 userData.setPhoneNumber(phoneNumber);
                 getUserProfileData.onGetProfileData(false);
             }
+    @Override
+    public void getFavoriteJSONFromURL(final GetFavoriteJSONCallback getFavoriteJSONCallback, final List<ProductItem> favoriteItemList) {
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, JSON_FAVORITE, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        loadFavoriteProductsFromJSON(response.toString(), auth.getCurrentUser().getUid(), favoriteItemList);
+                        getFavoriteJSONCallback.onGetFavoriteJSONCallback(false);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                getFavoriteJSONCallback.onGetFavoriteJSONCallback(true);
+            }
+        });
+        requestQueue.add(request);
+    }
+  /*  private class JsonTask extends AsyncTask<String, String, String> {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
