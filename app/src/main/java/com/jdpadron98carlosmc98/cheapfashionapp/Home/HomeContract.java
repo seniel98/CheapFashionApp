@@ -1,7 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -30,8 +30,6 @@ public interface HomeContract {
         void navigateToNextScreen();
 
         void showToast(String msg);
-
-        void createRecyclerView();
     }
 
     interface Presenter {
@@ -65,9 +63,9 @@ public interface HomeContract {
 
         void goToAddProduct();
 
-        List<ProductItem> getListFromModel();
+        void downloadDataFromRepository();
 
-        void getDataFromRepository();
+        void getProductListData();
     }
 
     interface Model {
@@ -83,7 +81,9 @@ public interface HomeContract {
 
         void logout(RepositoryContract.OnLogoutCallback logoutCallback);
 
-        void getDataFromRepository(RepositoryContract.OnGetJSONCallback getJSONCallback, List<ProductItem> productItemList);
+        void getProductListData(RepositoryContract.GetProductListCallback getProductListCallback);
+
+        void getDataFromRepository(RepositoryContract.OnGetJSONCallback getJSONCallback);
     }
 
     interface Router {

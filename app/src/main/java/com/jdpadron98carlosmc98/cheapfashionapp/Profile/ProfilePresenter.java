@@ -2,9 +2,8 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Profile;
 
 import android.util.Log;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeState;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.UserData;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.UserData;
 
 import java.lang.ref.WeakReference;
 

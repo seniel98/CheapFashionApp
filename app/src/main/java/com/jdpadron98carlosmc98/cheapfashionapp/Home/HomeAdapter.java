@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 
 import java.util.List;
 
@@ -38,7 +38,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     }
 
     public void setItems(List<ProductItem> items) {
-        itemList = items;
+        itemList.clear();
+        itemList.addAll(items);
         notifyDataSetChanged();
     }
 

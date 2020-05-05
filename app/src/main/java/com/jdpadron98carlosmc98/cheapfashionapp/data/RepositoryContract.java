@@ -1,4 +1,4 @@
-package com.jdpadron98carlosmc98.cheapfashionapp.app;
+package com.jdpadron98carlosmc98.cheapfashionapp.data;
 
 import android.widget.ImageView;
 
@@ -14,10 +14,9 @@ public interface RepositoryContract {
      * Esta forma es mucho mas rapida y eficaz que mediante el uso de Async Task.
      *
      * @param getJSONCallback
-     * @param productItemList
      */
 
-    void getJSONFromURL(OnGetJSONCallback getJSONCallback, List<ProductItem> productItemList);
+    void getJSONFromURL(OnGetJSONCallback getJSONCallback);
 
     /**
      * Cogemos el archivo JSON de mis productos desde la url de Firebase mediante el uso de la libreria Volley.
@@ -103,6 +102,19 @@ public interface RepositoryContract {
     void addFavoriteProduct(ProductItem productItem, final RepositoryContract.CreateFavoriteProductEntryCallBack callback);
 
     void getFavoriteJSONFromURL(final GetFavoriteJSONCallback getFavoriteJSONCallback, final List<ProductItem> favoriteItemList);
+
+    /**
+     * Metodo para pillar la lista de productos de la base de datos en Room
+     *
+     * @param callback
+     */
+    void getProductList(final GetProductListCallback callback);
+
+
+    interface GetProductListCallback {
+        void setProductList(List<ProductItem> loadProducts);
+    }
+
 
     interface GetFavoriteJSONCallback {
         void onGetFavoriteJSONCallback(boolean error);

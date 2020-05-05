@@ -1,15 +1,25 @@
-package com.jdpadron98carlosmc98.cheapfashionapp.app;
+package com.jdpadron98carlosmc98.cheapfashionapp.data;
 
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+
+@Entity(tableName = "products")
+
 public class ProductItem {
 
-
+    @NonNull
+    @PrimaryKey
     public String pid;
-    //public int drawable; //Variable para almacenar las imagenes de prueba
+
     public String price;
     public String name;
     public String picture;
+    @Ignore
     public ImageView imageView;
     public UserData userData;
     public String detail;
@@ -66,14 +76,6 @@ public class ProductItem {
     public void setPicture(String picture) {
         this.picture = picture;
     }
-
- /*   public int getDrawable() {
-        return drawable;
-    }
-
-    public void setDrawable(int drawable) {
-        this.drawable = drawable;
-    }*/
 
     public UserData getUserData() {
         return userData;

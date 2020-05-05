@@ -11,6 +11,7 @@ import com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail.ProductDetailState
 import com.jdpadron98carlosmc98.cheapfashionapp.Profile.ProfileState;
 import com.jdpadron98carlosmc98.cheapfashionapp.SignUp.SignUpState;
 import com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen.SplashScreenState;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 
 public class AppMediator {
 

@@ -1,9 +1,8 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.AddProduct;
 
-import android.util.Log;
 import android.widget.ImageView;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 public class AddProductModel implements AddProductContract.Model {
 

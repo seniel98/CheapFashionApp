@@ -1,6 +1,6 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 public class ForgotPasswordModel implements ForgotPasswordContract.Model {
 

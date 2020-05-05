@@ -2,11 +2,10 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 
 import android.util.Log;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomePresenter implements HomeContract.Presenter {
@@ -80,28 +79,35 @@ public class HomePresenter implements HomeContract.Presenter {
         // call the model and update the state
 //        state.data = model.getStoredData();
 
+
         // update the view
 
 
     }
 
 
-    public void getDataFromRepository() {
-        productItemList = new ArrayList<>();
+    public void getProductListData() {
+        model.getProductListData(new RepositoryContract.GetProductListCallback() {
+            @Override
+            public void setProductList(List<ProductItem> loadProducts) {
+                state.homeProductList = loadProducts;
+                //Log.e(TAG, "getProductListData" + loadProducts.get(0).userData);
+                view.get().fillArrayList(state);
+            }
+        });
+    }
+
+    public void downloadDataFromRepository() {
         model.getDataFromRepository(new RepositoryContract.OnGetJSONCallback() {
             @Override
             public void onGetJSON(boolean error) {
-                if (!error) {
-                    state.homeProductList = productItemList;
-                    view.get().fillArrayList(state);
-                    view.get().createRecyclerView();
-                } else {
-                    state.homeProductList = new ArrayList<>();
-                    view.get().fillArrayList(state);
-                    view.get().createRecyclerView();
+                if (error) {
+                    view.get().showToast("Error downloading data from internet");
+                }else{
+                    getProductListData();
                 }
             }
-        }, productItemList);
+        });
     }
 
 
@@ -127,11 +133,6 @@ public class HomePresenter implements HomeContract.Presenter {
         router.passStateToNextScreen(state);
         view.get().goToDetail();
 
-    }
-
-    @Override
-    public List<ProductItem> getListFromModel() {
-        return model.getListFromRepository();
     }
 
     @Override

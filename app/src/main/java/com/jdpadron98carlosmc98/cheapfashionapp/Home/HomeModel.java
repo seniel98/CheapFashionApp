@@ -1,7 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 import java.util.List;
 
@@ -18,8 +18,18 @@ public class HomeModel implements HomeContract.Model {
 
 
     @Override
-    public void getDataFromRepository(RepositoryContract.OnGetJSONCallback getJSONCallback, List<ProductItem> productItemList) {
-        repository.getJSONFromURL(getJSONCallback, productItemList);
+    public void getProductListData(RepositoryContract.GetProductListCallback getProductListCallback) {
+        repository.getProductList(getProductListCallback);
+    }
+
+    @Override
+    public void getDataFromRepository(RepositoryContract.OnGetJSONCallback getJSONCallback) {
+        repository.getJSONFromURL(getJSONCallback);
+    }
+
+
+    public RepositoryContract getRepository() {
+        return repository;
     }
 
     public List<ProductItem> getListFromRepository() {
