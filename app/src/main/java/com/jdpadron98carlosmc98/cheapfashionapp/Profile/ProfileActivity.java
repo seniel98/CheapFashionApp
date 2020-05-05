@@ -51,10 +51,19 @@ public class ProfileActivity
 
         ProfileScreen.configure(this);
 
+        if (savedInstanceState == null) {
+            presenter.onStart();
+        } else {
+            presenter.onRestart();
+        }
+
         initBottomNavMenu();
 
 
         bottomNavigationView.getMenu().getItem(3).setChecked(true);
+
+
+        presenter.getUserProfileData();
 
 
         changePassText.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +105,9 @@ public class ProfileActivity
      * Fijamos los textos del layout
      */
     private void setUpProfileLayout() {
+        nameText.setEnabled(false);
+        emailText.setEnabled(false);
+        phoneText.setEnabled(false);
         saveProfileButton.setText(R.string.saveProfileButtonLabel);
         changePassText.setText(R.string.changePassText);
     }
@@ -188,15 +200,22 @@ public class ProfileActivity
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
-    /*
-            @Override
-            public void displayData(ProfileViewModel viewModel) {
-                //Log.e(TAG, "displayData()");
+    @Override
+    public void updateView(ProfileViewModel viewModel) {
+        nameText.setText(viewModel.name);
+        emailText.setText(viewModel.email);
+        phoneText.setText(viewModel.phone);
+    }
 
-                // deal with the data
-                ((TextView) findViewById(R.id.data)).setText(viewModel.data);
-            }
-        */
+    /*
+                @Override
+                public void displayData(ProfileViewModel viewModel) {
+                    //Log.e(TAG, "displayData()");
+
+                    // deal with the data
+                    ((TextView) findViewById(R.id.data)).setText(viewModel.data);
+                }
+            */
     @Override
     public void injectPresenter(ProfileContract.Presenter presenter) {
         this.presenter = presenter;

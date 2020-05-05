@@ -85,7 +85,15 @@ public interface RepositoryContract {
      */
     void changePassword(String currentPassword, String newPassword, RepositoryContract.onChangePasswordCallback callback);
 
-    interface onChangePasswordCallback {
+    /**
+     * Metodo para coger los datos del perfil del usuario.
+     * @param userData
+     * @param getUserProfileDataCallback
+     */
+    void getUserProfileData(final UserData userData, final OnGetUserProfileDataCallback getUserProfileDataCallback);
+
+
+     interface onChangePasswordCallback {
         void onChangePassword(boolean error, String message);
     }
 
@@ -121,6 +129,10 @@ public interface RepositoryContract {
 
     interface OnGetMyProductsJSONCallback {
         void onGetJSON(boolean error);
+    }
+
+    interface OnGetUserProfileDataCallback {
+        void onGetProfileData(boolean error);
     }
 
 }

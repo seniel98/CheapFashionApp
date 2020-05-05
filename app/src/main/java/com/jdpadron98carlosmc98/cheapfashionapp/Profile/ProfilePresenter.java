@@ -1,6 +1,10 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Profile;
 
+import android.util.Log;
+
+import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeState;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.UserData;
 
 import java.lang.ref.WeakReference;
 
@@ -17,41 +21,43 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         this.state = state;
     }
 
-    /*
-       @Override
-        public void fetchData() {
-            // Log.e(TAG, "fetchData()");
-
-            // initialize the state if is necessary
-            if (state == null) {
-                state = new ProfileState();
-            }
-
-            // use passed state if is necessary
-            ProfileState savedState = router.getDataFromPreviousScreen();
-            if (savedState != null) {
-
-                // update view and model state
-                state.data = savedState.data;
-
-                // update the view
-                view.get().displayData(state);
-
-                return;
-            }
-
-            // call the model
-            String data = model.fetchData();
-
-            // set view state
-            state.data = data;
-
-            // update the view
-            view.get().displayData(state);
-
+    @Override
+    public void onStart() {
+        // initialize the state if is necessary
+        if (state == null) {
+            state = new ProfileState();
         }
-    */
 
+    }
+
+    @Override
+    public void onRestart() {
+
+        if (state == null) {
+            state = new ProfileState();
+        }
+
+
+    }
+
+    @Override
+    public void getUserProfileData() {
+        final UserData userData = new UserData("","","");
+        model.getUserProfileData(userData, new RepositoryContract.OnGetUserProfileDataCallback() {
+            @Override
+            public void onGetProfileData(boolean error) {
+                if(!error){
+                    state.email = userData.getEmail();
+                    state.name = userData.getName();
+                    state.phone = userData.getPhoneNumber();
+                    Log.e(TAG,"state.phone" + userData.getEmail());
+                    view.get().updateView(state);
+                }else{
+                    view.get().showToast("Error retrieving data");
+                }
+            }
+        });
+    }
 
     @Override
     public void onBackPressed() {

@@ -1,6 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Profile;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.UserData;
 
 import java.lang.ref.WeakReference;
 
@@ -21,6 +22,8 @@ public interface ProfileContract {
         void goChangePass();
 
         void showToast(String msg);
+
+        void updateView(ProfileViewModel viewModel);
     }
 
     interface Presenter {
@@ -43,11 +46,19 @@ public interface ProfileContract {
         void goToChangePass();
 
         void onBackPressed();
+
+        void getUserProfileData();
+
+        void onStart();
+
+        void onRestart();
     }
 
     interface Model {
         void logout(RepositoryContract.OnLogoutCallback logoutCallback);
         //String fetchData();
+
+        void getUserProfileData(UserData userData, RepositoryContract.OnGetUserProfileDataCallback getUserProfileDataCallback);
     }
 
     interface Router {

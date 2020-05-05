@@ -1,6 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Profile;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.app.UserData;
 
 public class ProfileModel implements ProfileContract.Model {
 
@@ -15,6 +16,11 @@ public class ProfileModel implements ProfileContract.Model {
     @Override
     public void logout(RepositoryContract.OnLogoutCallback logoutCallback) {
         repository.logout(logoutCallback);
+    }
+
+    @Override
+    public void getUserProfileData(UserData userData, RepositoryContract.OnGetUserProfileDataCallback getUserProfileDataCallback) {
+        repository.getUserProfileData(userData, getUserProfileDataCallback);
     }
 
 

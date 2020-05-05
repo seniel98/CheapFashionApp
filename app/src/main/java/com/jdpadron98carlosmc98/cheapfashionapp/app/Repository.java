@@ -444,6 +444,28 @@ public class Repository implements RepositoryContract {
         requestQueue.add(request);
     }
 
+    @Override
+    public void getUserProfileData(final UserData userData, final OnGetUserProfileDataCallback getUserProfileData) {
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid());
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String name = dataSnapshot.child("name").getValue(String.class);
+                String email = dataSnapshot.child("email").getValue(String.class);
+                String phoneNumber = dataSnapshot.child("phoneNumber").getValue(String.class);
+                //Log.e(TAG,"phoneNumber" + phoneNumber);
+                userData.setName(name);
+                userData.setEmail(email);
+                userData.setPhoneNumber(phoneNumber);
+                getUserProfileData.onGetProfileData(false);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                getUserProfileData.onGetProfileData(true);
+            }
+        });
+    }
 
     /*  private class JsonTask extends AsyncTask<String, String, String> {
 
