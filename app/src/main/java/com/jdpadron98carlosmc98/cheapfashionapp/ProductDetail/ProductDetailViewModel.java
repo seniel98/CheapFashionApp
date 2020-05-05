@@ -1,6 +1,6 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 
 public class ProductDetailViewModel {
 

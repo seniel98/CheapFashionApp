@@ -1,13 +1,15 @@
-package com.jdpadron98carlosmc98.cheapfashionapp.app;
+package com.jdpadron98carlosmc98.cheapfashionapp.data;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.room.Room;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +36,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jdpadron98carlosmc98.cheapfashionapp.database.CatalogDatabase;
+import com.jdpadron98carlosmc98.cheapfashionapp.database.ProductDao;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,13 +59,14 @@ public class Repository implements RepositoryContract {
     public static final String JSON_FILE = "https://cheap-fashion-app.firebaseio.com/products/.json";
     public static final String JSON_ROOT = "products";
     public static final String JSON_FAVORITE = "https://cheap-fashion-app.firebaseio.com/favorite/.json";
-
+    public static final String DB_FILE = "catalog.db";
 
     private static String passwordNotValidMessage = "Password must be at least 8 characters long with alphanumeric format";
     private static String registeredOkMessage = "Registered successfully";
 
+
+    private CatalogDatabase roomDatabase;
     private FirebaseAuth auth;
-    private FirebaseDatabase database;
     private StorageReference storageRef;
     private DatabaseReference usersRef;
     private DatabaseReference productsRef;
@@ -85,6 +90,8 @@ public class Repository implements RepositoryContract {
     private Repository(Context context) {
         this.context = context;
 
+        roomDatabase = Room.databaseBuilder(context, CatalogDatabase.class, DB_FILE).build();
+
         auth = FirebaseAuth.getInstance();
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -96,6 +103,7 @@ public class Repository implements RepositoryContract {
         productsRef = FirebaseDatabase.getInstance().getReference().child("products");
 
         favoriteRef = FirebaseDatabase.getInstance().getReference().child("favoriteProducts");
+
 
     }
 
@@ -289,27 +297,6 @@ public class Repository implements RepositoryContract {
         return baos.toByteArray();
     }
 
-//    private UserData getUserDataFromFirebase() {
-//        final UserData[] user = new UserData[1];
-//        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid());
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                String name = dataSnapshot.child("name").getValue(String.class);
-//                String email = dataSnapshot.child("email").getValue(String.class);
-//                String phoneNumber = dataSnapshot.child("phoneNumber").getValue(String.class);
-//                user[0] = new UserData(name,email,phoneNumber,new ArrayList<String>(),new ArrayList<String>());
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//        return user[0];
-//    }
-
     @Override
     public void signUp(final UserData userData, final String password, final OnSignUpCallback signUpCallback) {
         if (!isPasswordValid(password)) {
@@ -392,26 +379,7 @@ public class Repository implements RepositoryContract {
                 });
     }
 
-
-    /**
-     * Load the JSON file from the assets to have a default catalog
-     *
-     * @return
-     */
- /*   private String loadJSONFromAsset() {
-        String json = null;
-        try {
-            InputStream is = context.getAssets().open(JSON_FILE);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException error) {
-        }
-        return json;
-    }*/
-    private boolean loadCatalogFromJSON(String json, List<ProductItem> productItemList) {
+    private boolean loadCatalogFromJSON(String json) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         try {
@@ -422,15 +390,31 @@ public class Repository implements RepositoryContract {
                 JSONArray jsonArray = jsonObject.getJSONArray(key);
                 if (jsonArray.length() > 0) {
                     List<ProductItem> productItems = Arrays.asList(gson.fromJson(jsonArray.toString(), ProductItem[].class));
-                    productItemList.addAll(productItems);
-                    Log.e(TAG, "loadCatalogFromJSON.productItem" + productItemList.get(0).name);
+                    //Insertamos los productos obtenidos en la base de datos local
+                    insertListInDB(productItems);
                 }
-
             }
             return true;
         } catch (JSONException error) {
         }
         return false;
+    }
+
+
+    /**
+     * Metodo para insertar los productos en la base de datos en un hilo secundario
+     * @param productItems
+     */
+    private void insertListInDB(final List<ProductItem> productItems) {
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                for (ProductItem product : productItems) {
+                    getProductDao().insertProduct(product);
+                }
+            }
+        });
     }
 
     private boolean loadMyProductsFromJSON(String json, String key, List<ProductItem> productItemList) {
@@ -451,14 +435,30 @@ public class Repository implements RepositoryContract {
     }
 
 
+
     @Override
-    public void getJSONFromURL(final OnGetJSONCallback getJSONCallback, final List<ProductItem> productItemList) {
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
+    public void getProductList(final GetProductListCallback callback) {
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (callback != null) {
+                    callback.setProductList(getProductDao().loadProducts());
+                }
+            }
+        });
+
+    }
+
+
+    @Override
+    public void getJSONFromURL(final OnGetJSONCallback getJSONCallback) {
+        final RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, JSON_FILE, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        loadCatalogFromJSON(response.toString(), productItemList);
+                        loadCatalogFromJSON(response.toString());
                         getJSONCallback.onGetJSON(false);
                     }
                 }, new Response.ErrorListener() {
@@ -469,6 +469,7 @@ public class Repository implements RepositoryContract {
             }
         });
         requestQueue.add(request);
+
     }
 
     private boolean loadFavoriteProductsFromJSON(String json, String key, List<ProductItem> productFavoriteList) {
@@ -552,61 +553,8 @@ public class Repository implements RepositoryContract {
         requestQueue.add(request);
     }
 
-    /*  private class JsonTask extends AsyncTask<String, String, String> {
 
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        protected String doInBackground(String... params) {
-            HttpURLConnection connection = null;
-            BufferedReader reader = null;
-
-            try {
-                URL url = new URL(params[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-
-                InputStream stream = connection.getInputStream();
-
-                reader = new BufferedReader(new InputStreamReader(stream));
-
-                StringBuffer buffer = new StringBuffer();
-                String line = "";
-
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                    Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
-
-                }
-
-                return buffer.toString();
-
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            loadCatalogFromJSON(result);
-        }
-    }*/
+    private ProductDao getProductDao() {
+        return roomDatabase.productDao();
+    }
 }

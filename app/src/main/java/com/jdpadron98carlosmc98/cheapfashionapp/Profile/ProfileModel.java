@@ -1,7 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Profile;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.UserData;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.UserData;
 
 public class ProfileModel implements ProfileContract.Model {
 

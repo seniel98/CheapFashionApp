@@ -6,8 +6,8 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.Repository;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.Repository;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 public class ProductDetailScreen {
 

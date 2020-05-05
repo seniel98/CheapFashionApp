@@ -186,6 +186,9 @@ public class AddProductActivity
         //((TextView) findViewById(R.id.data)).setText(viewModel.data);
     }
 
+
+
+
     @Override
     public void navigateToNextScreen() {
         Intent intent = new Intent(this, AddProductActivity.class);

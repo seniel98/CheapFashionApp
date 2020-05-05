@@ -1,10 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail;
 
-import android.util.Log;
-
-import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.Repository;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 public class ProductDetailModel implements ProductDetailContract.Model {
 

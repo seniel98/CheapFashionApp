@@ -24,8 +24,9 @@ import com.jdpadron98carlosmc98.cheapfashionapp.ProductDetail.ProductDetailActiv
 import com.jdpadron98carlosmc98.cheapfashionapp.Profile.ProfileActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
-import com.jdpadron98carlosmc98.cheapfashionapp.app.ProductItem;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity
@@ -66,19 +67,12 @@ public class HomeActivity
             presenter.onRestart();
         }
 
-     /*   recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        homeAdapter = new HomeAdapter(
-                new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View view) {
-                        ProductItem item = (ProductItem) view.getTag();
-                        Log.e(TAG, "HomeAdapter.item" + item.getPicture());
-                        presenter.selectProduct(item);
-                    }
-                }, list);
+        list = new ArrayList<>();
 
-        recyclerView.setAdapter(homeAdapter);*/
+        presenter.downloadDataFromRepository();
+
+        createRecyclerView();
 
         initBottomNavMenu();
 
@@ -143,11 +137,6 @@ public class HomeActivity
         });
     }
 
-
-    public void addItemsFromPresenter(List<ProductItem> productItemList) {
-        homeAdapter.addItems(productItemList);
-    }
-
     @Override
     public void goToFavorites() {
         Intent intent = new Intent(this, FavoriteActivity.class);
@@ -209,13 +198,10 @@ public class HomeActivity
         // load the data
         presenter.onResume();
 
-        presenter.getDataFromRepository();
-
 
     }
 
-    @Override
-    public void createRecyclerView(){
+    private void createRecyclerView() {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         homeAdapter = new HomeAdapter(
                 new View.OnClickListener() {
@@ -269,8 +255,15 @@ public class HomeActivity
     }
 
     @Override
-    public void fillArrayList(HomeViewModel viewModel) {
-        list = viewModel.homeProductList;
+    public void fillArrayList(final HomeViewModel viewModel) {
+        //Ejecutamos la accion de añadir los items en el hilo especifico para la interfaz grafica
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // deal with the data
+                homeAdapter.setItems(viewModel.homeProductList);
+            }
+        });
     }
 
     @Override

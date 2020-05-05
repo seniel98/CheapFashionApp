@@ -1,6 +1,6 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.app.RepositoryContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 import java.lang.ref.WeakReference;
 

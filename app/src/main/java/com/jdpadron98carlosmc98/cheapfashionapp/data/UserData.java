@@ -1,6 +1,5 @@
-package com.jdpadron98carlosmc98.cheapfashionapp.app;
+package com.jdpadron98carlosmc98.cheapfashionapp.data;
 
-import java.util.List;
 
 public class UserData {
 
@@ -8,8 +7,6 @@ public class UserData {
     private String name;
     private String email;
     private String phoneNumber;
-    private List<String> likedProductList;
-    private List<String> myProductsList;
 
 
     public UserData(String name, String email, String phoneNumber) {
@@ -19,24 +16,8 @@ public class UserData {
     }
 
 
-    public UserData(){
+    public UserData() {
 
-    }
-
-    public List<String> getLikedProductList() {
-        return likedProductList;
-    }
-
-    public void setLikedProductList(List<String> likedProductList) {
-        this.likedProductList = likedProductList;
-    }
-
-    public List<String> getMyProductsList() {
-        return myProductsList;
-    }
-
-    public void setMyProductsList(List<String> myProductsList) {
-        this.myProductsList = myProductsList;
     }
 
     public String getName() {
