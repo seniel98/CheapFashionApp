@@ -102,7 +102,8 @@ public class HomePresenter implements HomeContract.Presenter {
             @Override
             public void onGetJSON(boolean error) {
                 if (error) {
-                    view.get().showToast("Error downloading data from internet");
+                    getProductListData();
+                    view.get().showToast("NO CONNECTION. DATA MAY BE OBSOLETE");
                 }else{
                     getProductListData();
                 }
