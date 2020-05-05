@@ -18,7 +18,7 @@ public class HomePresenter implements HomeContract.Presenter {
     private HomeContract.Model model;
     private HomeContract.Router router;
 
-    List<ProductItem> productItemList;
+    private List<ProductItem> productItemList;
 
     public HomePresenter(HomeState state) {
         this.state = state;

@@ -386,6 +386,23 @@ public class Repository implements RepositoryContract {
         return false;
     }
 
+    private boolean loadMyProductsFromJSON(String json, String key, List<ProductItem> productItemList) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray jsonArray = jsonObject.getJSONArray(key);
+            if (jsonArray.length() > 0) {
+                List<ProductItem> productItems = Arrays.asList(gson.fromJson(jsonArray.toString(), ProductItem[].class));
+                productItemList.addAll(productItems);
+                Log.e(TAG, "loadCatalogFromJSON.productItem" + productItemList.get(0).name);
+            }
+            return true;
+        } catch (JSONException error) {
+        }
+        return false;
+    }
+
 
     @Override
     public void getJSONFromURL(final OnGetJSONCallback getJSONCallback, final List<ProductItem> productItemList) {
@@ -407,8 +424,28 @@ public class Repository implements RepositoryContract {
         requestQueue.add(request);
     }
 
+    @Override
+    public void getMyProductsJSONFromURL(final OnGetMyProductsJSONCallback getMyProductsJSONCallback, final List<ProductItem> myProductItemList) {
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, JSON_FILE, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        loadMyProductsFromJSON(response.toString(), auth.getCurrentUser().getUid(), myProductItemList);
+                        getMyProductsJSONCallback.onGetJSON(false);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                getMyProductsJSONCallback.onGetJSON(true);
+            }
+        });
+        requestQueue.add(request);
+    }
 
-  /*  private class JsonTask extends AsyncTask<String, String, String> {
+
+    /*  private class JsonTask extends AsyncTask<String, String, String> {
 
         protected void onPreExecute() {
             super.onPreExecute();

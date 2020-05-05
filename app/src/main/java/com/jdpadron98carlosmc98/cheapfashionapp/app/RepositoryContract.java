@@ -20,6 +20,15 @@ public interface RepositoryContract {
     void getJSONFromURL(OnGetJSONCallback getJSONCallback, List<ProductItem> productItemList);
 
     /**
+     * Cogemos el archivo JSON de mis productos desde la url de Firebase mediante el uso de la libreria Volley.
+     * Esta forma es mucho mas rapida y eficaz que mediante el uso de Async Task.
+     *
+     * @param getMyProductsJSONCallback
+     * @param myProductItemList
+     */
+    void getMyProductsJSONFromURL(OnGetMyProductsJSONCallback getMyProductsJSONCallback, List<ProductItem> myProductItemList);
+
+    /**
      * Metodo que registra un usuario en la aplicacion
      *
      * @param userData
@@ -107,6 +116,10 @@ public interface RepositoryContract {
     }
 
     interface OnGetJSONCallback {
+        void onGetJSON(boolean error);
+    }
+
+    interface OnGetMyProductsJSONCallback {
         void onGetJSON(boolean error);
     }
 

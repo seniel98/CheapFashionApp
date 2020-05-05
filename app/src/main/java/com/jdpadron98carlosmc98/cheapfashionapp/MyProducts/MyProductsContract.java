@@ -26,6 +26,8 @@ public interface MyProductsContract {
         void goAddProduct();
 
         void showToast(String msg);
+
+        void createRecyclerView();
     }
 
     interface Presenter {
@@ -60,6 +62,8 @@ public interface MyProductsContract {
         void goToAddProduct();
 
         List<ProductItem> getListFromModel();
+
+        void getDataFromRepository();
     }
 
     interface Model {
@@ -74,6 +78,9 @@ public interface MyProductsContract {
         List<ProductItem> getListFromRepository();
 
         void logout(RepositoryContract.OnLogoutCallback logoutCallback);
+
+        void getDataFromRepository(RepositoryContract.OnGetMyProductsJSONCallback myProductsJSONCallback,
+                                   List<ProductItem> myProductsItemList);
     }
 
     interface Router {

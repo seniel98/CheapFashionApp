@@ -8,5 +8,5 @@ public class MyProductsViewModel {
 
     // put the view state here
     public String data;
-    public List<ProductItem> list;
+    public List<ProductItem> myProductsList;
 }

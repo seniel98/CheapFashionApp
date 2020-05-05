@@ -63,7 +63,7 @@ public class MyProductsActivity
             presenter.onRestart();
         }
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+       /* recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         myProductsAdapter = new MyProductsAdapter(new View.OnClickListener() {
 
             @Override
@@ -73,8 +73,7 @@ public class MyProductsActivity
             }
         }, list);
 
-        recyclerView.setAdapter(myProductsAdapter);
-
+        recyclerView.setAdapter(myProductsAdapter);*/
 
         initBottomNavMenu();
 
@@ -95,12 +94,29 @@ public class MyProductsActivity
 
         // load the data
         presenter.onResume();
+
+        presenter.getDataFromRepository();
     }
 
     private void initLayoutComponents() {
         bottomNavigationView = findViewById(R.id.bottomNavViewMyProducts);
         addProductButton = findViewById(R.id.floatingButtonMyProducts);
         recyclerView = findViewById(R.id.myProductsProductRecyclerView);
+    }
+
+    @Override
+    public void createRecyclerView() {
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        myProductsAdapter = new MyProductsAdapter(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                ProductItem item = (ProductItem) view.getTag();
+                presenter.selectProduct(item);
+            }
+        }, list);
+
+        recyclerView.setAdapter(myProductsAdapter);
     }
 
     private void logoutDialog() {
@@ -182,7 +198,7 @@ public class MyProductsActivity
 
     @Override
     public void fillArrayList(MyProductsViewModel viewModel) {
-        list = viewModel.list;
+        list = viewModel.myProductsList;
     }
 
     @Override
