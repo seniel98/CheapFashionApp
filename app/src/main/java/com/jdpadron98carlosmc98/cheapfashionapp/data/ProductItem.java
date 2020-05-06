@@ -23,18 +23,30 @@ public class ProductItem {
     public ImageView imageView;
     public UserData userData;
     public String detail;
+    public String uid;
 
-    public ProductItem(String pid, String price, String name, String picture, String detail, UserData userData) {
+
+
+    public ProductItem(String pid, String price, String name, String picture, String detail,String uid, UserData userData) {
         this.pid = pid;
         this.picture = picture;
         this.price = price;
         this.name = name;
         this.userData = userData;
         this.detail = detail;
+        this.uid = uid;
     }
 
     public ProductItem() {
 
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getDetail() {

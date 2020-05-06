@@ -169,16 +169,6 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
     }
 
     @Override
-    public List<ProductItem> getListFromModel() {
-        return model.getListFromRepository();
-    }
-
-    @Override
-    public void getFavoriteFromRepository() {
-        //model.getFavoriteListFromRepository()
-    }
-
-    @Override
     public void injectView(WeakReference<FavoriteContract.View> view) {
         this.view = view;
     }

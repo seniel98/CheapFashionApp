@@ -76,7 +76,7 @@ public class Repository implements RepositoryContract {
     // private String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
 
 
-    private List<ProductItem> productItemList = new ArrayList<>();
+    //private List<ProductItem> productItemList = new ArrayList<>();
 
 
     public static RepositoryContract getInstance(Context context) {
@@ -195,7 +195,7 @@ public class Repository implements RepositoryContract {
                     Uri downloadUri = task.getResult();
                     String url = downloadUri.toString();//Se obtiene la direccion de la imagen que se acaba de subir
                     final String uuid = UUID.randomUUID().toString().replace("-", "");
-                    ProductItem productItem = new ProductItem(uuid, productPrice, productName, url, productDescription, user[0]);
+                    ProductItem productItem = new ProductItem(uuid, productPrice, productName, url, productDescription, auth.getCurrentUser().getUid(), user[0]);
                     productItems.add(productItem);
                     productsRef.child(auth.getCurrentUser().getUid()).setValue(productItems);
                     callback.onAddNewProduct(false);
@@ -368,11 +368,6 @@ public class Repository implements RepositoryContract {
 
 
     @Override
-    public List<ProductItem> getProductList() {
-        return productItemList;
-    }
-
-    @Override
     public void signIn(String email, String password, final OnSignInCallback callback) {
         auth.signInWithEmailAndPassword(email, password).
                 addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -428,24 +423,6 @@ public class Repository implements RepositoryContract {
             }
         });
     }
-
-    private boolean loadMyProductsFromJSON(String json, String key, List<ProductItem> productItemList) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonArray = jsonObject.getJSONArray(key);
-            if (jsonArray.length() > 0) {
-                List<ProductItem> productItems = Arrays.asList(gson.fromJson(jsonArray.toString(), ProductItem[].class));
-                productItemList.addAll(productItems);
-                Log.e(TAG, "loadCatalogFromJSON.productItem" + productItemList.get(0).name);
-            }
-            return true;
-        } catch (JSONException error) {
-        }
-        return false;
-    }
-
 
     @Override
     public void getProductList(final GetProductListCallback callback) {
@@ -532,24 +509,35 @@ public class Repository implements RepositoryContract {
     }
 
     @Override
-    public void getMyProductsJSONFromURL(final OnGetMyProductsJSONCallback getMyProductsJSONCallback, final List<ProductItem> myProductItemList) {
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, JSON_FILE, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        loadMyProductsFromJSON(response.toString(), auth.getCurrentUser().getUid(), myProductItemList);
-                        getMyProductsJSONCallback.onGetJSON(false);
-                    }
-                }, new Response.ErrorListener() {
+    public void getMyProductsFromDatabase(final OnGetMyProductsCallback getMyProductsCallback) {
+        AsyncTask.execute(new Runnable() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                getMyProductsJSONCallback.onGetJSON(true);
+            public void run() {
+                if (getMyProductsCallback != null) {
+                    getMyProductsCallback.setProductList(getProductDao().loadMyProducts(auth.getCurrentUser().getUid()));
+                }
             }
         });
-        requestQueue.add(request);
     }
+
+
+    /*private boolean loadMyProductsFromJSON(String json, String key) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray jsonArray = jsonObject.getJSONArray(key);
+            if (jsonArray.length() > 0) {
+                List<ProductItem> productItems = Arrays.asList(gson.fromJson(jsonArray.toString(), ProductItem[].class));
+
+                // Log.e(TAG, "loadCatalogFromJSON.productItem" + productItemList.get(0).name);
+            }
+            return true;
+        } catch (JSONException error) {
+        }
+        return false;
+    }*/
+
 
     @Override
     public void getUserProfileData(final UserData userData, final OnGetUserProfileDataCallback getUserProfileData) {

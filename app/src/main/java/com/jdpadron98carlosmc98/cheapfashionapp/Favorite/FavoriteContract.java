@@ -60,11 +60,7 @@ public interface FavoriteContract {
 
         void callLogout();
 
-        List<ProductItem> getListFromModel();
-
         void downloadDataFromRepository();
-
-        void getFavoriteFromRepository();
     }
 
     interface Model {
@@ -75,10 +71,6 @@ public interface FavoriteContract {
         void onRestartScreen(String data);
 
         void onDataFromPreviousScreen(String data);
-
-        List<ProductItem> getListFromRepository();
-
-        List<ProductItem> getFavoriteList(List<ProductItem> list);
 
         void logout(RepositoryContract.OnLogoutCallback logoutCallback);
 
