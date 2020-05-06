@@ -3,6 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 public class HomeActivity
         extends AppCompatActivity implements HomeContract.View {
@@ -243,7 +245,16 @@ public class HomeActivity
 
     @Override
     public void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        final Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+        toast.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast.cancel();
+            }
+        }, 1000);
+
     }
 
     @Override

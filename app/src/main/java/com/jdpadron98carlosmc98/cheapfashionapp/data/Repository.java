@@ -105,6 +105,17 @@ public class Repository implements RepositoryContract {
         favoriteRef = FirebaseDatabase.getInstance().getReference().child("favoriteProducts");
 
 
+        clearDBTable();
+
+    }
+
+    private void clearDBTable() {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                roomDatabase.clearAllTables();
+            }
+        });
     }
 
 
@@ -213,7 +224,7 @@ public class Repository implements RepositoryContract {
         AuthCredential credential = EmailAuthProvider
                 .getCredential(email, currentPassword);
 
-// Prompt the user to re-provide their sign-in credentials
+        // Prompt the user to re-provide their sign-in credentials
         user.reauthenticate(credential)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -261,7 +272,7 @@ public class Repository implements RepositoryContract {
                 }
                 UUID uuid = UUID.randomUUID();
                 String randomUUIDString = uuid.toString();
-                FavoriteItem favoriteItem = new FavoriteItem(randomUUIDString,auth.getCurrentUser().getUid(), productItem.getPid());
+                FavoriteItem favoriteItem = new FavoriteItem(randomUUIDString, auth.getCurrentUser().getUid(), productItem.getPid());
                 if (favoriteProducts.size() == 0) {
                     favoriteProducts.add(favoriteItem);
                     databaseReference.child("favorite").child(auth.getCurrentUser().getUid()).setValue(favoriteProducts);
