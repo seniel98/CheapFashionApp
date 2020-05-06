@@ -37,6 +37,7 @@ import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jdpadron98carlosmc98.cheapfashionapp.database.CatalogDatabase;
+import com.jdpadron98carlosmc98.cheapfashionapp.database.FavoriteDao;
 import com.jdpadron98carlosmc98.cheapfashionapp.database.ProductDao;
 
 import org.json.JSONArray;
@@ -246,34 +247,34 @@ public class Repository implements RepositoryContract {
 
     @Override
     public void addFavoriteProduct(final ProductItem productItem, final CreateFavoriteProductEntryCallBack callback) {
-        final List<ProductItem> favoriteProducts = new ArrayList<>();
+        final List<FavoriteItem> favoriteProducts = new ArrayList<>();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Pillamos un tipo generico segun las recomendaciones de Firebase, ver https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html
-                GenericTypeIndicator<List<ProductItem>> genericTypeIndicator = new GenericTypeIndicator<List<ProductItem>>() {
+                GenericTypeIndicator<List<FavoriteItem>> genericTypeIndicator = new GenericTypeIndicator<List<FavoriteItem>>() {
                 };
-                List<ProductItem> productList = dataSnapshot.child("favorite").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator);
+                List<FavoriteItem> productList = dataSnapshot.child("favorite").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator);
                 //Log.e(TAG,"productList"+ dataSnapshot.child("products").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator));
 
                 if (productList != null) {
                     favoriteProducts.addAll(productList);
                 }
 
-                ProductItem favorite = new ProductItem(productItem.pid, productItem.price, productItem.name,
-                        productItem.picture, productItem.detail, productItem.userData);
+                FavoriteItem favoriteItem = new FavoriteItem(auth.getCurrentUser().getUid(), productItem.getPid());
+                String pid = productItem.getPid();
                 if (favoriteProducts.size() == 0) {
-                    favoriteProducts.add(favorite);
+                    favoriteProducts.add(favoriteItem);
                     databaseReference.child("favorite").child(auth.getCurrentUser().getUid()).setValue(favoriteProducts);
                     callback.onAddFavoriteProduct(false);
                 } else {
-                    for (ProductItem product : favoriteProducts) {
-                        if (product.getPid().equals(favorite.pid)) {
+                    for (FavoriteItem product : favoriteProducts) {
+                        if (product.getId().equals(favoriteItem.getId())) {
                             callback.onAddFavoriteProduct(true);
                             return;
                         }
                     }
-                    favoriteProducts.add(favorite);
+                    favoriteProducts.add(favoriteItem);
                     databaseReference.child("favorite").child(auth.getCurrentUser().getUid()).setValue(favoriteProducts);
                     callback.onAddFavoriteProduct(false);
                 }
@@ -403,6 +404,7 @@ public class Repository implements RepositoryContract {
 
     /**
      * Metodo para insertar los productos en la base de datos en un hilo secundario
+     *
      * @param productItems
      */
     private void insertListInDB(final List<ProductItem> productItems) {
@@ -435,7 +437,6 @@ public class Repository implements RepositoryContract {
     }
 
 
-
     @Override
     public void getProductList(final GetProductListCallback callback) {
 
@@ -444,6 +445,26 @@ public class Repository implements RepositoryContract {
             public void run() {
                 if (callback != null) {
                     callback.setProductList(getProductDao().loadProducts());
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public void getFavoriteList(final GetFavoriteListCallback callback) {
+        final List<ProductItem> favoriteList = new ArrayList<>();
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (callback != null) {
+                    List<FavoriteItem> favoritePIDList = new ArrayList<>();
+                    favoritePIDList.addAll(getFavoriteDao().loadFavoriteProducts());
+                    for (FavoriteItem pid : favoritePIDList) {
+                        ProductItem productItem = getProductDao().loadFavoriteProducts(pid.id);
+                        favoriteList.add(productItem);
+                    }
+                    callback.setFavoriteList(favoriteList);
                 }
             }
         });
@@ -472,21 +493,32 @@ public class Repository implements RepositoryContract {
 
     }
 
-    private boolean loadFavoriteProductsFromJSON(String json, String key, List<ProductItem> productFavoriteList) {
+    private boolean loadFavoriteProductsFromJSON(String json, String key) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         try {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray jsonArray = jsonObject.getJSONArray(key);
             if (jsonArray.length() > 0) {
-                List<ProductItem> productItems = Arrays.asList(gson.fromJson(jsonArray.toString(), ProductItem[].class));
-                productFavoriteList.addAll(productItems);
-                Log.e(TAG, "loadCatalogFromJSON.productItem" + productFavoriteList.get(0).name);
+                List<FavoriteItem> favoriteItems = Arrays.asList(gson.fromJson(jsonArray.toString(), FavoriteItem[].class));
+                insertFavoriteListInDB(favoriteItems);
             }
             return true;
         } catch (JSONException error) {
         }
         return false;
+    }
+
+    private void insertFavoriteListInDB(final List<FavoriteItem> favoriteItems) {
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                for (FavoriteItem product : favoriteItems) {
+                    getFavoriteDao().insertFavoriteProduct(product);
+                }
+            }
+        });
     }
 
     @Override
@@ -534,13 +566,13 @@ public class Repository implements RepositoryContract {
 
 
     @Override
-    public void getFavoriteJSONFromURL(final GetFavoriteJSONCallback getFavoriteJSONCallback, final List<ProductItem> favoriteItemList) {
+    public void getFavoriteJSONFromURL(final GetFavoriteJSONCallback getFavoriteJSONCallback) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, JSON_FAVORITE, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        loadFavoriteProductsFromJSON(response.toString(), auth.getCurrentUser().getUid(), favoriteItemList);
+                        loadFavoriteProductsFromJSON(response.toString(), auth.getCurrentUser().getUid());
                         getFavoriteJSONCallback.onGetFavoriteJSONCallback(false);
                     }
                 }, new Response.ErrorListener() {
@@ -556,5 +588,9 @@ public class Repository implements RepositoryContract {
 
     private ProductDao getProductDao() {
         return roomDatabase.productDao();
+    }
+
+    private FavoriteDao getFavoriteDao() {
+        return roomDatabase.favoriteDao();
     }
 }

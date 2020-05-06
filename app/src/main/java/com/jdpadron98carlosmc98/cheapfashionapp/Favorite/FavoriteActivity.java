@@ -23,6 +23,7 @@ import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteActivity
@@ -56,16 +57,11 @@ public class FavoriteActivity
         } else {
             presenter.onRestart();
         }
-   /*     recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        listAdapter = new FavoriteAdapter(new View.OnClickListener() {
+        list = new ArrayList<>();
 
-            @Override
-            public void onClick(View view) {
-                ProductItem item = (ProductItem) view.getTag();
-                presenter.selectProductData(item);
-            }
-        }, list);
-*/
+        presenter.downloadDataFromRepository();
+
+        createRecyclerView();
         initBottomNavMenu();
         bottomNavigationView.getMenu().getItem(1).setChecked(true);
         //recyclerView.setAdapter(listAdapter);
@@ -79,7 +75,7 @@ public class FavoriteActivity
 
     }
 
-    public void createRecyclerView(){
+    private void createRecyclerView(){
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         listAdapter = new FavoriteAdapter(new View.OnClickListener() {
 
@@ -222,8 +218,14 @@ public class FavoriteActivity
     }
 
     @Override
-    public void fillArrayList(FavoriteViewModel viewModel) {
-        list = viewModel.productItems;
+    public void fillArrayList(final FavoriteViewModel viewModel) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // deal with the data
+                listAdapter.setItems(viewModel.favoriteItems);
+            }
+        });
     }
 
 

@@ -22,4 +22,7 @@ public interface ProductDao {
 
     @Query("SELECT * FROM products")
     List<ProductItem> loadProducts();
+
+    @Query("SELECT * FROM products Where pid = :pid")
+    ProductItem loadFavoriteProducts(String pid);
 }

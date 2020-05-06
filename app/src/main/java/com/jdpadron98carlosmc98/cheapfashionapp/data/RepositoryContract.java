@@ -101,7 +101,7 @@ public interface RepositoryContract {
      */
     void addFavoriteProduct(ProductItem productItem, final RepositoryContract.CreateFavoriteProductEntryCallBack callback);
 
-    void getFavoriteJSONFromURL(final GetFavoriteJSONCallback getFavoriteJSONCallback, final List<ProductItem> favoriteItemList);
+    void getFavoriteJSONFromURL(final GetFavoriteJSONCallback getFavoriteJSONCallback);
 
     /**
      * Metodo para pillar la lista de productos de la base de datos en Room
@@ -110,6 +110,11 @@ public interface RepositoryContract {
      */
     void getProductList(final GetProductListCallback callback);
 
+    void getFavoriteList(final GetFavoriteListCallback callback);
+
+    interface GetFavoriteListCallback{
+        void setFavoriteList(List<ProductItem> favoriteItems);
+    }
 
     interface GetProductListCallback {
         void setProductList(List<ProductItem> loadProducts);

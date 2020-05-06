@@ -9,5 +9,5 @@ public class FavoriteViewModel {
     // put the view state here
     public String data;
     public ProductItem item;
-    public List<ProductItem> productItems;
+    public List<ProductItem> favoriteItems;
 }

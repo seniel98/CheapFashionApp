@@ -28,8 +28,7 @@ public interface FavoriteContract {
         void goToDetail();
 
         void showToast(String msg);
-        
-        void createRecyclerView();
+
     }
 
     interface Presenter {
@@ -62,6 +61,10 @@ public interface FavoriteContract {
         void callLogout();
 
         List<ProductItem> getListFromModel();
+
+        void downloadDataFromRepository();
+
+        void getFavoriteFromRepository();
     }
 
     interface Model {
@@ -79,7 +82,9 @@ public interface FavoriteContract {
 
         void logout(RepositoryContract.OnLogoutCallback logoutCallback);
 
-        void getDataFromRepository(RepositoryContract.GetFavoriteJSONCallback getFavoriteJSONCallback, List<ProductItem> productItems);
+        void getDataFromRepository(RepositoryContract.GetFavoriteJSONCallback getFavoriteJSONCallback);
+
+        void getFavoriteListData(RepositoryContract.GetFavoriteListCallback getFavoriteListCallback);
     }
 
     interface Router {
