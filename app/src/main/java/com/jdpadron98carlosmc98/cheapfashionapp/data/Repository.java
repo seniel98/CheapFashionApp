@@ -258,13 +258,13 @@ public class Repository implements RepositoryContract {
     @Override
     public void addFavoriteProduct(final ProductItem productItem, final CreateFavoriteProductEntryCallBack callback) {
         final List<FavoriteItem> favoriteProducts = new ArrayList<>();
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Pillamos un tipo generico segun las recomendaciones de Firebase, ver https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html
                 GenericTypeIndicator<List<FavoriteItem>> genericTypeIndicator = new GenericTypeIndicator<List<FavoriteItem>>() {
                 };
-                List<FavoriteItem> productList = dataSnapshot.child("favorite").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator);
+                List<FavoriteItem> productList = dataSnapshot.child(auth.getCurrentUser().getUid()).child("favorites").getValue(genericTypeIndicator);
                 //Log.e(TAG,"productList"+ dataSnapshot.child("products").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator));
 
                 if (productList != null) {
@@ -275,7 +275,7 @@ public class Repository implements RepositoryContract {
                 FavoriteItem favoriteItem = new FavoriteItem(randomUUIDString, auth.getCurrentUser().getUid(), productItem.getPid());
                 if (favoriteProducts.size() == 0) {
                     favoriteProducts.add(favoriteItem);
-                    databaseReference.child("favorite").child(auth.getCurrentUser().getUid()).setValue(favoriteProducts);
+                    usersRef.child(auth.getCurrentUser().getUid()).child("favorites").setValue(favoriteProducts);
                     callback.onAddFavoriteProduct(false);
                 } else {
                     for (FavoriteItem product : favoriteProducts) {
@@ -285,7 +285,7 @@ public class Repository implements RepositoryContract {
                         }
                     }
                     favoriteProducts.add(favoriteItem);
-                    databaseReference.child("favorite").child(auth.getCurrentUser().getUid()).setValue(favoriteProducts);
+                    usersRef.child(auth.getCurrentUser().getUid()).child("favorites").setValue(favoriteProducts);
                     callback.onAddFavoriteProduct(false);
                 }
             }
@@ -480,12 +480,12 @@ public class Repository implements RepositoryContract {
 
     }
 
-    private boolean loadFavoriteProductsFromJSON(String json, String key) {
+    private boolean loadFavoriteProductsFromJSON(String json) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         try {
             JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonArray = jsonObject.getJSONArray(key);
+            JSONArray jsonArray = jsonObject.getJSONArray("favorites");
             if (jsonArray.length() > 0) {
                 List<FavoriteItem> favoriteItems = Arrays.asList(gson.fromJson(jsonArray.toString(), FavoriteItem[].class));
                 insertFavoriteListInDB(favoriteItems);
@@ -521,24 +521,6 @@ public class Repository implements RepositoryContract {
     }
 
 
-    /*private boolean loadMyProductsFromJSON(String json, String key) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonArray = jsonObject.getJSONArray(key);
-            if (jsonArray.length() > 0) {
-                List<ProductItem> productItems = Arrays.asList(gson.fromJson(jsonArray.toString(), ProductItem[].class));
-
-                // Log.e(TAG, "loadCatalogFromJSON.productItem" + productItemList.get(0).name);
-            }
-            return true;
-        } catch (JSONException error) {
-        }
-        return false;
-    }*/
-
-
     @Override
     public void getUserProfileData(final UserData userData, final OnGetUserProfileDataCallback getUserProfileData) {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid());
@@ -566,11 +548,12 @@ public class Repository implements RepositoryContract {
     @Override
     public void getFavoriteJSONFromURL(final GetFavoriteJSONCallback getFavoriteJSONCallback) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, JSON_FAVORITE, null,
+        String JSON_FILE = "https://cheap-fashion-app.firebaseio.com/users/" + auth.getCurrentUser().getUid() + "/.json";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, JSON_FILE, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        loadFavoriteProductsFromJSON(response.toString(), auth.getCurrentUser().getUid());
+                        loadFavoriteProductsFromJSON(response.toString());
                         getFavoriteJSONCallback.onGetFavoriteJSONCallback(false);
                     }
                 }, new Response.ErrorListener() {
