@@ -287,6 +287,7 @@ public class Repository implements RepositoryContract {
                     favoriteProducts.add(favoriteItem);
                     usersRef.child(auth.getCurrentUser().getUid()).child("favorites").setValue(favoriteProducts);
                     callback.onAddFavoriteProduct(false);
+
                 }
             }
 
@@ -540,6 +541,27 @@ public class Repository implements RepositoryContract {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 getUserProfileData.onGetProfileData(true);
+            }
+        });
+    }
+
+    @Override
+    public void checkIfIsFavorite(final String productID, final IsFavoriteCallback isFavoriteCallback) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (isFavoriteCallback != null) {
+                    List<FavoriteItem> favoritePIDList = new ArrayList<>();
+                    favoritePIDList.addAll(getFavoriteDao().loadFavoriteProducts());
+                    for (FavoriteItem pid : favoritePIDList) {
+                        if(pid.getPid().equals(productID)){
+                            isFavoriteCallback.isFavorite(true);
+                            return;
+                        }
+                    }
+                    isFavoriteCallback.isFavorite(false);
+                }
+
             }
         });
     }

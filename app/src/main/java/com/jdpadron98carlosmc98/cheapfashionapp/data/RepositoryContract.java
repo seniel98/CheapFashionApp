@@ -108,7 +108,20 @@ public interface RepositoryContract {
 
     void getFavoriteList(final GetFavoriteListCallback callback);
 
-    interface GetFavoriteListCallback{
+    /**
+     * Metodo que compueba si el prodcuto está en favoritos con el pid.
+     * @param productID
+     * @param isFavoriteCallback
+     */
+    void checkIfIsFavorite(final String productID, final IsFavoriteCallback isFavoriteCallback);
+
+
+    interface IsFavoriteCallback {
+        void isFavorite(boolean isFavorite);
+    }
+
+
+    interface GetFavoriteListCallback {
         void setFavoriteList(List<ProductItem> favoriteItems);
     }
 

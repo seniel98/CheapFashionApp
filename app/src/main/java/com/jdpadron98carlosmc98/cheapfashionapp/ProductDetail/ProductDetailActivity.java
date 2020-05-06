@@ -45,6 +45,10 @@ public class ProductDetailActivity
         } else {
             presenter.onRestart();
         }
+
+        presenter.checkFavorite();
+
+
         contactProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
