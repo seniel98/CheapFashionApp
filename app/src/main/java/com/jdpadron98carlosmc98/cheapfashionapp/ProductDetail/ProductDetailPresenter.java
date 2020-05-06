@@ -32,7 +32,7 @@ public class ProductDetailPresenter implements ProductDetailContract.Presenter {
         if (savedState != null) {
             view.get().displayProductData(savedState);
             // update the model if is necessary
-           // model.onDataFromPreviousScreen(savedState.data);
+            // model.onDataFromPreviousScreen(savedState.data);
         }
     }
 
@@ -63,6 +63,21 @@ public class ProductDetailPresenter implements ProductDetailContract.Presenter {
         // update the view
         view.get().onDataUpdated(state);
 
+    }
+
+
+    @Override
+    public void checkFavorite() {
+        model.checkIfProductFavorite(state.item.pid, new RepositoryContract.IsFavoriteCallback() {
+            @Override
+            public void isFavorite(boolean isFavorite) {
+                if (isFavorite) {
+                    view.get().setLikeButtonEnabled();
+                } else {
+                    view.get().setLikedButtonDisabled();
+                }
+            }
+        });
     }
 
     @Override
@@ -96,17 +111,17 @@ public class ProductDetailPresenter implements ProductDetailContract.Presenter {
             item.liked = true;
         }
         state.item = item;*/
-      ProductItem item = state.item;
-      model.addProductToFavorite(item, new RepositoryContract.CreateFavoriteProductEntryCallBack() {
-          @Override
-          public void onAddFavoriteProduct(boolean error) {
-            if (!error){
-                view.get().setLikeButtonEnabled();
-            }else{
-                view.get().setLikedButtonDisabled();
+        ProductItem item = state.item;
+        model.addProductToFavorite(item, new RepositoryContract.CreateFavoriteProductEntryCallBack() {
+            @Override
+            public void onAddFavoriteProduct(boolean error) {
+                if (!error) {
+                    view.get().setLikeButtonEnabled();
+                } else {
+                    view.get().setLikedButtonDisabled();
+                }
             }
-          }
-      });
+        });
     }
 
     @Override

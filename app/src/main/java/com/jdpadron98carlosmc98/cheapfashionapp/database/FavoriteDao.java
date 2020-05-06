@@ -21,4 +21,5 @@ public interface FavoriteDao {
 
     @Query("SELECT * FROM favorite")
     List<FavoriteItem> loadFavoriteProducts();
+
 }

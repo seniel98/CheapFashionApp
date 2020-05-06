@@ -47,6 +47,8 @@ public interface ProductDetailContract {
         void initDialog();
 
         void likeButtonPressed();
+
+        void checkFavorite();
     }
 
     interface Model {
@@ -59,6 +61,8 @@ public interface ProductDetailContract {
         void onDataFromPreviousScreen(String data);
 
         void addProductToFavorite(ProductItem item, RepositoryContract.CreateFavoriteProductEntryCallBack createFavoriteProductEntryCallBack);
+
+        void checkIfProductFavorite(String pid, RepositoryContract.IsFavoriteCallback isFavoriteCallback);
     }
 
     interface Router {

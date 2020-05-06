@@ -14,6 +14,12 @@ public class ProductDetailModel implements ProductDetailContract.Model {
         this.repository = repository;
     }
 
+
+    @Override
+    public void checkIfProductFavorite(String pid, RepositoryContract.IsFavoriteCallback isFavoriteCallback) {
+        repository.checkIfIsFavorite(pid, isFavoriteCallback);
+    }
+
     @Override
     public String getStoredData() {
         // Log.e(TAG, "getStoredData()");
@@ -37,6 +43,6 @@ public class ProductDetailModel implements ProductDetailContract.Model {
 
     @Override
     public void addProductToFavorite(ProductItem item, RepositoryContract.CreateFavoriteProductEntryCallBack createFavoriteProductEntryCallBack) {
-        repository.addFavoriteProduct(item,createFavoriteProductEntryCallBack);
+        repository.addFavoriteProduct(item, createFavoriteProductEntryCallBack);
     }
 }
