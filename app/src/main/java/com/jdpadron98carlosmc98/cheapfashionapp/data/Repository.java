@@ -73,7 +73,6 @@ public class Repository implements RepositoryContract {
     private DatabaseReference productsRef;
     private DatabaseReference favoriteRef;
     private DatabaseReference databaseReference;
-
     // private String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
 
 
@@ -260,16 +259,16 @@ public class Repository implements RepositoryContract {
                 if (productList != null) {
                     favoriteProducts.addAll(productList);
                 }
-
-                FavoriteItem favoriteItem = new FavoriteItem(auth.getCurrentUser().getUid(), productItem.getPid());
-                String pid = productItem.getPid();
+                UUID uuid = UUID.randomUUID();
+                String randomUUIDString = uuid.toString();
+                FavoriteItem favoriteItem = new FavoriteItem(randomUUIDString,auth.getCurrentUser().getUid(), productItem.getPid());
                 if (favoriteProducts.size() == 0) {
                     favoriteProducts.add(favoriteItem);
                     databaseReference.child("favorite").child(auth.getCurrentUser().getUid()).setValue(favoriteProducts);
                     callback.onAddFavoriteProduct(false);
                 } else {
                     for (FavoriteItem product : favoriteProducts) {
-                        if (product.getId().equals(favoriteItem.getId())) {
+                        if (product.getPid().equals(favoriteItem.getPid())) {
                             callback.onAddFavoriteProduct(true);
                             return;
                         }
@@ -461,7 +460,7 @@ public class Repository implements RepositoryContract {
                     List<FavoriteItem> favoritePIDList = new ArrayList<>();
                     favoritePIDList.addAll(getFavoriteDao().loadFavoriteProducts());
                     for (FavoriteItem pid : favoritePIDList) {
-                        ProductItem productItem = getProductDao().loadFavoriteProducts(pid.id);
+                        ProductItem productItem = getProductDao().loadFavoriteProducts(pid.getPid());
                         favoriteList.add(productItem);
                     }
                     callback.setFavoriteList(favoriteList);

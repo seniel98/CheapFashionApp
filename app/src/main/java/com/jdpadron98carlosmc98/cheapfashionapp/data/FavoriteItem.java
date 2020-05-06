@@ -6,6 +6,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import com.google.auto.value.AutoValue;
+
 import static androidx.room.ForeignKey.CASCADE;
 
 
@@ -20,23 +22,35 @@ import static androidx.room.ForeignKey.CASCADE;
 )
 
 public class FavoriteItem {
+    public FavoriteItem(String id, String uid, String pid) {
+        this.id = id;
+        this.uid = uid;
+        this.pid = pid;
+    }
+
     @PrimaryKey
     @NonNull
+    private String id;
+
     private String uid;
 
     @ColumnInfo(name = "favoritePID")
-    public String id;
+    public String pid;
 
-    public FavoriteItem(@NonNull String uid, String id) {
-        this.uid = uid;
-        this.id = id;
-    }
 
     public FavoriteItem(){
         
     }
 
     @NonNull
+    public String getId() {
+        return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
+    }
+
     public String getUid() {
         return uid;
     }
@@ -45,11 +59,11 @@ public class FavoriteItem {
         this.uid = uid;
     }
 
-    public String getId() {
-        return id;
+    public String getPid() {
+        return pid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 }
