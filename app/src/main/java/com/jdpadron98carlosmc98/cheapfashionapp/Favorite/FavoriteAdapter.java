@@ -39,7 +39,8 @@ public class FavoriteAdapter
     }
 
     public void setItems(List<ProductItem> items) {
-        itemList = items;
+        itemList.clear();
+        itemList.addAll(items);
         notifyDataSetChanged();
     }
 

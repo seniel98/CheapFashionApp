@@ -4,14 +4,15 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.data.FavoriteItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 
-@Database(entities = {ProductItem.class},
+@Database(entities = {ProductItem.class, FavoriteItem.class},
         version = 1)
 @TypeConverters({Converters.class})
 public abstract class CatalogDatabase extends RoomDatabase {
 
     public abstract ProductDao productDao();
-
+    public abstract FavoriteDao favoriteDao();
 }
 

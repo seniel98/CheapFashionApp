@@ -80,7 +80,6 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
             model.onDataFromNextScreen(savedState.data);
         }
 
-        getDataFromRepository();
         // call the model and update the state
 //        state.data = model.getStoredData();
 
@@ -91,24 +90,31 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
 
 
     }
-    public void getDataFromRepository() {
-        productItems = new ArrayList<>();
+    private void getProductListData() {
+        model.getFavoriteListData(new RepositoryContract.GetFavoriteListCallback() {
+            @Override
+            public void setFavoriteList(List<ProductItem> favoriteItems) {
+                state.favoriteItems = favoriteItems;
+                //Log.e(TAG, "getProductListData" + loadProducts.get(0).userData);
+                view.get().fillArrayList(state);
+            }
+
+        });
+    }
+
+    public void downloadDataFromRepository() {
         model.getDataFromRepository(new RepositoryContract.GetFavoriteJSONCallback() {
             @Override
             public void onGetFavoriteJSONCallback(boolean error) {
-                if (!error) {
-                    state.productItems = productItems;
-                    view.get().fillArrayList(state);
-                    view.get().createRecyclerView();
-                } else {
-                    state.productItems = new ArrayList<>();
-                    view.get().fillArrayList(state);
-                    view.get().createRecyclerView();
+                if (error) {
+                    getProductListData();
+                    view.get().showToast("NO CONNECTION. DATA MAY BE OBSOLETE");
+                }else{
+                    getProductListData();
                 }
             }
-        }, productItems);
+        });
     }
-
     @Override
     public void onBackPressed() {
         // Log.e(TAG, "onBackPressed()");
@@ -165,6 +171,11 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
     @Override
     public List<ProductItem> getListFromModel() {
         return model.getListFromRepository();
+    }
+
+    @Override
+    public void getFavoriteFromRepository() {
+        //model.getFavoriteListFromRepository()
     }
 
     @Override
