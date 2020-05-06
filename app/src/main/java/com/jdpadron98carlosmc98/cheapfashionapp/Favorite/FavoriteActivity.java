@@ -3,6 +3,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.Favorite;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -75,7 +76,7 @@ public class FavoriteActivity
 
     }
 
-    private void createRecyclerView(){
+    private void createRecyclerView() {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         listAdapter = new FavoriteAdapter(new View.OnClickListener() {
 
@@ -168,7 +169,15 @@ public class FavoriteActivity
 
     @Override
     public void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        final Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+        toast.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast.cancel();
+            }
+        }, 1000);
     }
 
     @Override

@@ -69,16 +69,6 @@ public interface HomeContract {
     }
 
     interface Model {
-        String getStoredData();
-
-        void onDataFromNextScreen(String data);
-
-        void onRestartScreen(String data);
-
-        List<ProductItem> getListFromRepository();
-
-        void onDataFromPreviousScreen(String data);
-
         void logout(RepositoryContract.OnLogoutCallback logoutCallback);
 
         void getProductListData(RepositoryContract.GetProductListCallback getProductListCallback);

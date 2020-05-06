@@ -4,7 +4,6 @@ import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyProductsPresenter implements MyProductsContract.Presenter {
@@ -19,9 +18,6 @@ public class MyProductsPresenter implements MyProductsContract.Presenter {
     public MyProductsPresenter(MyProductsState state) {
         this.state = state;
     }
-
-
-    private List<ProductItem> myProductsItemList;
 
     @Override
     public void onStart() {
@@ -76,7 +72,7 @@ public class MyProductsPresenter implements MyProductsContract.Presenter {
         if (savedState != null) {
 
             // update the model if is necessary
-            model.onDataFromNextScreen(savedState.data);
+            // model.onDataFromNextScreen(savedState.data);
         }
 
         // call the model and update the state
@@ -140,31 +136,18 @@ public class MyProductsPresenter implements MyProductsContract.Presenter {
 
     @Override
     public void getDataFromRepository() {
-        myProductsItemList = new ArrayList<>();
-        model.getDataFromRepository(new RepositoryContract.OnGetMyProductsJSONCallback() {
+        model.getDataFromRepository(new RepositoryContract.OnGetMyProductsCallback() {
             @Override
-            public void onGetJSON(boolean error) {
-                if (!error) {
-                    state.myProductsList = myProductsItemList;
-                    view.get().fillArrayList(state);
-                    view.get().createRecyclerView();
-                } else {
-                    state.myProductsList = new ArrayList<>();
-                    view.get().fillArrayList(state);
-                    view.get().createRecyclerView();
-                }
+            public void setProductList(List<ProductItem> loadProducts) {
+                state.myProductsList = loadProducts;
+                view.get().fillArrayList(state);
             }
-        }, myProductsItemList);
+        });
     }
 
     @Override
     public void goToAddProduct() {
         view.get().goAddProduct();
-    }
-
-    @Override
-    public List<ProductItem> getListFromModel() {
-        return model.getListFromRepository();
     }
 
     @Override

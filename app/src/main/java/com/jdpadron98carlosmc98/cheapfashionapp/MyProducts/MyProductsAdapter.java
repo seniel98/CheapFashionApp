@@ -20,7 +20,7 @@ public class MyProductsAdapter extends RecyclerView.Adapter<MyProductsAdapter.Vi
     private final View.OnClickListener clickListener;
 
 
-    public MyProductsAdapter(View.OnClickListener listener,List<ProductItem> itemList) {
+    public MyProductsAdapter(View.OnClickListener listener, List<ProductItem> itemList) {
 
         this.itemList = itemList;
         clickListener = listener;
@@ -38,7 +38,8 @@ public class MyProductsAdapter extends RecyclerView.Adapter<MyProductsAdapter.Vi
     }
 
     public void setItems(List<ProductItem> items) {
-        itemList = items;
+        itemList.clear();
+        itemList.addAll(items);
         notifyDataSetChanged();
     }
 

@@ -73,7 +73,6 @@ public class HomePresenter implements HomeContract.Presenter {
         if (savedState != null) {
 
             // update the model if is necessary
-            model.onDataFromNextScreen(savedState.data);
         }
 
         // call the model and update the state

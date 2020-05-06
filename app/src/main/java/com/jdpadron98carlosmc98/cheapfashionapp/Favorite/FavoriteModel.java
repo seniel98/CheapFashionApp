@@ -55,19 +55,4 @@ public class FavoriteModel implements FavoriteContract.Model {
         // Log.e(TAG, "onDataFromPreviousScreen()");
     }
 
-    @Override
-    public List<ProductItem> getFavoriteList(List<ProductItem> list) {
-        List<ProductItem> favoriteList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            favoriteList.add(list.get(i));
-
-        }
-        return favoriteList;
-    }
-
-    @Override
-    public List<ProductItem> getListFromRepository() {
-        return repository.getProductList();
-    }
-
 }

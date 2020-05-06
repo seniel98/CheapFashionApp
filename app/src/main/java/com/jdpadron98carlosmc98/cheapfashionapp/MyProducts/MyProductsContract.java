@@ -4,7 +4,6 @@ import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 public interface MyProductsContract {
 
@@ -27,7 +26,6 @@ public interface MyProductsContract {
 
         void showToast(String msg);
 
-        void createRecyclerView();
     }
 
     interface Presenter {
@@ -61,26 +59,14 @@ public interface MyProductsContract {
 
         void goToAddProduct();
 
-        List<ProductItem> getListFromModel();
-
         void getDataFromRepository();
     }
 
     interface Model {
-        String getStoredData();
-
-        void onDataFromNextScreen(String data);
-
-        void onRestartScreen(String data);
-
-        void onDataFromPreviousScreen(String data);
-
-        List<ProductItem> getListFromRepository();
 
         void logout(RepositoryContract.OnLogoutCallback logoutCallback);
 
-        void getDataFromRepository(RepositoryContract.OnGetMyProductsJSONCallback myProductsJSONCallback,
-                                   List<ProductItem> myProductsItemList);
+        void getDataFromRepository(RepositoryContract.OnGetMyProductsCallback myProductsJSONCallback);
     }
 
     interface Router {

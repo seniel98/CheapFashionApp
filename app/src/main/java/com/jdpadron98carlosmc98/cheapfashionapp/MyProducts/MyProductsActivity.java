@@ -24,6 +24,7 @@ import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyProductsActivity
@@ -63,17 +64,12 @@ public class MyProductsActivity
             presenter.onRestart();
         }
 
-       /* recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        myProductsAdapter = new MyProductsAdapter(new View.OnClickListener() {
+        list = new ArrayList<>();
 
-            @Override
-            public void onClick(View view) {
-                ProductItem item = (ProductItem) view.getTag();
-                presenter.selectProduct(item);
-            }
-        }, list);
+        presenter.getDataFromRepository();
 
-        recyclerView.setAdapter(myProductsAdapter);*/
+        createRecyclerView();
+
 
         initBottomNavMenu();
 
@@ -94,8 +90,6 @@ public class MyProductsActivity
 
         // load the data
         presenter.onResume();
-
-        presenter.getDataFromRepository();
     }
 
     private void initLayoutComponents() {
@@ -104,8 +98,8 @@ public class MyProductsActivity
         recyclerView = findViewById(R.id.myProductsProductRecyclerView);
     }
 
-    @Override
-    public void createRecyclerView() {
+
+    private void createRecyclerView() {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         myProductsAdapter = new MyProductsAdapter(new View.OnClickListener() {
 
@@ -197,8 +191,16 @@ public class MyProductsActivity
     }
 
     @Override
-    public void fillArrayList(MyProductsViewModel viewModel) {
-        list = viewModel.myProductsList;
+    public void fillArrayList(final MyProductsViewModel viewModel) {
+        //Ejecutamos la accion de añadir los items en el hilo especifico para la interfaz grafica
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // deal with the data
+                myProductsAdapter.setItems(viewModel.myProductsList);
+            }
+        });
+
     }
 
     @Override

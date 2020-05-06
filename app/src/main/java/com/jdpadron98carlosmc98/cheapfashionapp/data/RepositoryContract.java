@@ -6,9 +6,6 @@ import java.util.List;
 
 public interface RepositoryContract {
 
-
-    List<ProductItem> getProductList();
-
     /**
      * Cogemos el archivo JSON desde la url de Firebase mediante el uso de la libreria Volley.
      * Esta forma es mucho mas rapida y eficaz que mediante el uso de Async Task.
@@ -23,9 +20,8 @@ public interface RepositoryContract {
      * Esta forma es mucho mas rapida y eficaz que mediante el uso de Async Task.
      *
      * @param getMyProductsJSONCallback
-     * @param myProductItemList
      */
-    void getMyProductsJSONFromURL(OnGetMyProductsJSONCallback getMyProductsJSONCallback, List<ProductItem> myProductItemList);
+    void getMyProductsFromDatabase(OnGetMyProductsCallback getMyProductsJSONCallback);
 
     /**
      * Metodo que registra un usuario en la aplicacion
@@ -163,8 +159,8 @@ public interface RepositoryContract {
         void onGetJSON(boolean error);
     }
 
-    interface OnGetMyProductsJSONCallback {
-        void onGetJSON(boolean error);
+    interface OnGetMyProductsCallback {
+        void setProductList(List<ProductItem> loadProducts);
     }
 
     interface OnGetUserProfileDataCallback {
