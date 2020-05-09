@@ -74,6 +74,8 @@ public class HomeActivity
 
         presenter.downloadDataFromRepository();
 
+        presenter.loadFavoriteList();
+
         createRecyclerView();
 
         initBottomNavMenu();

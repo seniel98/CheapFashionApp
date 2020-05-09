@@ -27,6 +27,11 @@ public class HomeModel implements HomeContract.Model {
         repository.getJSONFromURL(getJSONCallback);
     }
 
+    @Override
+    public void getFavoriteDataFromRepository(RepositoryContract.GetFavoriteJSONCallback getFavoriteJSONCallback) {
+        repository.getFavoriteJSONFromURL(getFavoriteJSONCallback);
+    }
+
 
     public RepositoryContract getRepository() {
         return repository;

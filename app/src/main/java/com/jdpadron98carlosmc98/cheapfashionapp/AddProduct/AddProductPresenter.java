@@ -102,6 +102,9 @@ public class AddProductPresenter implements AddProductContract.Presenter {
                     state.message="Book Added";
                     view.get().displayData(state);
                     view.get().goHome();
+                }else{
+                    state.message = "Fill all the fields";
+                    view.get().displayData(state);
                 }
             }
         });

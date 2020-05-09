@@ -1,5 +1,6 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.MyProducts;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 public class MyProductsModel implements MyProductsContract.Model {
@@ -22,6 +23,11 @@ public class MyProductsModel implements MyProductsContract.Model {
     @Override
     public void getDataFromRepository(RepositoryContract.OnGetMyProductsCallback myProductsJSONCallback) {
         repository.getMyProductsFromDatabase(myProductsJSONCallback);
+    }
+
+    @Override
+    public void deleteProduct(ProductItem item, RepositoryContract.DeleteProductCallback deleteProductCallback) {
+        repository.deleteProduct(item,deleteProductCallback);
     }
 
 }

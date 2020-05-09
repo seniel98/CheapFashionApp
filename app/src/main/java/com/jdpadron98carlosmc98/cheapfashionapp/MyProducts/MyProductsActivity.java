@@ -106,7 +106,7 @@ public class MyProductsActivity
             @Override
             public void onClick(View view) {
                 ProductItem item = (ProductItem) view.getTag();
-                presenter.selectProduct(item);
+                deleteDialog(item);
             }
         }, list);
 
@@ -157,6 +157,25 @@ public class MyProductsActivity
         });
     }
 
+    private void deleteDialog(final ProductItem item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete Product "+ item.name)
+                .setMessage("Are you sure?")
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.deleteProduct(item);
+                    }
+                });
+
+        builder.show();
+    }
 
     @Override
     public void onBackPressed() {

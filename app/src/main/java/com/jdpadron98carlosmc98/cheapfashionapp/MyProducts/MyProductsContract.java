@@ -60,6 +60,8 @@ public interface MyProductsContract {
         void goToAddProduct();
 
         void getDataFromRepository();
+
+        void deleteProduct(ProductItem item);
     }
 
     interface Model {
@@ -67,6 +69,8 @@ public interface MyProductsContract {
         void logout(RepositoryContract.OnLogoutCallback logoutCallback);
 
         void getDataFromRepository(RepositoryContract.OnGetMyProductsCallback myProductsJSONCallback);
+
+        void deleteProduct(ProductItem item,RepositoryContract.DeleteProductCallback deleteProductCallback);
     }
 
     interface Router {

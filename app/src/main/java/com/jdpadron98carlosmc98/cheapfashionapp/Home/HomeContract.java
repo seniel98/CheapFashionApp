@@ -65,7 +65,7 @@ public interface HomeContract {
 
         void downloadDataFromRepository();
 
-        void getProductListData();
+        void loadFavoriteList();
     }
 
     interface Model {
@@ -74,6 +74,8 @@ public interface HomeContract {
         void getProductListData(RepositoryContract.GetProductListCallback getProductListCallback);
 
         void getDataFromRepository(RepositoryContract.OnGetJSONCallback getJSONCallback);
+
+        void getFavoriteDataFromRepository(RepositoryContract.GetFavoriteJSONCallback getFavoriteJSONCallback);
     }
 
     interface Router {

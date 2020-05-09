@@ -115,6 +115,11 @@ public interface RepositoryContract {
      */
     void checkIfIsFavorite(final String productID, final IsFavoriteCallback isFavoriteCallback);
 
+    void deleteProduct(ProductItem item, DeleteProductCallback deleteProductCallback);
+
+    interface DeleteProductCallback{
+        void onDelete(boolean error);
+    }
 
     interface IsFavoriteCallback {
         void isFavorite(boolean isFavorite);

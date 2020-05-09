@@ -33,8 +33,7 @@
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:background="@color/addProductImageBackground"
-            android:elevation="4dp"
-            android:src="@drawable/ic_camera_alt_80px" />
+            android:elevation="4dp"/>
 
         <TextView
             android:id="@+id/addProductAddImageText"
