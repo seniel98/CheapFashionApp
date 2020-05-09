@@ -60,10 +60,10 @@ public class FavoriteActivity
         }
         list = new ArrayList<>();
 
-
-
         createRecyclerView();
+
         initBottomNavMenu();
+
         bottomNavigationView.getMenu().getItem(1).setChecked(true);
         //recyclerView.setAdapter(listAdapter);
     }
@@ -74,6 +74,7 @@ public class FavoriteActivity
         // load the data
         presenter.onResume();
         presenter.downloadDataFromRepository();
+
 
 
     }

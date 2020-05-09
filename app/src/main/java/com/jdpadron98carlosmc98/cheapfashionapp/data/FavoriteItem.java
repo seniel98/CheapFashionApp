@@ -3,17 +3,12 @@ package com.jdpadron98carlosmc98.cheapfashionapp.data;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
-
-import com.google.auto.value.AutoValue;
-
-import static androidx.room.ForeignKey.CASCADE;
 
 
 @Entity(
         tableName = "favorite"
-        )
+)
 
 
 public class FavoriteItem {
@@ -33,8 +28,8 @@ public class FavoriteItem {
     public String pid;
 
 
-    public FavoriteItem(){
-        
+    public FavoriteItem() {
+
     }
 
     @NonNull
