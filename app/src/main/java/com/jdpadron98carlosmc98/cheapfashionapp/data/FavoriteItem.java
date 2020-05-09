@@ -12,14 +12,9 @@ import static androidx.room.ForeignKey.CASCADE;
 
 
 @Entity(
-        tableName = "favorite",
-        foreignKeys = @ForeignKey(
-                entity = ProductItem.class,
-                parentColumns = "pid",
-                childColumns = "favoritePID",
-                onDelete = CASCADE
+        tableName = "favorite"
         )
-)
+
 
 public class FavoriteItem {
     public FavoriteItem(String id, String uid, String pid) {

@@ -118,7 +118,7 @@ public interface RepositoryContract {
     void deleteProduct(ProductItem item, DeleteProductCallback deleteProductCallback);
 
     interface DeleteProductCallback{
-        void onDelete(boolean error);
+        void onDelete(boolean error, List<ProductItem> productItems);
     }
 
     interface IsFavoriteCallback {

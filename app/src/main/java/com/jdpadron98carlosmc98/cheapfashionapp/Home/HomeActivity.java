@@ -74,7 +74,7 @@ public class HomeActivity
 
         presenter.downloadDataFromRepository();
 
-        presenter.loadFavoriteList();
+        //presenter.loadFavoriteList();
 
         createRecyclerView();
 

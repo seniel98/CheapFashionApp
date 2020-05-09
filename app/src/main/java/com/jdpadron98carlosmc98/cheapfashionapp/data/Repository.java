@@ -36,7 +36,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.database.CatalogDatabase;
 import com.jdpadron98carlosmc98.cheapfashionapp.database.FavoriteDao;
 import com.jdpadron98carlosmc98.cheapfashionapp.database.ProductDao;
@@ -141,12 +140,12 @@ public class Repository implements RepositoryContract {
     @Override
     public void addNewProduct(final String productName, final String productPrice, final String productDescription,
                               ImageView imageView, final CreateProductEntryCallBack callback) {
-        if(productDescription.equals("") ||
+        if (productDescription.equals("") ||
                 productPrice.equals("") ||
                 productName.equals("") ||
-                imageView.getDrawable() == null){
+                imageView.getDrawable() == null) {
             callback.onAddNewProduct(true);
-        }else {
+        } else {
             //final UserData user = getUserDataFromFirebase();
             final UserData[] user = new UserData[1];
             //databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid());
@@ -582,7 +581,7 @@ public class Repository implements RepositoryContract {
                     List<FavoriteItem> favoritePIDList = new ArrayList<>();
                     favoritePIDList.addAll(getFavoriteDao().loadFavoriteProducts());
                     for (FavoriteItem pid : favoritePIDList) {
-                        if(pid.getPid().equals(productID)){
+                        if (pid.getPid().equals(productID)) {
                             isFavoriteCallback.isFavorite(true);
                             return;
                         }
@@ -595,7 +594,7 @@ public class Repository implements RepositoryContract {
     }
 
     @Override
-    public void deleteProduct(final ProductItem item, DeleteProductCallback deleteProductCallback) {
+    public void deleteProduct(final ProductItem item, final DeleteProductCallback deleteProductCallback) {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -610,6 +609,7 @@ public class Repository implements RepositoryContract {
                     }
                 }
                 productsRef.child(auth.getCurrentUser().getUid()).setValue(productItems);
+                deleteProductCallback.onDelete(false, productItems);
             }
         });
     }
