@@ -149,23 +149,10 @@ public class Repository implements RepositoryContract {
             //final UserData user = getUserDataFromFirebase();
             final UserData[] user = new UserData[1];
             //databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid());
-            final List<ProductItem> productItems = new ArrayList<>();
             databaseReference = FirebaseDatabase.getInstance().getReference();
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    //Pillamos un tipo generico segun las recomendaciones de Firebase, ver https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html
-                    GenericTypeIndicator<List<ProductItem>> genericTypeIndicator = new GenericTypeIndicator<List<ProductItem>>() {
-                    };
-                    List<ProductItem> productList = dataSnapshot.child("products").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator);
-                    //Log.e(TAG,"productList"+ dataSnapshot.child("products").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator));
-
-                    if (productList != null) {
-                        productItems.addAll(productList);
-                    }
-
-
                     String name = dataSnapshot.child("users").child(auth.getCurrentUser().getUid()).child("name").getValue(String.class);
                     String email = dataSnapshot.child("users").child(auth.getCurrentUser().getUid()).child("email").getValue(String.class);
                     String phoneNumber = dataSnapshot.child("users").child(auth.getCurrentUser().getUid()).child("phoneNumber").getValue(String.class);
@@ -199,10 +186,9 @@ public class Repository implements RepositoryContract {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         String url = downloadUri.toString();//Se obtiene la direccion de la imagen que se acaba de subir
-                        final String uuid = UUID.randomUUID().toString().replace("-", "");
-                        ProductItem productItem = new ProductItem(uuid, productPrice, productName, url, productDescription, auth.getCurrentUser().getUid(), user[0]);
-                        productItems.add(productItem);
-                        productsRef.child(auth.getCurrentUser().getUid()).setValue(productItems);
+                        final String pid = UUID.randomUUID().toString().replace("-", "");
+                        ProductItem productItem = new ProductItem(pid, productPrice, productName, url, productDescription, auth.getCurrentUser().getUid(), user[0]);
+                        productsRef.child(auth.getCurrentUser().getUid()).child(pid).setValue(productItem);
                         callback.onAddNewProduct(false);
                     }
                 }
@@ -270,7 +256,7 @@ public class Repository implements RepositoryContract {
                 //Pillamos un tipo generico segun las recomendaciones de Firebase, ver https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html
                 GenericTypeIndicator<List<FavoriteItem>> genericTypeIndicator = new GenericTypeIndicator<List<FavoriteItem>>() {
                 };
-                List<FavoriteItem> productList = dataSnapshot.child(auth.getCurrentUser().getUid()).child("favorites").getValue(genericTypeIndicator);
+                List<FavoriteItem> productList = dataSnapshot.child(auth.getCurrentUser().getUid()).child("favorite").getValue(genericTypeIndicator);
                 //Log.e(TAG,"productList"+ dataSnapshot.child("products").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator));
 
                 if (productList != null) {
@@ -278,10 +264,10 @@ public class Repository implements RepositoryContract {
                 }
                 UUID uuid = UUID.randomUUID();
                 String randomUUIDString = uuid.toString();
-                FavoriteItem favoriteItem = new FavoriteItem(randomUUIDString, auth.getCurrentUser().getUid(), productItem.getPid());
+                FavoriteItem favoriteItem = new FavoriteItem(randomUUIDString, productItem.uid, productItem.getPid());
                 if (favoriteProducts.size() == 0) {
                     favoriteProducts.add(favoriteItem);
-                    usersRef.child(auth.getCurrentUser().getUid()).child("favorites").setValue(favoriteProducts);
+                    usersRef.child(auth.getCurrentUser().getUid()).child("favorite").setValue(favoriteProducts);
                     callback.onAddFavoriteProduct(false);
                 } else {
                     for (FavoriteItem product : favoriteProducts) {
@@ -292,7 +278,7 @@ public class Repository implements RepositoryContract {
                         }
                     }
                     favoriteProducts.add(favoriteItem);
-                    usersRef.child(auth.getCurrentUser().getUid()).child("favorites").setValue(favoriteProducts);
+                    usersRef.child(auth.getCurrentUser().getUid()).child("favorite").setValue(favoriteProducts);
                     callback.onAddFavoriteProduct(false);
 
                 }
@@ -320,7 +306,7 @@ public class Repository implements RepositoryContract {
                         break;
                     }
                 }
-                usersRef.child(auth.getCurrentUser().getUid()).child("favorites").setValue(favoritePIDList);
+                usersRef.child(auth.getCurrentUser().getUid()).child("favorite").setValue(favoritePIDList);
             }
         });
 
@@ -414,20 +400,38 @@ public class Repository implements RepositoryContract {
     }
 
     private boolean loadCatalogFromJSON(String json) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
         try {
+            List<ProductItem> productItems = new ArrayList<>();
             JSONObject jsonObject = new JSONObject(json);
             Iterator<String> keys = jsonObject.keys();
             while (keys.hasNext()) {
                 String key = keys.next();
-                JSONArray jsonArray = jsonObject.getJSONArray(key);
-                if (jsonArray.length() > 0) {
-                    List<ProductItem> productItems = Arrays.asList(gson.fromJson(jsonArray.toString(), ProductItem[].class));
-                    //Insertamos los productos obtenidos en la base de datos local
-                    insertListInDB(productItems);
+                JSONObject jsonObjectProductList = jsonObject.getJSONObject(key);
+                Iterator<String> productKeys = jsonObjectProductList.keys();
+                while (productKeys.hasNext()) {
+
+                    String productKey = productKeys.next();
+                    JSONObject jsonObjectProductData = jsonObjectProductList.getJSONObject(productKey);
+                    UserData userData = new UserData("", "", "");
+                    ProductItem productItem = new ProductItem("", "", "", "", "", "", userData);
+
+                    productItem.detail = jsonObjectProductData.getString("detail");
+                    productItem.name = jsonObjectProductData.getString("name");
+                    productItem.picture = jsonObjectProductData.getString("picture");
+                    productItem.pid = jsonObjectProductData.getString("pid");
+                    productItem.price = jsonObjectProductData.getString("price");
+                    productItem.uid = jsonObjectProductData.getString("uid");
+
+                    userData.setEmail(jsonObjectProductData.getJSONObject("userData").getString("email"));
+                    userData.setName(jsonObjectProductData.getJSONObject("userData").getString("name"));
+                    userData.setPhoneNumber(jsonObjectProductData.getJSONObject("userData").getString("phoneNumber"));
+
+                    productItem.userData = userData;
+
+                    productItems.add(productItem);
                 }
             }
+            insertListInDB(productItems);
             return true;
         } catch (JSONException error) {
         }
@@ -473,13 +477,40 @@ public class Repository implements RepositoryContract {
             @Override
             public void run() {
                 if (callback != null) {
-                    List<FavoriteItem> favoritePIDList = new ArrayList<>();
+                    final List<FavoriteItem> favoritePIDList = new ArrayList<>();
                     favoritePIDList.addAll(getFavoriteDao().loadFavoriteProducts());
-                    for (FavoriteItem pid : favoritePIDList) {
-                        ProductItem productItem = getProductDao().loadFavoriteProducts(pid.getPid());
-                        favoriteList.add(productItem);
-                    }
-                    callback.setFavoriteList(favoriteList);
+                    Log.e(TAG, "getProductListData.Repository" + favoritePIDList.size());
+                    //Aqui comprobamos si el elemento de favoritos se encuentra en la BDD en firebase
+                    productsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (favoritePIDList.size() == 0) {
+                                callback.setFavoriteList(favoriteList);
+                            } else {
+                                for (final FavoriteItem pid : favoritePIDList) {
+                                    if (!dataSnapshot.child(pid.getUid()).hasChild(pid.getPid())) {
+                                        //Si no esta en la base de datos lo borramos de la local
+                                        deleteFavoriteProduct(pid);
+                                    } else {
+                                        //Ejecutamos el metodo de cargar los favortitos en otro hilo distinto del principal
+                                        AsyncTask.execute(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                ProductItem productItem = getProductDao().loadFavoriteProducts(pid.getPid());
+                                                favoriteList.add(productItem);
+                                                callback.setFavoriteList(favoriteList);
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
             }
         });
@@ -513,7 +544,7 @@ public class Repository implements RepositoryContract {
         Gson gson = gsonBuilder.create();
         try {
             JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonArray = jsonObject.getJSONArray("favorites");
+            JSONArray jsonArray = jsonObject.getJSONArray("favorite");
             if (jsonArray.length() > 0) {
                 List<FavoriteItem> favoriteItems = Arrays.asList(gson.fromJson(jsonArray.toString(), FavoriteItem[].class));
                 insertFavoriteListInDB(favoriteItems);
