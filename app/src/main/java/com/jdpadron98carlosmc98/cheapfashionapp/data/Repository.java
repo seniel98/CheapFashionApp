@@ -36,6 +36,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.database.CatalogDatabase;
 import com.jdpadron98carlosmc98.cheapfashionapp.database.FavoriteDao;
 import com.jdpadron98carlosmc98.cheapfashionapp.database.ProductDao;
@@ -140,68 +141,74 @@ public class Repository implements RepositoryContract {
     @Override
     public void addNewProduct(final String productName, final String productPrice, final String productDescription,
                               ImageView imageView, final CreateProductEntryCallBack callback) {
+        if(productDescription.equals("") ||
+                productPrice.equals("") ||
+                productName.equals("") ||
+                imageView.getDrawable() == null){
+            callback.onAddNewProduct(true);
+        }else {
+            //final UserData user = getUserDataFromFirebase();
+            final UserData[] user = new UserData[1];
+            //databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid());
+            final List<ProductItem> productItems = new ArrayList<>();
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-        //final UserData user = getUserDataFromFirebase();
-        final UserData[] user = new UserData[1];
-        //databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid());
-        final List<ProductItem> productItems = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    //Pillamos un tipo generico segun las recomendaciones de Firebase, ver https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html
+                    GenericTypeIndicator<List<ProductItem>> genericTypeIndicator = new GenericTypeIndicator<List<ProductItem>>() {
+                    };
+                    List<ProductItem> productList = dataSnapshot.child("products").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator);
+                    //Log.e(TAG,"productList"+ dataSnapshot.child("products").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator));
 
-                //Pillamos un tipo generico segun las recomendaciones de Firebase, ver https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html
-                GenericTypeIndicator<List<ProductItem>> genericTypeIndicator = new GenericTypeIndicator<List<ProductItem>>() {
-                };
-                List<ProductItem> productList = dataSnapshot.child("products").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator);
-                //Log.e(TAG,"productList"+ dataSnapshot.child("products").child(auth.getCurrentUser().getUid()).getValue(genericTypeIndicator));
+                    if (productList != null) {
+                        productItems.addAll(productList);
+                    }
 
-                if (productList != null) {
-                    productItems.addAll(productList);
+
+                    String name = dataSnapshot.child("users").child(auth.getCurrentUser().getUid()).child("name").getValue(String.class);
+                    String email = dataSnapshot.child("users").child(auth.getCurrentUser().getUid()).child("email").getValue(String.class);
+                    String phoneNumber = dataSnapshot.child("users").child(auth.getCurrentUser().getUid()).child("phoneNumber").getValue(String.class);
+                    user[0] = new UserData(name, email, phoneNumber);
                 }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                String name = dataSnapshot.child("users").child(auth.getCurrentUser().getUid()).child("name").getValue(String.class);
-                String email = dataSnapshot.child("users").child(auth.getCurrentUser().getUid()).child("email").getValue(String.class);
-                String phoneNumber = dataSnapshot.child("users").child(auth.getCurrentUser().getUid()).child("phoneNumber").getValue(String.class);
-                user[0] = new UserData(name, email, phoneNumber);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        byte[] data = convertImageView(imageView);
-        final StorageReference ref = storageRef.child("images/" + auth.getCurrentUser().getUid() +
-                "/" + productName + ".jpg");
-        UploadTask uploadTask = ref.putBytes(data);
-        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot,
-                Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
                 }
+            });
 
-                // Continue with the task to get the download URL
-                return ref.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                    String url = downloadUri.toString();//Se obtiene la direccion de la imagen que se acaba de subir
-                    final String uuid = UUID.randomUUID().toString().replace("-", "");
-                    ProductItem productItem = new ProductItem(uuid, productPrice, productName, url, productDescription, auth.getCurrentUser().getUid(), user[0]);
-                    productItems.add(productItem);
-                    productsRef.child(auth.getCurrentUser().getUid()).setValue(productItems);
-                    callback.onAddNewProduct(false);
+            byte[] data = convertImageView(imageView);
+            final StorageReference ref = storageRef.child("images/" + auth.getCurrentUser().getUid() +
+                    "/" + productName + ".jpg");
+            UploadTask uploadTask = ref.putBytes(data);
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot,
+                    Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return ref.getDownloadUrl();
                 }
-            }
-        });
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        String url = downloadUri.toString();//Se obtiene la direccion de la imagen que se acaba de subir
+                        final String uuid = UUID.randomUUID().toString().replace("-", "");
+                        ProductItem productItem = new ProductItem(uuid, productPrice, productName, url, productDescription, auth.getCurrentUser().getUid(), user[0]);
+                        productItems.add(productItem);
+                        productsRef.child(auth.getCurrentUser().getUid()).setValue(productItems);
+                        callback.onAddNewProduct(false);
+                    }
+                }
+            });
+        }
     }
 
     @Override
