@@ -92,6 +92,7 @@ public class HomePresenter implements HomeContract.Presenter {
                 state.homeProductList = loadProducts;
                 //Log.e(TAG, "getProductListData" + loadProducts.get(0).userData);
                 view.get().fillArrayList(state);
+                getFavoriteListData();
             }
         });
     }
