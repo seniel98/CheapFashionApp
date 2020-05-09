@@ -587,6 +587,26 @@ public class Repository implements RepositoryContract {
         });
     }
 
+    @Override
+    public void deleteProduct(final ProductItem item, DeleteProductCallback deleteProductCallback) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                List<ProductItem> productItems = new ArrayList<>();
+                productItems.addAll(getProductDao().loadMyProducts(auth.getCurrentUser().getUid()));
+
+                for (ProductItem product : productItems) {
+                    if (product.getPid().equals(item.getPid())) {
+                        productItems.remove(product);
+                        getProductDao().deleteProduct(product);
+                        break;
+                    }
+                }
+                productsRef.child(auth.getCurrentUser().getUid()).setValue(productItems);
+            }
+        });
+    }
+
 
     @Override
     public void getFavoriteJSONFromURL(final GetFavoriteJSONCallback getFavoriteJSONCallback) {

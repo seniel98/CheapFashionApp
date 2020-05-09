@@ -54,6 +54,8 @@ public class MyProductsAdapter extends RecyclerView.Adapter<MyProductsAdapter.Vi
     public void onBindViewHolder(final MyProductsAdapter.ViewHolder holder, int position) {
         holder.priceProduct.setText(itemList.get(position).getPrice());
         holder.nameProduct.setText(itemList.get(position).getName());
+        holder.itemView.setTag(itemList.get(position));
+        holder.itemView.setOnClickListener(clickListener);
         //Esto esta hecho solo para la version del primer Sprint
         loadImageFromURL(holder.imageProduct, itemList.get(position).getPicture());
         //Insertar la imagen al producto que creamos para posteriormente tenerla en el detalle

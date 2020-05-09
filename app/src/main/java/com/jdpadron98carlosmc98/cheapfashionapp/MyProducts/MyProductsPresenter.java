@@ -146,6 +146,16 @@ public class MyProductsPresenter implements MyProductsContract.Presenter {
     }
 
     @Override
+    public void deleteProduct(ProductItem item) {
+        model.deleteProduct(item,new RepositoryContract.DeleteProductCallback() {
+            @Override
+            public void onDelete(boolean error) {
+
+            }
+        });
+    }
+
+    @Override
     public void goToAddProduct() {
         view.get().goAddProduct();
     }

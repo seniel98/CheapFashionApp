@@ -74,6 +74,8 @@ public class HomeActivity
 
         presenter.downloadDataFromRepository();
 
+        presenter.loadFavoriteList();
+
         createRecyclerView();
 
         initBottomNavMenu();
@@ -198,7 +200,6 @@ public class HomeActivity
 
 
         // load the data
-        presenter.loadFavoriteList();
         presenter.onResume();
 
 
