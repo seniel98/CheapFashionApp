@@ -479,24 +479,29 @@ public class Repository implements RepositoryContract {
                 if (callback != null) {
                     final List<FavoriteItem> favoritePIDList = new ArrayList<>();
                     favoritePIDList.addAll(getFavoriteDao().loadFavoriteProducts());
+                    Log.e(TAG, "getProductListData.Repository" + favoritePIDList.size());
                     //Aqui comprobamos si el elemento de favoritos se encuentra en la BDD en firebase
                     productsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (final FavoriteItem pid : favoritePIDList) {
-                                if (!dataSnapshot.child(pid.getUid()).hasChild(pid.getPid())) {
-                                    //Si no esta en la base de datos lo borramos de la local
-                                    deleteFavoriteProduct(pid);
-                                } else {
-                                    //Ejecutamos el metodo de cargar los favortitos en otro hilo distinto del principal
-                                    AsyncTask.execute(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            ProductItem productItem = getProductDao().loadFavoriteProducts(pid.getPid());
-                                            favoriteList.add(productItem);
-                                            callback.setFavoriteList(favoriteList);
-                                        }
-                                    });
+                            if (favoritePIDList.size() == 0) {
+                                callback.setFavoriteList(favoriteList);
+                            } else {
+                                for (final FavoriteItem pid : favoritePIDList) {
+                                    if (!dataSnapshot.child(pid.getUid()).hasChild(pid.getPid())) {
+                                        //Si no esta en la base de datos lo borramos de la local
+                                        deleteFavoriteProduct(pid);
+                                    } else {
+                                        //Ejecutamos el metodo de cargar los favortitos en otro hilo distinto del principal
+                                        AsyncTask.execute(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                ProductItem productItem = getProductDao().loadFavoriteProducts(pid.getPid());
+                                                favoriteList.add(productItem);
+                                                callback.setFavoriteList(favoriteList);
+                                            }
+                                        });
+                                    }
                                 }
                             }
                         }
