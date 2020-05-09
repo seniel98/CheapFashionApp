@@ -60,7 +60,7 @@ public class FavoriteActivity
         }
         list = new ArrayList<>();
 
-        presenter.downloadDataFromRepository();
+
 
         createRecyclerView();
         initBottomNavMenu();
@@ -73,6 +73,8 @@ public class FavoriteActivity
         super.onResume();
         // load the data
         presenter.onResume();
+        presenter.downloadDataFromRepository();
+
 
     }
 

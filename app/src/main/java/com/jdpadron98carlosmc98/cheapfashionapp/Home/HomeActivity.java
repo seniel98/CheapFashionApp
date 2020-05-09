@@ -198,6 +198,7 @@ public class HomeActivity
 
 
         // load the data
+        presenter.loadFavoriteList();
         presenter.onResume();
 
 

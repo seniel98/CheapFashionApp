@@ -280,6 +280,7 @@ public class Repository implements RepositoryContract {
                 } else {
                     for (FavoriteItem product : favoriteProducts) {
                         if (product.getPid().equals(favoriteItem.getPid())) {
+                            deleteFavoriteProduct(favoriteItem);
                             callback.onAddFavoriteProduct(true);
                             return;
                         }
@@ -294,6 +295,26 @@ public class Repository implements RepositoryContract {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+    }
+
+    private void deleteFavoriteProduct(final FavoriteItem favoriteItem) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                List<FavoriteItem> favoritePIDList = new ArrayList<>();
+                favoritePIDList.addAll(getFavoriteDao().loadFavoriteProducts());
+
+                for (FavoriteItem product : favoritePIDList) {
+                    if (product.getPid().equals(favoriteItem.getPid())) {
+                        favoritePIDList.remove(product);
+                        getFavoriteDao().deleteFavoriteProduct(product);
+                        break;
+                    }
+                }
+                usersRef.child(auth.getCurrentUser().getUid()).child("favorites").setValue(favoritePIDList);
             }
         });
 

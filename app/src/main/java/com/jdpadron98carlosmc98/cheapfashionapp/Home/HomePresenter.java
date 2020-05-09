@@ -85,7 +85,7 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
 
-    public void getProductListData() {
+    private void getProductListData() {
         model.getProductListData(new RepositoryContract.GetProductListCallback() {
             @Override
             public void setProductList(List<ProductItem> loadProducts) {
@@ -105,6 +105,23 @@ public class HomePresenter implements HomeContract.Presenter {
                     view.get().showToast("NO CONNECTION. DATA MAY BE OBSOLETE");
                 }else{
                     getProductListData();
+
+                }
+            }
+        });
+    }
+
+    @Override
+    public void loadFavoriteList() {
+        getFavoriteListData();
+    }
+
+    private void getFavoriteListData() {
+        model.getFavoriteDataFromRepository(new RepositoryContract.GetFavoriteJSONCallback() {
+            @Override
+            public void onGetFavoriteJSONCallback(boolean error) {
+                if (!error){
+                    Log.d(TAG,"se ha cargado la base de datos de favorite");
                 }
             }
         });
