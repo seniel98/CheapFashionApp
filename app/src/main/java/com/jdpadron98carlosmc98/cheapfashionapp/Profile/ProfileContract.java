@@ -52,6 +52,8 @@ public interface ProfileContract {
         void onStart();
 
         void onRestart();
+
+        void changeUserData(String name, String phone);
     }
 
     interface Model {
@@ -59,6 +61,8 @@ public interface ProfileContract {
         //String fetchData();
 
         void getUserProfileData(UserData userData, RepositoryContract.OnGetUserProfileDataCallback getUserProfileDataCallback);
+
+        void changeUserData(String name, String phone, RepositoryContract.ChangeUserDataCallback changeUserDataCallback);
     }
 
     interface Router {

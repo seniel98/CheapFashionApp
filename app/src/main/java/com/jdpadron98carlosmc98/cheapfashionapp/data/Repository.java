@@ -186,7 +186,7 @@ public class Repository implements RepositoryContract {
                         Uri downloadUri = task.getResult();
                         String url = downloadUri.toString();//Se obtiene la direccion de la imagen que se acaba de subir
                         final String pid = UUID.randomUUID().toString().replace("-", "");
-                        ProductItem productItem = new ProductItem(pid, productPrice, productName, url, productDescription, auth.getCurrentUser().getUid(), user[0]);
+                        ProductItem productItem = new ProductItem(pid, productPrice, productName, url, productDescription, auth.getCurrentUser().getUid(), null);
                         productsRef.child(auth.getCurrentUser().getUid()).child(pid).setValue(productItem);
                         callback.onAddNewProduct(false);
                     }
@@ -398,9 +398,9 @@ public class Repository implements RepositoryContract {
                 });
     }
 
-    private boolean loadCatalogFromJSON(String json) {
+    private boolean loadCatalogFromJSON(String json, final OnGetJSONCallback getJSONCallback) {
         try {
-            List<ProductItem> productItems = new ArrayList<>();
+            final List<ProductItem> productItems = new ArrayList<>();
             JSONObject jsonObject = new JSONObject(json);
             Iterator<String> keys = jsonObject.keys();
             while (keys.hasNext()) {
@@ -411,8 +411,8 @@ public class Repository implements RepositoryContract {
 
                     String productKey = productKeys.next();
                     JSONObject jsonObjectProductData = jsonObjectProductList.getJSONObject(productKey);
-                    UserData userData = new UserData("", "", "");
-                    ProductItem productItem = new ProductItem("", "", "", "", "", "", userData);
+                    final UserData userData = new UserData("", "", "");
+                    final ProductItem productItem = new ProductItem("", "", "", "", "", "", userData);
 
                     productItem.detail = jsonObjectProductData.getString("detail");
                     productItem.name = jsonObjectProductData.getString("name");
@@ -421,17 +421,31 @@ public class Repository implements RepositoryContract {
                     productItem.price = jsonObjectProductData.getString("price");
                     productItem.uid = jsonObjectProductData.getString("uid");
 
+                    //Cogemos los datos del usuario en tiempo real
+                    usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            userData.setEmail(dataSnapshot.child(productItem.uid).child("email").getValue(String.class));
+                            userData.setPhoneNumber(dataSnapshot.child(productItem.uid).child("phoneNumber").getValue(String.class));
+                            userData.setName(dataSnapshot.child(productItem.uid).child("name").getValue(String.class));
+                            productItem.userData = userData;
+                            productItems.add(productItem);
+                            insertListInDB(productItems);
+                            getJSONCallback.onGetJSON(false);
+                        }
 
-                    userData.setEmail(jsonObjectProductData.getJSONObject("userData").getString("email"));
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                   /* userData.setEmail(jsonObjectProductData.getJSONObject("userData").getString("email"));
                     userData.setName(jsonObjectProductData.getJSONObject("userData").getString("name"));
                     userData.setPhoneNumber(jsonObjectProductData.getJSONObject("userData").getString("phoneNumber"));
-
-                    productItem.userData = userData;
-
-                    productItems.add(productItem);
+                    */
                 }
             }
-            insertListInDB(productItems);
             return true;
         } catch (JSONException error) {
         }
@@ -525,8 +539,9 @@ public class Repository implements RepositoryContract {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        loadCatalogFromJSON(response.toString());
-                        getJSONCallback.onGetJSON(false);
+                        if (!loadCatalogFromJSON(response.toString(), getJSONCallback)) {
+                            getJSONCallback.onGetJSON(true);
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -643,6 +658,18 @@ public class Repository implements RepositoryContract {
                 deleteProductCallback.onDelete(false, productItems);
             }
         });
+    }
+
+    @Override
+    public void changeUserData(String name, String phone, ChangeUserDataCallback changeUserDataCallback) {
+        if (name.equals("") || phone.equals("")) {
+            changeUserDataCallback.onChangeUserData(true);
+        } else {
+            usersRef.child(auth.getCurrentUser().getUid()).child("name").setValue(name);
+            usersRef.child(auth.getCurrentUser().getUid()).child("phoneNumber").setValue(phone);
+            changeUserDataCallback.onChangeUserData(false);
+        }
+
     }
 
 

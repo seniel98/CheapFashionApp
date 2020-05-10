@@ -72,7 +72,6 @@ public class HomeActivity
 
         list = new ArrayList<>();
 
-        presenter.downloadDataFromRepository();
 
         //presenter.loadFavoriteList();
 
@@ -201,6 +200,11 @@ public class HomeActivity
 
         // load the data
         presenter.onResume();
+
+        presenter.downloadDataFromRepository();
+
+
+
 
 
     }

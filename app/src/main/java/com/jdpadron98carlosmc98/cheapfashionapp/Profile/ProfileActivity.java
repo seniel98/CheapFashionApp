@@ -72,6 +72,14 @@ public class ProfileActivity
                 presenter.goToChangePass();
             }
         });
+
+        saveProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                presenter.changeUserData(nameText.getText().toString().trim(),phoneText.getText().toString().trim());
+            }
+        });
     }
 
     @Override
@@ -105,9 +113,7 @@ public class ProfileActivity
      * Fijamos los textos del layout
      */
     private void setUpProfileLayout() {
-        nameText.setEnabled(false);
         emailText.setEnabled(false);
-        phoneText.setEnabled(false);
         saveProfileButton.setText(R.string.saveProfileButtonLabel);
         changePassText.setText(R.string.changePassText);
     }
