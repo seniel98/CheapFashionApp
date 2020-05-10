@@ -104,9 +104,7 @@ public class Repository implements RepositoryContract {
 
         favoriteRef = FirebaseDatabase.getInstance().getReference().child("favoriteProducts");
 
-
         clearDBTable();
-
     }
 
     private void clearDBTable() {
@@ -122,6 +120,7 @@ public class Repository implements RepositoryContract {
     @Override
     public void logout(OnLogoutCallback logoutCallback) {
         auth.signOut();
+        clearDBTable();
         logoutCallback.onLogout(false);
     }
 
@@ -421,6 +420,7 @@ public class Repository implements RepositoryContract {
                     productItem.pid = jsonObjectProductData.getString("pid");
                     productItem.price = jsonObjectProductData.getString("price");
                     productItem.uid = jsonObjectProductData.getString("uid");
+
 
                     userData.setEmail(jsonObjectProductData.getJSONObject("userData").getString("email"));
                     userData.setName(jsonObjectProductData.getJSONObject("userData").getString("name"));
