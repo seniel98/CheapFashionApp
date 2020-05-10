@@ -110,6 +110,7 @@ public interface RepositoryContract {
 
     /**
      * Metodo que compueba si el prodcuto está en favoritos con el pid.
+     *
      * @param productID
      * @param isFavoriteCallback
      */
@@ -117,7 +118,14 @@ public interface RepositoryContract {
 
     void deleteProduct(ProductItem item, DeleteProductCallback deleteProductCallback);
 
-    interface DeleteProductCallback{
+
+    void changeUserData(String name, String phone, ChangeUserDataCallback changeUserDataCallback);
+
+    interface ChangeUserDataCallback {
+        void onChangeUserData(boolean error);
+    }
+
+    interface DeleteProductCallback {
         void onDelete(boolean error, List<ProductItem> productItems);
     }
 

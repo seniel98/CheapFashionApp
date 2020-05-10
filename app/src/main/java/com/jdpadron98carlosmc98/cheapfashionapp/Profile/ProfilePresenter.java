@@ -40,18 +40,32 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     }
 
     @Override
+    public void changeUserData(String name, String phone) {
+        model.changeUserData(name, phone, new RepositoryContract.ChangeUserDataCallback() {
+            @Override
+            public void onChangeUserData(boolean error) {
+                if (!error) {
+                    view.get().showToast("Successfully updated!");
+                } else {
+                    view.get().showToast("Fields must not be empty");
+                }
+            }
+        });
+    }
+
+    @Override
     public void getUserProfileData() {
-        final UserData userData = new UserData("","","");
+        final UserData userData = new UserData("", "", "");
         model.getUserProfileData(userData, new RepositoryContract.OnGetUserProfileDataCallback() {
             @Override
             public void onGetProfileData(boolean error) {
-                if(!error){
+                if (!error) {
                     state.email = userData.getEmail();
                     state.name = userData.getName();
                     state.phone = userData.getPhoneNumber();
-                    Log.e(TAG,"state.phone" + userData.getEmail());
+                    Log.e(TAG, "state.phone" + userData.getEmail());
                     view.get().updateView(state);
-                }else{
+                } else {
                     view.get().showToast("Error retrieving data");
                 }
             }
@@ -98,10 +112,10 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         model.logout(new RepositoryContract.OnLogoutCallback() {
             @Override
             public void onLogout(boolean error) {
-                if(!error){
+                if (!error) {
                     view.get().showToast("Logged out successfully!");
                     view.get().goToLogin();
-                }else{
+                } else {
 
                 }
             }

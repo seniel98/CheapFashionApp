@@ -23,12 +23,8 @@ public class ProfileModel implements ProfileContract.Model {
         repository.getUserProfileData(userData, getUserProfileDataCallback);
     }
 
-
-    /*
     @Override
-    public String fetchData() {
-        // Log.e(TAG, "fetchData()");
-        return "Hello";
+    public void changeUserData(String name, String phone, RepositoryContract.ChangeUserDataCallback changeUserDataCallback) {
+        repository.changeUserData(name, phone, changeUserDataCallback);
     }
-    */
 }
