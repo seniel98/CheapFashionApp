@@ -38,11 +38,6 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
             // update the model if is necessary
             //model.onDataFromPreviousScreen(savedState.data);
         }
-        //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
-//        List<ProductItem> list = getListFromModel();
-//        List<ProductItem> favoriteList = model.getFavoriteList(list);
-//        state.productItems = favoriteList;
-//        view.get().fillArrayList(state);
     }
 
     @Override
@@ -59,13 +54,7 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
             // update the model if is necessary
             //model.onDataFromPreviousScreen(savedState.data);
         }
-        //Correccion para guardar el estado de la lista en el caso de cargar los items para la prueba
-//        List<ProductItem> list = getListFromModel();
-//        List<ProductItem> favoriteList = model.getFavoriteList(list);
-//        state.productItems = favoriteList;
-//        view.get().fillArrayList(state);
-        // update the model if is necessary
-        //model.onRestartScreen(state.data);
+
     }
 
     @Override
@@ -80,16 +69,13 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
             model.onDataFromNextScreen(savedState.data);
         }
 
-        // call the model and update the state
-//        state.data = model.getStoredData();
-
-        // update the view
-//        List<ProductItem> favoriteList = model.getFavoriteList(state.productItems);
-//        state.productItems = favoriteList;
-//        view.get().fillArrayList(state);
-
-
     }
+
+    /**
+     * Metodo que obtiene los productos de favoritos de la base de datos local y la inserta en el
+     * adapter.
+     */
+
     private void getProductListData() {
         model.getFavoriteListData(new RepositoryContract.GetFavoriteListCallback() {
             @Override
@@ -102,6 +88,9 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
         });
     }
 
+    /**
+     * Metodo que obtiene los productos favoritos del usuario desde el Json de firebaseDatabase
+     */
     public void downloadDataFromRepository() {
         model.getDataFromRepository(new RepositoryContract.GetFavoriteJSONCallback() {
             @Override

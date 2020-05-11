@@ -82,6 +82,12 @@ public class AddProductActivity
         });
     }
 
+    /**
+
+    /**
+     * Metodo que crea un dialog, en el cual se puede seleccionar la galeria o la camara para
+     * añadir una imagen al imageView del producto para poder añadirlo
+     */
     private void selectImage(){
         final CharSequence[] items= {"Camera", "Gallery", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(AddProductActivity.this);
@@ -105,6 +111,11 @@ public class AddProductActivity
         builder.show();
     }
 
+    /**
+     * Metodo que pide los permisos para poder acceder a la camara del dispositivo
+     * @param permission
+     * @param requestCode
+     */
     private void askPermission(String permission, int requestCode) {
         if(ContextCompat.checkSelfPermission(this, permission)!= PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
@@ -113,6 +124,13 @@ public class AddProductActivity
         }
     }
 
+    /**
+     *  Metodo que dependiendo de donde hayamos tomado la imagen del producto lo inserta en el
+     *  imageView
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode,resultCode,data);

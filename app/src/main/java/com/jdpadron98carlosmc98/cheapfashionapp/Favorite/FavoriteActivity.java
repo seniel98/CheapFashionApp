@@ -99,6 +99,10 @@ public class FavoriteActivity
         recyclerView = findViewById(R.id.recyclerFavoriteProducts);
     }
 
+    /**
+     * Metodo que crea un dialog al pulsar en el boton de desconectar y cierra la sesion en caso de
+     * pulsar que si.
+     */
     private void logoutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Logout")
@@ -170,6 +174,11 @@ public class FavoriteActivity
     }
 
 
+    /**
+     * Metodo que crea un Toast con el mensaje que se pasa por parametros.
+     *
+     * @param msg
+     */
     @Override
     public void showToast(String msg) {
         final Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);

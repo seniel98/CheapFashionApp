@@ -90,6 +90,11 @@ public class HomeActivity
         });
     }
 
+    /**
+     * Metodo que crea un dialog al pulsar en el boton de desconectar y cierra la sesion en caso de
+     * pulsar que si.
+     */
+
     private void logoutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Logout")
@@ -248,6 +253,10 @@ public class HomeActivity
         presenter.onDestroy();
     }
 
+    /**
+     * Metodo que crea un toast con el mensaje que se le pasa por parametros.
+     * @param msg
+     */
 
     @Override
     public void showToast(String msg) {
@@ -271,6 +280,11 @@ public class HomeActivity
 //        ((TextView) findViewById(R.id.data)).setText(viewModel.data);
     }
 
+    /**
+     * Metodo que carga la lista de productos al adapter
+     *
+     * @param viewModel
+     */
     @Override
     public void fillArrayList(final HomeViewModel viewModel) {
         //Ejecutamos la accion de añadir los items en el hilo especifico para la interfaz grafica

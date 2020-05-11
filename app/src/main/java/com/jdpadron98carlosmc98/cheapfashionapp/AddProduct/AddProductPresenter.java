@@ -93,13 +93,20 @@ public class AddProductPresenter implements AddProductContract.Presenter {
         router.saveState(state);
     }
 
+    /**
+     * Metodo que dependiendo de si el producto se pudo añadir o no, crea un mensaje
+     * @param productName
+     * @param productPrice
+     * @param productDescription
+     * @param addProductImage
+     */
     @Override
     public void addNewProduct(String productName, String productPrice, String productDescription, ImageView addProductImage) {
             model.addProduct(productName,productPrice,productDescription,addProductImage, new RepositoryContract.CreateProductEntryCallBack() {
             @Override
             public void onAddNewProduct(boolean error) {
                 if(!error){
-                    state.message="Book Added";
+                    state.message="Product added";
                     view.get().displayData(state);
                     view.get().goHome();
                 }else{

@@ -60,6 +60,11 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
         this.router = router;
     }
 
+    /**
+     * Metodo que crea un toast en caso de que se envie el correo al email que indicamos por parametros.
+     *
+     * @param email
+     */
     @Override
     public void onSendClicked(String email) {
         model.onForgetPassword(email, new RepositoryContract.onForgetPasswordCallback() {

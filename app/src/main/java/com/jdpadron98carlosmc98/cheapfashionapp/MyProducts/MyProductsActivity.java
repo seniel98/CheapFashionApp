@@ -157,6 +157,13 @@ public class MyProductsActivity
         });
     }
 
+    /**
+     * Metodo que crea un un dialog al pulsar en un producto del RecyclerView, y en caso de pulsar
+     * que si, elimina el producto.
+     *
+     * @param item
+     */
+
     private void deleteDialog(final ProductItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete Product "+ item.name)

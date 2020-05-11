@@ -34,7 +34,7 @@ public interface RepositoryContract {
 
 
     /**
-     * Method that logs in if the user is on the Firebase Authentication dB
+     * Metodo que permite al usuario iniciar sesion si tiene una cuenta en Firebase authentication
      *
      * @param email
      * @param password
@@ -51,7 +51,7 @@ public interface RepositoryContract {
     void logout(RepositoryContract.OnLogoutCallback logoutCallback);
 
     /**
-     * Metodo para comprobar si el usuario tiene la sesion activa
+     * Metodo para comprobar si el usuario tiene la sesion activa.
      *
      * @param loggedInCallback
      */
@@ -59,7 +59,7 @@ public interface RepositoryContract {
 
 
     /**
-     * Method that add the data values to the database and storage the image into firebase Storage
+     * Metodo que añade el producto a Firebase Database y la imagen del mismo a firebase Storage.
      *
      * @param productName
      * @param productPrice
@@ -69,10 +69,17 @@ public interface RepositoryContract {
      */
     void addNewProduct(final String productName, final String productPrice, final String productDescription, final ImageView imageView, final RepositoryContract.CreateProductEntryCallBack callback);
 
+    /**
+     * Metodo que nos envia un correo al email dado para poder recuperar la cuenta en caso de haber
+     * olvidado la contraseña.
+     * @param email
+     * @param callback
+     */
     void forgetPassword(String email, RepositoryContract.onForgetPasswordCallback callback);
 
     /**
-     * Method that change current password with a new one
+     * Metodo que permite cambiar la contraseña actual por una nueva, que tiene que cumplir con
+     * los requisitos.
      *
      * @param currentPassword
      * @param newPassword
@@ -90,22 +97,34 @@ public interface RepositoryContract {
 
 
     /**
-     * Method that add the data values to the database and storage the image into firebase Storage
+     * Metodo que añade a la lista de favorites del usuario el producto en cuestion.
      *
      * @param productItem
      * @param callback
      */
     void addFavoriteProduct(ProductItem productItem, final RepositoryContract.CreateFavoriteProductEntryCallBack callback);
 
+    /**
+     * Metodo que pilla el Json de favoritos de cada usuario de Firebase para luego poder cargarlo a
+     * la base de datos local (Room).
+     *
+     * @param getFavoriteJSONCallback
+     */
     void getFavoriteJSONFromURL(final GetFavoriteJSONCallback getFavoriteJSONCallback);
 
     /**
-     * Metodo para pillar la lista de productos de la base de datos en Room
+     * Metodo para pillar la lista de productos de la base de datos en Room.
      *
      * @param callback
      */
     void getProductList(final GetProductListCallback callback);
 
+    /**
+     * Metodo para pillar la lista de productos de la base de datos de Room de la tabla de favortos
+     * del usuario que esta conectado.
+     *
+     * @param callback
+     */
     void getFavoriteList(final GetFavoriteListCallback callback);
 
     /**
@@ -116,9 +135,23 @@ public interface RepositoryContract {
      */
     void checkIfIsFavorite(final String productID, final IsFavoriteCallback isFavoriteCallback);
 
+    /**
+     * Metodo que elimina los datos del producto en cuestion, asi como si un usuario lo tiene como
+     * favorito, lo elimina tambien de esa lista.
+     *
+     * @param item
+     * @param deleteProductCallback
+     */
     void deleteProduct(ProductItem item, DeleteProductCallback deleteProductCallback);
 
-
+    /**
+     * Metodo para cambiar informacion del usuario, el nombre y el telefono, dejando el correo como
+     * una variable que no se puede modificar.
+     *
+     * @param name
+     * @param phone
+     * @param changeUserDataCallback
+     */
     void changeUserData(String name, String phone, ChangeUserDataCallback changeUserDataCallback);
 
     interface ChangeUserDataCallback {

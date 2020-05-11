@@ -94,15 +94,6 @@ public class SignUpActivity
 
 
 
-
-
-    /*    @Override
-    public void displayData(SignUpViewModel viewModel) {
-        //Log.e(TAG, "displayData()");
-
-        // deal with the data
-    }*/
-
     @Override
     public void injectPresenter(SignUpContract.Presenter presenter) {
         this.presenter = presenter;

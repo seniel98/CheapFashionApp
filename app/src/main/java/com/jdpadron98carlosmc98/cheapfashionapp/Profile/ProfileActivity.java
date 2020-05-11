@@ -118,6 +118,10 @@ public class ProfileActivity
         changePassText.setText(R.string.changePassText);
     }
 
+    /**
+     * Metodo que crea un dialog al pulsar en el boton de desconectar y cierra la sesion en caso de
+     * pulsar que si.
+     */
     private void logoutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Logout")
@@ -213,15 +217,6 @@ public class ProfileActivity
         phoneText.setText(viewModel.phone);
     }
 
-    /*
-                @Override
-                public void displayData(ProfileViewModel viewModel) {
-                    //Log.e(TAG, "displayData()");
-
-                    // deal with the data
-                    ((TextView) findViewById(R.id.data)).setText(viewModel.data);
-                }
-            */
     @Override
     public void injectPresenter(ProfileContract.Presenter presenter) {
         this.presenter = presenter;

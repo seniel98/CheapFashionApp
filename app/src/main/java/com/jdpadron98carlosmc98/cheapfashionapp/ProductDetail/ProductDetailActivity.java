@@ -79,6 +79,13 @@ public class ProductDetailActivity
 
     }
 
+    /**
+     * Metodo que crea un dialog, en el cual se puede seleccionar e-mail o telefono movil, dependiendo
+     * de cual se selecciona nos redirige a la aplicacion de correo o movil para contactar con el usuario
+     *
+     * @param viewModel
+     */
+
     public void selectContact(final ProductDetailViewModel viewModel) {
         final CharSequence[] items = {"E-mail", "Phone number", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -108,6 +115,11 @@ public class ProductDetailActivity
         productLikeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_24px));
     }
 
+    /**
+     * Metodo que redirige al correo con un patron dado.
+     *
+     * @param viewModel
+     */
     public void sendEmail(ProductDetailViewModel viewModel) {
         String emailSender = viewModel.item.getUserData().getEmail();
         String email = emailSender;
@@ -125,6 +137,11 @@ public class ProductDetailActivity
         startActivity(Intent.createChooser(emailIntent, chooserTitle));
     }
 
+    /**
+     * metodo que redirige a la aplicacion del telefono con el numero del usuario que subio el producto.
+     *
+     * @param viewModel
+     */
     @Override
     public void callUser(ProductDetailViewModel viewModel) {
         String phoneNumber = viewModel.item.getUserData().getPhoneNumber();

@@ -107,6 +107,9 @@ public class Repository implements RepositoryContract {
         clearDBTable();
     }
 
+    /**
+     * Metodo para eliminar todos los datos de la base de datos de Room.
+     */
     private void clearDBTable() {
         AsyncTask.execute(new Runnable() {
             @Override
@@ -291,6 +294,12 @@ public class Repository implements RepositoryContract {
 
     }
 
+    /**
+     * Metodo que elimina el producto de la tabla de favoritos en local, asi como de la base de datos
+     * de firebase del usuario.
+     *
+     * @param favoriteItem
+     */
     private void deleteFavoriteProduct(final FavoriteItem favoriteItem) {
         AsyncTask.execute(new Runnable() {
             @Override
@@ -310,6 +319,14 @@ public class Repository implements RepositoryContract {
         });
 
     }
+
+    /**
+     * Metodo que convierte la imagen del ImageView a una con un formato valido para almacenarse en
+     * Firebase Storage.
+     *
+     * @param imageView
+     * @return
+     */
 
     private byte[] convertImageView(ImageView imageView) {
         imageView.setDrawingCacheEnabled(true);
@@ -398,6 +415,14 @@ public class Repository implements RepositoryContract {
                 });
     }
 
+    /**
+     * Metodo que carga todos los productos de la base de datos, seleccionando sus diferentes parametros
+     * asi como los parametros del usuario desde su propia lista, debido a que estos se pueden
+     * modificar
+     * @param json
+     * @param getJSONCallback
+     * @return
+     */
     private boolean loadCatalogFromJSON(String json, final OnGetJSONCallback getJSONCallback) {
         try {
             final List<ProductItem> productItems = new ArrayList<>();
@@ -554,6 +579,13 @@ public class Repository implements RepositoryContract {
 
     }
 
+    /**
+     * Metodo que carga los productos que tiene el usuario en su lista de favoritos desde firebase
+     * a la base de datos local.
+     *
+     * @param json
+     * @return
+     */
     private boolean loadFavoriteProductsFromJSON(String json) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
@@ -570,6 +602,10 @@ public class Repository implements RepositoryContract {
         return false;
     }
 
+    /**
+     * Metodo que inserta un producto a la tabla de favoritos del usuario conectado.
+     * @param favoriteItems
+     */
     private void insertFavoriteListInDB(final List<FavoriteItem> favoriteItems) {
 
         AsyncTask.execute(new Runnable() {

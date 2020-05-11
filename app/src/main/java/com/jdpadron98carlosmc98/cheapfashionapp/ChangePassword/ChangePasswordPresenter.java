@@ -78,6 +78,12 @@ public class ChangePasswordPresenter implements ChangePasswordContract.Presenter
         // Log.e(TAG, "onDestroy()");
     }
 
+    /**
+     * Metodo que crea un mensaje en caso de que se pueda modificar la contraseña.
+     *
+     * @param currentPasswordText
+     * @param newPasswordText
+     */
     @Override
     public void onSaveClicked(String currentPasswordText, String newPasswordText) {
         model.onChangePassword(currentPasswordText, newPasswordText, new RepositoryContract.onChangePasswordCallback() {
