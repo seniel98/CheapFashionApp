@@ -13,6 +13,8 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen.SplashScreenActivity;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.Repository;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -24,6 +26,7 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
