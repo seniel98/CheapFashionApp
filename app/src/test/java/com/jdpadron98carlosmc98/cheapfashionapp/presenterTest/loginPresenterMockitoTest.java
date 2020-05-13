@@ -64,6 +64,13 @@ public class loginPresenterMockitoTest {
         presenterMock.goToSignUpRouter();
         verify(viewMock).goToSignUp();
     }
+
+    @Test
+    public void goToForgotPassword(){
+        presenterMock.goToForgotPasswordRouter();
+        verify(viewMock).goToForgotPassword();
+    }
+
     @Test
     public void signInWithRegisteredUser(){
         presenterMock.checkLogin(email,pass);

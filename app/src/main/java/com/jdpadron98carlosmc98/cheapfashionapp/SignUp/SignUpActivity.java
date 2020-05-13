@@ -41,7 +41,7 @@ public class SignUpActivity
                 String phone = phoneText.getText().toString().trim();
                 String pass = passText.getText().toString().trim();
                 UserData userData = new UserData(name,email,phone);
-                presenter.signUpClicked(name, email, phone, pass);
+                presenter.signUpClicked(userData, pass);
             }
         });
         // do the setup

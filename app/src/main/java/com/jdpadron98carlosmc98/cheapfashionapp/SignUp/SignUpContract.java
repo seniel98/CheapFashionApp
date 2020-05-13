@@ -24,7 +24,7 @@ public interface SignUpContract {
 
         void injectRouter(Router router);
 
-        void signUpClicked(String name, String email, String phone, String pass);
+        void signUpClicked(UserData userData, String pass);
 
         //void fetchData();
     }

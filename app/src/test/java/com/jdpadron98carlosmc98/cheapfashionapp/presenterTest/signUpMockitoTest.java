@@ -19,9 +19,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.lang.ref.WeakReference;
 
+import static org.mockito.ArgumentMatchers.charThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class signUpMockitoTest {
@@ -55,7 +57,7 @@ public class signUpMockitoTest {
 
     private static final String password = "Prueba123";
 
-    private static final UserData userData = new UserData(name,email,phoneNumber);
+    private static final UserData userData = mock(UserData.class);
 
 
 
@@ -77,12 +79,18 @@ public class signUpMockitoTest {
 
     @Test
     public void signUpWithEmptyFields(){
-        presenterMock.signUpClicked(EMPTY_STRING,EMPTY_STRING,EMPTY_STRING,EMPTY_STRING);
+        when(userData.getEmail()).thenReturn(EMPTY_STRING);
+        when(userData.getName()).thenReturn(EMPTY_STRING);
+        when(userData.getPhoneNumber()).thenReturn(EMPTY_STRING);
+        presenterMock.signUpClicked(userData,EMPTY_STRING);
         verify(viewMock).showToast(signUpState);
     }
     @Test
     public void signUpNewUserValidFields(){
-        presenterMock.signUpClicked(name,email,phoneNumber,password);
+        when(userData.getEmail()).thenReturn(email);
+        when(userData.getName()).thenReturn(name);
+        when(userData.getPhoneNumber()).thenReturn(phoneNumber);
+        presenterMock.signUpClicked(userData,password);
         verify(modelMock).signUp(eq(userData), eq(password),signUpCallbackArgumentCaptor.capture());
         signUpCallbackArgumentCaptor.getValue().onSignUp(false,NO_ERROR_STRING);
         verify(viewMock).showToast(signUpState);

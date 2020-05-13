@@ -1,5 +1,6 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.SignUp;
 
+import com.google.firebase.firestore.auth.User;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.UserData;
 
@@ -48,18 +49,17 @@ public class SignUpPresenter implements SignUpContract.Presenter {
 
 
     @Override
-    public void signUpClicked(String name, String email, String phone, String pass) {
-        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || pass.isEmpty()) {
+    public void signUpClicked(UserData userData, String pass) {
+        if (userData.getName().isEmpty() || userData.getEmail().isEmpty() || userData.getPhoneNumber().isEmpty() || pass.isEmpty()) {
             viewModel.message = "Fields must not be empty";
             view.get().showToast(viewModel);
 
         } else {
-            callModelToSignUp(name, email, phone, pass);
+            callModelToSignUp(userData, pass);
         }
     }
 
-    private void callModelToSignUp(String name, String email, String phone, String pass) {
-        UserData userData = new UserData(name, email, phone);
+    private void callModelToSignUp(UserData userData, String pass) {
         model.signUp(userData, pass, new RepositoryContract.OnSignUpCallback() {
             @Override
             public void onSignUp(boolean error, String msg) {
