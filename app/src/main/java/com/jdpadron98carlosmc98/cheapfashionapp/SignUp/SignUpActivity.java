@@ -11,6 +11,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.UserData;
 
 public class SignUpActivity
         extends AppCompatActivity implements SignUpContract.View {
@@ -39,6 +40,7 @@ public class SignUpActivity
                 String email = emailText.getText().toString().trim();
                 String phone = phoneText.getText().toString().trim();
                 String pass = passText.getText().toString().trim();
+                UserData userData = new UserData(name,email,phone);
                 presenter.signUpClicked(name, email, phone, pass);
             }
         });
@@ -81,12 +83,12 @@ public class SignUpActivity
     }
 
     @Override
-    public void showToast(String msg) {
+    public void showToast(SignUpViewModel msg) {
         //Reiniciamos el toast para que no se generen infinitos toasts
         if (toast != null) {
             toast.cancel();
         }
-        toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+        toast = Toast.makeText(this, msg.message, Toast.LENGTH_SHORT);
         toast.show();
 
 

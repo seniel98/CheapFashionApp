@@ -9,4 +9,6 @@ public class SignUpViewModel {
 
     public String rd;
 
+    public String message;
+
 }

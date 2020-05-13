@@ -50,8 +50,8 @@ public class SignUpPresenter implements SignUpContract.Presenter {
     @Override
     public void signUpClicked(String name, String email, String phone, String pass) {
         if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || pass.isEmpty()) {
-
-            view.get().showToast("Fields must not be empty");
+            viewModel.message = "Fields must not be empty";
+            view.get().showToast(viewModel);
 
         } else {
             callModelToSignUp(name, email, phone, pass);
@@ -64,10 +64,12 @@ public class SignUpPresenter implements SignUpContract.Presenter {
             @Override
             public void onSignUp(boolean error, String msg) {
                 if (!error) {
-                    view.get().showToast(msg);
+                    viewModel.message = msg;
+                    view.get().showToast(viewModel);
                     view.get().onBackPressed();
                 } else {
-                    view.get().showToast(msg);
+                    viewModel.message = msg;
+                    view.get().showToast(viewModel);
                 }
             }
         });

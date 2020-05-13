@@ -48,6 +48,12 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
+    //mockito
+        // ... more entries
+        // required if you want to use Mockito for unit tests
+        testImplementation 'org.mockito:mockito-core:2.7.22'
+        // required if you want to use Mockito for Android tests
+        androidTestImplementation 'org.mockito:mockito-android:2.7.22'
 
 
 

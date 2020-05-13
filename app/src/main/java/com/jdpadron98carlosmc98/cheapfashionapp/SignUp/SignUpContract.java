@@ -12,7 +12,7 @@ public interface SignUpContract {
 
         void onBackPressed();
 
-        void showToast(String msg);
+        void showToast(SignUpViewModel msg);
 
         //void displayData(SignUpViewModel viewModel);
     }
