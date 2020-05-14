@@ -71,7 +71,11 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
             @Override
             public void onForgetPassword(boolean error) {
                 if(!error){
-                    view.get().displayResult();
+                    viewModel.message = "An Email has been sent, check your inbox";
+                    view.get().displayResult(viewModel);
+                }else{
+                    viewModel.message = "This account does not exist";
+                    view.get().displayResult(viewModel);
                 }
             }
         });
