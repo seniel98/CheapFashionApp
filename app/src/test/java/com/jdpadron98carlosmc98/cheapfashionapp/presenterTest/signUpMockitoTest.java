@@ -62,7 +62,7 @@ public class signUpMockitoTest {
 
 
     @Before
-    public void setupLoginScreen(){
+    public void setupSignUpScreen(){
         signUpState = new SignUpState();
         // To inject the mocks in the test this method needs to be called
         MockitoAnnotations.initMocks(this);

@@ -1,6 +1,5 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.ForgotPassword;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -87,8 +86,8 @@ public void navigateToNextScreen() {
 }
 
     @Override
-    public void displayResult() {
-        Toast.makeText(this, "An Email has been sent, check your inbox", Toast.LENGTH_SHORT).show();
+    public void displayResult(ForgotPasswordViewModel viewModel) {
+        Toast.makeText(this, viewModel.message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -11,7 +11,7 @@ public interface ForgotPasswordContract {
 
         void navigateToNextScreen();
 
-        void displayResult();
+        void displayResult(ForgotPasswordViewModel viewModel);
 
         // void displayData(ForgotPasswordViewModel viewModel);
     }
