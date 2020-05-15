@@ -22,7 +22,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class homePresenterMockitoTest {
+public class HomePresenterMockitoTest {
     @Captor
     private ArgumentCaptor<RepositoryContract.GetProductListCallback> getProductListCallbackArgumentCaptor;
 
