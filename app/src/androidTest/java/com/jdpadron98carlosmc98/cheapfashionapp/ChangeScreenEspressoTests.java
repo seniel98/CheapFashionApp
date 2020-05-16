@@ -27,8 +27,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.doubleClick;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -48,6 +53,19 @@ public class ChangeScreenEspressoTests {
     public GrantPermissionRule mGrantPermissionRule =
             GrantPermissionRule.grant(
                     "android.permission.READ_EXTERNAL_STORAGE");
+
+    public void fillInputs() {
+        onView(withId(R.id.emailLoginText)).perform(replaceText("prueba@gmail.com"));
+        onView(withId(R.id.passLoginText)).perform(replaceText("Prueba123"));
+
+    }
+
+    public void logOut() {
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+
+    }
 
     @Test
     public void goToForgotPassword() {
@@ -104,6 +122,8 @@ public class ChangeScreenEspressoTests {
             e.printStackTrace();
         }
 
+        fillInputs();
+
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
                         childAtPosition(
@@ -113,6 +133,36 @@ public class ChangeScreenEspressoTests {
                                 0),
                         isDisplayed()));
         materialButton.perform(click());
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.bottomNavViewMarket),
+                                        0),
+                                4),
+                        isDisplayed()));
+        bottomNavigationItemView.perform(click());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("Yes"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton.perform(scrollTo(), click());
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -126,6 +176,8 @@ public class ChangeScreenEspressoTests {
             e.printStackTrace();
         }
 
+        fillInputs();
+
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
                         childAtPosition(
@@ -140,7 +192,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(700);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -151,9 +203,30 @@ public class ChangeScreenEspressoTests {
                                 childAtPosition(
                                         withId(R.id.frameLayout),
                                         2)),
-                        0),
+                        1),
                         isDisplayed()));
         linearLayout.perform(click());
+
+        pressBack();
+
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.bottomNavViewMarket),
+                                        0),
+                                4),
+                        isDisplayed()));
+        bottomNavigationItemView.perform(click());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("Yes"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton.perform(scrollTo(), click());
     }
 
 
@@ -168,6 +241,8 @@ public class ChangeScreenEspressoTests {
             e.printStackTrace();
         }
 
+        fillInputs();
+
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
                         childAtPosition(
@@ -182,7 +257,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(700);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -206,7 +281,37 @@ public class ChangeScreenEspressoTests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
+        pressBack();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.bottomNavViewMarket),
+                                        0),
+                                4),
+                        isDisplayed()));
+        bottomNavigationItemView.perform(click());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("Yes"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton.perform(scrollTo(), click());
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }    }
 
     @Test
     public void goToFavorites() {
@@ -218,6 +323,8 @@ public class ChangeScreenEspressoTests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        fillInputs();
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
@@ -233,7 +340,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(700);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -247,6 +354,37 @@ public class ChangeScreenEspressoTests {
                                 1),
                         isDisplayed()));
         bottomNavigationItemView.perform(click());
+
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        ViewInteraction bottomNavigationItemView2 = onView(
+                allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.bottomNavViewFavorite),
+                                        0),
+                                4),
+                        isDisplayed()));
+        bottomNavigationItemView2.perform(click());
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("Yes"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton.perform(scrollTo(), click());
     }
 
     @Test
@@ -260,6 +398,8 @@ public class ChangeScreenEspressoTests {
             e.printStackTrace();
         }
 
+        fillInputs();
+
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
                         childAtPosition(
@@ -274,7 +414,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(700);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -288,6 +428,30 @@ public class ChangeScreenEspressoTests {
                                 2),
                         isDisplayed()));
         bottomNavigationItemView.perform(click());
+
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ViewInteraction bottomNavigationItemView2 = onView(
+                allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.bottomNavViewMyProducts),
+                                        0),
+                                4),
+                        isDisplayed()));
+        bottomNavigationItemView2.perform(click());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("Yes"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton.perform(scrollTo(), click());
     }
 
     @Test
@@ -300,6 +464,7 @@ public class ChangeScreenEspressoTests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        fillInputs();
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
@@ -315,7 +480,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(700);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -330,14 +495,6 @@ public class ChangeScreenEspressoTests {
                         isDisplayed()));
         bottomNavigationItemView.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(700);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         ViewInteraction floatingActionButton = onView(
                 allOf(withId(R.id.floatingButtonMyProducts),
@@ -350,14 +507,32 @@ public class ChangeScreenEspressoTests {
                         isDisplayed()));
         floatingActionButton.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+        pressBack();
+
         try {
-            Thread.sleep(700);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        ViewInteraction bottomNavigationItemView3 = onView(
+                allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.bottomNavViewMyProducts),
+                                        0),
+                                4),
+                        isDisplayed()));
+        bottomNavigationItemView3.perform(click());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("Yes"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton.perform(scrollTo(), click());
     }
 
 
@@ -372,6 +547,8 @@ public class ChangeScreenEspressoTests {
             e.printStackTrace();
         }
 
+        fillInputs();
+
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
                         childAtPosition(
@@ -386,7 +563,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(700);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -400,6 +577,25 @@ public class ChangeScreenEspressoTests {
                                 3),
                         isDisplayed()));
         bottomNavigationItemView.perform(click());
+
+        ViewInteraction bottomNavigationItemView2 = onView(
+                allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.bottomNavViewProfile),
+                                        0),
+                                4),
+                        isDisplayed()));
+        bottomNavigationItemView2.perform(click());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("Yes"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton.perform(scrollTo(), click());
     }
 
     @Test
@@ -413,6 +609,8 @@ public class ChangeScreenEspressoTests {
             e.printStackTrace();
         }
 
+        fillInputs();
+
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
                         childAtPosition(
@@ -427,7 +625,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(700);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -446,7 +644,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(700);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -461,6 +659,37 @@ public class ChangeScreenEspressoTests {
                                 5),
                         isDisplayed()));
         appCompatTextView.perform(click());
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        pressBack();
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        ViewInteraction bottomNavigationItemView2 = onView(
+                allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.bottomNavViewProfile),
+                                        0),
+                                4),
+                        isDisplayed()));
+        bottomNavigationItemView2.perform(click());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("Yes"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton.perform(scrollTo(), click());
     }
 
 
@@ -475,6 +704,8 @@ public class ChangeScreenEspressoTests {
             e.printStackTrace();
         }
 
+        fillInputs();
+
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
                         childAtPosition(
@@ -485,14 +716,12 @@ public class ChangeScreenEspressoTests {
                         isDisplayed()));
         materialButton.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(700);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
 
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
@@ -526,6 +755,8 @@ public class ChangeScreenEspressoTests {
             e.printStackTrace();
         }
 
+        fillInputs();
+
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
                         childAtPosition(
@@ -536,15 +767,12 @@ public class ChangeScreenEspressoTests {
                         isDisplayed()));
         materialButton.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+
         try {
-            Thread.sleep(700);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
                         childAtPosition(
@@ -563,8 +791,30 @@ public class ChangeScreenEspressoTests {
                                         0),
                                 2)));
         appCompatButton.perform(scrollTo(), click());
-    }
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ViewInteraction bottomNavigationItemView2 = onView(
+                allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.bottomNavViewMarket),
+                                        0),
+                                4),
+                        isDisplayed()));
+        bottomNavigationItemView2.perform(click());
 
+        ViewInteraction appCompatButton2 = onView(
+                allOf(withId(android.R.id.button1), withText("Yes"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton2.perform(scrollTo(), click());
+    }
 
 
     private static Matcher<View> childAtPosition(
@@ -586,16 +836,4 @@ public class ChangeScreenEspressoTests {
         };
     }
 
-    private void rotate() {
-
-        Context context = ApplicationProvider.getApplicationContext();
-        int orientation = context.getResources().getConfiguration().orientation;
-        Activity activity = mActivityTestRule.getActivity();
-
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else {
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
-    }
 }
