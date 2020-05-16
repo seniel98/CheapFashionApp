@@ -54,8 +54,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     }
 
     @Override
-    public void getUserProfileData() {
-        final UserData userData = new UserData("", "", "");
+    public void getUserProfileData(final UserData userData) {
         model.getUserProfileData(userData, new RepositoryContract.OnGetUserProfileDataCallback() {
             @Override
             public void onGetProfileData(boolean error) {

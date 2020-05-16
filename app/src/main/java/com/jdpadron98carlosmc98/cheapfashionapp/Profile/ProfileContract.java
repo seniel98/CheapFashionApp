@@ -47,7 +47,7 @@ public interface ProfileContract {
 
         void onBackPressed();
 
-        void getUserProfileData();
+        void getUserProfileData(UserData userData);
 
         void onStart();
 

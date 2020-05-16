@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class forgotPasswordPresenterMockitoTest {
+public class ForgotPasswordPresenterMockitoTest {
     @Captor
     private ArgumentCaptor<RepositoryContract.onForgetPasswordCallback> onForgetPasswordCallbackArgumentCaptor;
 

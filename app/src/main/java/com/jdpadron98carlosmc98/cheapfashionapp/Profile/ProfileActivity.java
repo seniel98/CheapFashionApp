@@ -23,6 +23,7 @@ import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.MyProducts.MyProductsActivity;
 import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.app.AppMediator;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.UserData;
 
 public class ProfileActivity
         extends AppCompatActivity implements ProfileContract.View {
@@ -62,8 +63,9 @@ public class ProfileActivity
 
         bottomNavigationView.getMenu().getItem(3).setChecked(true);
 
+        UserData userData = new UserData("","","");
 
-        presenter.getUserProfileData();
+        presenter.getUserProfileData(userData);
 
 
         changePassText.setOnClickListener(new View.OnClickListener() {
