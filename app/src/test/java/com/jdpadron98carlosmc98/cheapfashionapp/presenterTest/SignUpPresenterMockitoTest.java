@@ -1,7 +1,6 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.presenterTest;
 
 
-import com.google.firebase.firestore.auth.User;
 import com.jdpadron98carlosmc98.cheapfashionapp.SignUp.SignUpContract;
 import com.jdpadron98carlosmc98.cheapfashionapp.SignUp.SignUpPresenter;
 import com.jdpadron98carlosmc98.cheapfashionapp.SignUp.SignUpState;
@@ -19,14 +18,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.lang.ref.WeakReference;
 
-import static org.mockito.ArgumentMatchers.charThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SignUpMockitoTest {
+public class SignUpPresenterMockitoTest {
     @Captor
     private ArgumentCaptor<RepositoryContract.OnSignUpCallback> signUpCallbackArgumentCaptor;
 
@@ -60,9 +58,8 @@ public class SignUpMockitoTest {
     private static final UserData userData = mock(UserData.class);
 
 
-
     @Before
-    public void setupSignUpScreen(){
+    public void setupSignUpScreen() {
         signUpState = new SignUpState();
         // To inject the mocks in the test this method needs to be called
         MockitoAnnotations.initMocks(this);
@@ -78,21 +75,22 @@ public class SignUpMockitoTest {
 
 
     @Test
-    public void signUpWithEmptyFields(){
+    public void signUpWithEmptyFields() {
         when(userData.getEmail()).thenReturn(EMPTY_STRING);
         when(userData.getName()).thenReturn(EMPTY_STRING);
         when(userData.getPhoneNumber()).thenReturn(EMPTY_STRING);
-        presenterMock.signUpClicked(userData,EMPTY_STRING);
+        presenterMock.signUpClicked(userData, EMPTY_STRING);
         verify(viewMock).showToast(signUpState);
     }
+
     @Test
-    public void signUpNewUserValidFields(){
+    public void signUpNewUserValidFields() {
         when(userData.getEmail()).thenReturn(email);
         when(userData.getName()).thenReturn(name);
         when(userData.getPhoneNumber()).thenReturn(phoneNumber);
-        presenterMock.signUpClicked(userData,password);
-        verify(modelMock).signUp(eq(userData), eq(password),signUpCallbackArgumentCaptor.capture());
-        signUpCallbackArgumentCaptor.getValue().onSignUp(false,NO_ERROR_STRING);
+        presenterMock.signUpClicked(userData, password);
+        verify(modelMock).signUp(eq(userData), eq(password), signUpCallbackArgumentCaptor.capture());
+        signUpCallbackArgumentCaptor.getValue().onSignUp(false, NO_ERROR_STRING);
         verify(viewMock).showToast(signUpState);
         verify(viewMock).onBackPressed();
     }
