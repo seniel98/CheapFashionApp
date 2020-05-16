@@ -159,6 +159,7 @@ public class LoginActivity
         this.presenter = presenter;
     }
 
+
     public void onLoginClicked(View view) {
         String emailStr = emailText.getText().toString();
         String passStr = passText.getText().toString();
