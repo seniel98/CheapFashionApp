@@ -9,6 +9,7 @@ import android.view.ViewParent;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
+import androidx.test.rule.GrantPermissionRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginActivity;
@@ -26,6 +27,8 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
@@ -42,6 +45,18 @@ public class ChangeScreenLandscapeEspressoTests {
     @Rule
     public ActivityTestRule<SplashScreenActivity> mActivityTestRule = new ActivityTestRule<>(SplashScreenActivity.class);
 
+    @Rule
+    public GrantPermissionRule mGrantPermissionRule =
+            GrantPermissionRule.grant(
+                    "android.permission.READ_EXTERNAL_STORAGE");
+
+
+    public void fillInputs() {
+        onView(withId(R.id.emailLoginText)).perform(replaceText("prueba@gmail.com"));
+        onView(withId(R.id.passLoginText)).perform(replaceText("Prueba123"));
+
+    }
+
     @Test
     public void goToHomeAndRotateScreen() {
         // Added a sleep statement to match the app's execution delay.
@@ -53,6 +68,7 @@ public class ChangeScreenLandscapeEspressoTests {
             e.printStackTrace();
         }
 
+        fillInputs();
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
                         childAtPosition(
@@ -75,6 +91,31 @@ public class ChangeScreenLandscapeEspressoTests {
         mActivityTestRule.getActivity()
                 .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.bottomNavViewMarket),
+                                        0),
+                                4),
+                        isDisplayed()));
+        bottomNavigationItemView.perform(click());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("Yes"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton.perform(scrollTo(), click());
+
 
     }
 
@@ -88,6 +129,8 @@ public class ChangeScreenLandscapeEspressoTests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        fillInputs();
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
@@ -103,7 +146,7 @@ public class ChangeScreenLandscapeEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(700);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -137,6 +180,34 @@ public class ChangeScreenLandscapeEspressoTests {
         }
         mActivityTestRule.getActivity()
                 .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        pressBack();
+
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.bottomNavViewMarket),
+                                        0),
+                                4),
+                        isDisplayed()));
+        bottomNavigationItemView.perform(click());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("Yes"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton.perform(scrollTo(), click());
+
     }
     @Test
     public void goToProductDetailAndRotate() {
@@ -148,6 +219,8 @@ public class ChangeScreenLandscapeEspressoTests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        fillInputs();
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
@@ -163,7 +236,7 @@ public class ChangeScreenLandscapeEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(700);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -187,6 +260,31 @@ public class ChangeScreenLandscapeEspressoTests {
             e.printStackTrace();
         }
         pressBack();
+
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.bottomNavViewMarket),
+                                        0),
+                                4),
+                        isDisplayed()));
+        bottomNavigationItemView.perform(click());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("Yes"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton.perform(scrollTo(), click());
     }
 
     @Test
@@ -199,6 +297,8 @@ public class ChangeScreenLandscapeEspressoTests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        fillInputs();
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
@@ -214,7 +314,7 @@ public class ChangeScreenLandscapeEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(700);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -232,16 +332,6 @@ public class ChangeScreenLandscapeEspressoTests {
         mActivityTestRule.getActivity()
                 .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(700);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         ViewInteraction floatingActionButton = onView(
                 allOf(withId(R.id.floatingButtonMyProducts),
                         childAtPosition(
@@ -252,6 +342,27 @@ public class ChangeScreenLandscapeEspressoTests {
                                 0),
                         isDisplayed()));
         floatingActionButton.perform(click());
+
+        pressBack();
+
+        ViewInteraction bottomNavigationItemView2 = onView(
+                allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.bottomNavViewMyProducts),
+                                        0),
+                                4),
+                        isDisplayed()));
+        bottomNavigationItemView2.perform(click());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("Yes"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton.perform(scrollTo(), click());
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
@@ -276,6 +387,8 @@ public class ChangeScreenLandscapeEspressoTests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        fillInputs();
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.loginButton), withText("Login"),
@@ -306,9 +419,39 @@ public class ChangeScreenLandscapeEspressoTests {
                         isDisplayed()));
         bottomNavigationItemView.perform(click());
 
-
         mActivityTestRule.getActivity()
                 .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        ViewInteraction bottomNavigationItemView2 = onView(
+                allOf(withId(R.id.nav_menu_logout), withContentDescription("Logout"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.bottomNavViewProfile),
+                                        0),
+                                4),
+                        isDisplayed()));
+        bottomNavigationItemView2.perform(click());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("Yes"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton.perform(scrollTo(), click());
+
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        mActivityTestRule.getActivity()
+                .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
 
