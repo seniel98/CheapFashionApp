@@ -1,9 +1,6 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
-
-import java.util.List;
 
 public class HomeModel implements HomeContract.Model {
 
