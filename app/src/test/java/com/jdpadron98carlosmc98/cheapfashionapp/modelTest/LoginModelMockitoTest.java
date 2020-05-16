@@ -2,7 +2,6 @@ package com.jdpadron98carlosmc98.cheapfashionapp.modelTest;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginContract;
 import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginModel;
-import com.jdpadron98carlosmc98.cheapfashionapp.data.Repository;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 import org.junit.Before;
@@ -34,13 +33,13 @@ public class LoginModelMockitoTest {
     private LoginContract.Model model;
 
 
-    private static final String EMAIL = "jdpadron98@gmail.com";
+    private static final String email = "jdpadron98@gmail.com";
 
-    private static final String PASSWORD = "Jdpadron98";
+    private static final String password = "Jdpadron98";
 
 
     @Before
-    public void setupLoginModelTests() {
+    public void setup() {
         // To inject the mocks in the test this method needs to be called
         MockitoAnnotations.initMocks(this);
 
@@ -55,9 +54,9 @@ public class LoginModelMockitoTest {
     @Test
     public void verifyLogin() {
 
-        model.signIn(EMAIL, PASSWORD, signInCallbackMock);
+        model.signIn(email, password, signInCallbackMock);
 
-        verify(repositoryMock).signIn(eq(EMAIL), eq(PASSWORD), onSignInCallbackArgumentCaptor.capture());
+        verify(repositoryMock).signIn(eq(email), eq(password), onSignInCallbackArgumentCaptor.capture());
 
     }
 

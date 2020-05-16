@@ -1,6 +1,5 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.modelTest;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.SignUp.SignUpContract;
 import com.jdpadron98carlosmc98.cheapfashionapp.SignUp.SignUpModel;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
@@ -39,12 +38,12 @@ public class SignUpModelMockitoTest {
 
     private static final UserData userDataMock = mock(UserData.class);
 
-    private static final String PASSWORD = "Jdpadron98";
+    private static final String password = "Jdpadron98";
 
 
 
     @Before
-    public void setupSignUpScreen() {
+    public void setup() {
         // To inject the mocks in the test this method needs to be called
         MockitoAnnotations.initMocks(this);
 
@@ -54,8 +53,8 @@ public class SignUpModelMockitoTest {
 
     @Test
     public void verifySignUp() {
-        model.signUp(userDataMock, PASSWORD, signUpCallbackMock);
-        verify(repositoryMock).signUp(eq(userDataMock), eq(PASSWORD), onSignUpCallbackArgumentCaptor.capture());
+        model.signUp(userDataMock, password, signUpCallbackMock);
+        verify(repositoryMock).signUp(eq(userDataMock), eq(password), onSignUpCallbackArgumentCaptor.capture());
     }
 
 }

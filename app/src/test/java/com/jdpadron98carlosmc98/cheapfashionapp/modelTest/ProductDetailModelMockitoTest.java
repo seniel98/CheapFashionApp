@@ -38,11 +38,11 @@ public class ProductDetailModelMockitoTest {
 
     private ProductItem productItem = mock(ProductItem.class);
 
-    private final String PID = "pid";
+    private static final String pid = "pid";
 
 
     @Before
-    public void setupSignUpScreen() {
+    public void setup() {
         // To inject the mocks in the test this method needs to be called
         MockitoAnnotations.initMocks(this);
 
@@ -53,8 +53,8 @@ public class ProductDetailModelMockitoTest {
 
     @Test
     public void verifyCheckIfProductFavorite() {
-        model.checkIfProductFavorite(PID, isFavoriteCallbackMock);
-        verify(repositoryMock).checkIfIsFavorite(eq(PID), isFavoriteCallbackArgumentCaptor.capture());
+        model.checkIfProductFavorite(pid, isFavoriteCallbackMock);
+        verify(repositoryMock).checkIfIsFavorite(eq(pid), isFavoriteCallbackArgumentCaptor.capture());
     }
 
     @Test

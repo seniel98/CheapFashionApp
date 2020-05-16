@@ -46,7 +46,7 @@ public class HomeModelMockitoTest {
 
 
     @Before
-    public void setupHomeModel() {
+    public void setup() {
         // To inject the mocks in the test this method needs to be called
         MockitoAnnotations.initMocks(this);
 

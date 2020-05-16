@@ -1,10 +1,6 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Favorite;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FavoriteModel implements FavoriteContract.Model {
 
