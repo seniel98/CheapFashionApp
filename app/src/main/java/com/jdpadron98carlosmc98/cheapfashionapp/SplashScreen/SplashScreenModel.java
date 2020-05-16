@@ -18,4 +18,11 @@ public class SplashScreenModel implements SplashScreenContract.Model {
     public void checkSession(RepositoryContract.OnLoggedInCallback loggedInCallback) {
         repository.isLoggedIn(loggedInCallback);
     }
+
+    @Override
+    public void getDataFromRepository(RepositoryContract.OnGetJSONCallback onGetJSONCallback) {
+        repository.getJSONFromURL(onGetJSONCallback);
+    }
+
+
 }

@@ -419,6 +419,7 @@ public class Repository implements RepositoryContract {
      * Metodo que carga todos los productos de la base de datos, seleccionando sus diferentes parametros
      * asi como los parametros del usuario desde su propia lista, debido a que estos se pueden
      * modificar
+     *
      * @param json
      * @param getJSONCallback
      * @return
@@ -455,8 +456,8 @@ public class Repository implements RepositoryContract {
                             userData.setName(dataSnapshot.child(productItem.uid).child("name").getValue(String.class));
                             productItem.userData = userData;
                             productItems.add(productItem);
-                            insertListInDB(productItems);
-                            getJSONCallback.onGetJSON(false);
+                            insertListInDB(productItems, getJSONCallback);
+                            //getJSONCallback.onGetJSON(false);
                         }
 
                         @Override
@@ -483,7 +484,7 @@ public class Repository implements RepositoryContract {
      *
      * @param productItems
      */
-    private void insertListInDB(final List<ProductItem> productItems) {
+    private void insertListInDB(final List<ProductItem> productItems, final OnGetJSONCallback getJSONCallback) {
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -491,6 +492,7 @@ public class Repository implements RepositoryContract {
                 for (ProductItem product : productItems) {
                     getProductDao().insertProduct(product);
                 }
+                getJSONCallback.onGetJSON(false);
             }
         });
     }
@@ -604,6 +606,7 @@ public class Repository implements RepositoryContract {
 
     /**
      * Metodo que inserta un producto a la tabla de favoritos del usuario conectado.
+     *
      * @param favoriteItems
      */
     private void insertFavoriteListInDB(final List<FavoriteItem> favoriteItems) {

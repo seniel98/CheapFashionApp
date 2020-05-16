@@ -34,13 +34,28 @@ public class SplashScreenPresenter implements SplashScreenContract.Presenter {
             @Override
             public void onLoggedIn(boolean isLoggedIn) {
                 if (isLoggedIn) {
-                    view.get().goToHome();
+                    downloadDataFromRepository();
                 } else {
                     view.get().goToLogin();
                 }
             }
         });
     }
+
+    private void downloadDataFromRepository() {
+        model.getDataFromRepository(new RepositoryContract.OnGetJSONCallback() {
+            @Override
+            public void onGetJSON(boolean error) {
+                if (error) {
+                    view.get().showToast("NO CONNECTION. DATA MAY BE OBSOLETE");
+                    view.get().goToHome();
+                } else {
+                    view.get().goToHome();
+                }
+            }
+        });
+    }
+
 
     @Override
     public void injectView(WeakReference<SplashScreenContract.View> view) {

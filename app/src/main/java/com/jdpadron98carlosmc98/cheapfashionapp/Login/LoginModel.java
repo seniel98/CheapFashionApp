@@ -16,4 +16,9 @@ public class LoginModel implements LoginContract.Model {
     public void signIn(String emailStr, String passStr, RepositoryContract.OnSignInCallback onSignInCallback) {
         repository.signIn(emailStr, passStr, onSignInCallback);
     }
+
+    @Override
+    public void getDataFromRepository(RepositoryContract.OnGetJSONCallback onGetJSONCallback) {
+        repository.getJSONFromURL(onGetJSONCallback);
+    }
 }

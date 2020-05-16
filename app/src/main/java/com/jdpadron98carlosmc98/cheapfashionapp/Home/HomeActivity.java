@@ -29,7 +29,6 @@ import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimerTask;
 
 public class HomeActivity
         extends AppCompatActivity implements HomeContract.View {
@@ -206,10 +205,7 @@ public class HomeActivity
         // load the data
         presenter.onResume();
 
-        presenter.downloadDataFromRepository();
-
-
-
+        presenter.getProductListData();
 
 
     }
@@ -255,6 +251,7 @@ public class HomeActivity
 
     /**
      * Metodo que crea un toast con el mensaje que se le pasa por parametros.
+     *
      * @param msg
      */
 

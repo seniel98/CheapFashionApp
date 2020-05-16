@@ -85,7 +85,7 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
 
-    private void getProductListData() {
+    public void getProductListData() {
         model.getProductListData(new RepositoryContract.GetProductListCallback() {
             @Override
             public void setProductList(List<ProductItem> loadProducts) {

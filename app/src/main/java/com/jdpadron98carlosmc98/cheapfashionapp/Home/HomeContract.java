@@ -66,6 +66,8 @@ public interface HomeContract {
         void downloadDataFromRepository();
 
         void loadFavoriteList();
+
+        void getProductListData();
     }
 
     interface Model {

@@ -24,6 +24,8 @@ public interface LoginContract {
         void navigateToNextScreen();
 
         void displayData(LoginViewModel viewModel);
+
+        void showToast(String msg);
     }
 
     interface Presenter {
@@ -48,6 +50,8 @@ public interface LoginContract {
 
     interface Model {
         void signIn(String emailStr, String passStr, RepositoryContract.OnSignInCallback onSignInCallback);
+
+        void getDataFromRepository(RepositoryContract.OnGetJSONCallback onGetJSONCallback);
     }
 
     interface Router {

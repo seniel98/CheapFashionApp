@@ -12,6 +12,8 @@ public interface SplashScreenContract {
         void goToLogin();
 
         void goToHome();
+
+        void showToast(String msg);
     }
 
     interface Presenter {
@@ -31,6 +33,8 @@ public interface SplashScreenContract {
 
     interface Model {
         void checkSession(RepositoryContract.OnLoggedInCallback loggedInCallback);
+
+        void getDataFromRepository(RepositoryContract.OnGetJSONCallback onGetJSONCallback);
     }
 
     interface Router {

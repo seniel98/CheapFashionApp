@@ -31,7 +31,8 @@ public class LoginPresenter implements LoginContract.Presenter {
             @Override
             public void onSignIn(boolean error) {
                 if(!error){
-                    goToHomeRouter();
+                    downloadDataFromRepository();
+                    //goToHomeRouter();
                 }else{
                     viewModel.message="This user does not exist";
                     view.get().displayData(viewModel);
@@ -41,6 +42,19 @@ public class LoginPresenter implements LoginContract.Presenter {
         });
     }
 
+    private void downloadDataFromRepository() {
+        model.getDataFromRepository(new RepositoryContract.OnGetJSONCallback() {
+            @Override
+            public void onGetJSON(boolean error) {
+                if (error) {
+                    view.get().showToast("NO CONNECTION. DATA MAY BE OBSOLETE");
+                    view.get().goToHome();
+                } else {
+                    view.get().goToHome();
+                }
+            }
+        });
+    }
 
 
     @Override
