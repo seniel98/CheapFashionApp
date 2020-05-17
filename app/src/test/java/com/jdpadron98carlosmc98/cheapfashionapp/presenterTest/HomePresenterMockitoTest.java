@@ -116,7 +116,7 @@ public class HomePresenterMockitoTest {
     public void loadJSONProducts(){
         presenterMock.downloadDataFromRepository();
         verify(modelMock).getDataFromRepository(onGetJSONCallbackArgumentCaptor.capture());
-        onGetJSONCallbackArgumentCaptor.getValue().onGetJSON(false, productItems);
+        onGetJSONCallbackArgumentCaptor.getValue().onGetJSON(false, productList);
         verify(modelMock).getProductListData(getProductListCallbackArgumentCaptor.capture());
         getProductListCallbackArgumentCaptor.getValue().setProductList(productList);
         verify(viewMock).fillArrayList(homeState);
@@ -126,7 +126,7 @@ public class HomePresenterMockitoTest {
     public void loadJSONProductsWithoutConnection(){
         presenterMock.downloadDataFromRepository();
         verify(modelMock).getDataFromRepository(onGetJSONCallbackArgumentCaptor.capture());
-        onGetJSONCallbackArgumentCaptor.getValue().onGetJSON(true, productItems);
+        onGetJSONCallbackArgumentCaptor.getValue().onGetJSON(true, productList);
         verify(viewMock).showToast(ERROR_STRING);
         verify(modelMock).getProductListData(getProductListCallbackArgumentCaptor.capture());
         getProductListCallbackArgumentCaptor.getValue().setProductList(productList);

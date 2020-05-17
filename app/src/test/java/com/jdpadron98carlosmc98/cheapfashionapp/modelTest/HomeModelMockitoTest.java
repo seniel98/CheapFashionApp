@@ -2,6 +2,7 @@ package com.jdpadron98carlosmc98.cheapfashionapp.modelTest;
 
 import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeContract;
 import com.jdpadron98carlosmc98.cheapfashionapp.Home.HomeModel;
+import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 import org.junit.Before;
@@ -13,6 +14,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -31,6 +35,9 @@ public class HomeModelMockitoTest {
     @Captor
     private ArgumentCaptor<RepositoryContract.OnLogoutCallback> logoutCallbackArgumentCaptor;
 
+    @Captor
+    private ArgumentCaptor<RepositoryContract.onInsertListInDBCallback> onInsertListInDBCallbackArgumentCaptor;
+
     @Mock
     private RepositoryContract repositoryMock;
 
@@ -44,6 +51,10 @@ public class HomeModelMockitoTest {
 
     private RepositoryContract.OnLogoutCallback logoutCallbackMock = mock(RepositoryContract.OnLogoutCallback.class);
 
+    private RepositoryContract.onInsertListInDBCallback onInsertListInDBCallbackMock = mock(RepositoryContract.onInsertListInDBCallback.class);
+
+    private static List<ProductItem> productItems = mock(List.class);
+
 
     @Before
     public void setup() {
@@ -52,6 +63,13 @@ public class HomeModelMockitoTest {
 
 
         model = new HomeModel(repositoryMock);
+    }
+
+    @Test
+    public void verifyInsertListInDb() {
+        model.insertListInDb(onInsertListInDBCallbackMock, productItems);
+
+        verify(repositoryMock).insertListInDB(eq(productItems), onInsertListInDBCallbackArgumentCaptor.capture());
     }
 
 
