@@ -31,6 +31,8 @@ import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
+
 public class HomeActivity
         extends AppCompatActivity implements HomeContract.View {
 
@@ -82,7 +84,6 @@ public class HomeActivity
         initBottomNavMenu();
 
         bottomNavigationView.getMenu().getItem(0).setChecked(true);
-
 
         addProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
