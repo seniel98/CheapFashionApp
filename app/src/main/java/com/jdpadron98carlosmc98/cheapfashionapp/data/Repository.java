@@ -191,11 +191,25 @@ public class Repository implements RepositoryContract {
                         final String pid = UUID.randomUUID().toString().replace("-", "");
                         ProductItem productItem = new ProductItem(pid, productPrice, productName, url, productDescription, auth.getCurrentUser().getUid(), null);
                         productsRef.child(auth.getCurrentUser().getUid()).child(pid).setValue(productItem);
-                        callback.onAddNewProduct(false);
+                        //callback.onAddNewProduct(false);
+                        //Insertamos los datos del usuario de manera local para que no sea null en el market.
+                        productItem.setUserData(user[0]);
+                        addProductInLocalDB(productItem, callback);
                     }
                 }
             });
         }
+    }
+
+
+    private void addProductInLocalDB(final ProductItem productItem, final CreateProductEntryCallBack callback) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                getProductDao().insertProduct(productItem);
+                callback.onAddNewProduct(false);
+            }
+        });
     }
 
     @Override
