@@ -27,9 +27,12 @@ public interface HomeContract {
 
         void goToDetail();
 
-        void navigateToNextScreen();
+        void restartActivity();
 
         void showToast(String msg);
+
+        void interactWithLayoutComponents();
+
     }
 
     interface Presenter {
@@ -78,6 +81,8 @@ public interface HomeContract {
         void getDataFromRepository(RepositoryContract.OnGetJSONCallback getJSONCallback);
 
         void getFavoriteDataFromRepository(RepositoryContract.GetFavoriteJSONCallback getFavoriteJSONCallback);
+
+        void insertListInDb(RepositoryContract.onInsertListInDBCallback onInsertListInDBCallback, List<ProductItem> productItems);
     }
 
     interface Router {

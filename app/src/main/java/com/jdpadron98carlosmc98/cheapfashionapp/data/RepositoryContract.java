@@ -72,6 +72,7 @@ public interface RepositoryContract {
     /**
      * Metodo que nos envia un correo al email dado para poder recuperar la cuenta en caso de haber
      * olvidado la contraseña.
+     *
      * @param email
      * @param callback
      */
@@ -154,6 +155,13 @@ public interface RepositoryContract {
      */
     void changeUserData(String name, String phone, ChangeUserDataCallback changeUserDataCallback);
 
+    void insertListInDB(List<ProductItem> productItems, onInsertListInDBCallback insertListInDBCallback);
+
+
+    interface onInsertListInDBCallback {
+        void onInsert(boolean error);
+    }
+
     interface ChangeUserDataCallback {
         void onChangeUserData(boolean error);
     }
@@ -215,7 +223,7 @@ public interface RepositoryContract {
     }
 
     interface OnGetJSONCallback {
-        void onGetJSON(boolean error);
+        void onGetJSON(boolean error, List<ProductItem> productItems);
     }
 
     interface OnGetMyProductsCallback {

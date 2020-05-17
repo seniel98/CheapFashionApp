@@ -438,15 +438,14 @@ public class Repository implements RepositoryContract {
      * @param getJSONCallback
      * @return
      */
-    private boolean loadCatalogFromJSON(String json, final OnGetJSONCallback getJSONCallback) {
+    private boolean loadCatalogFromJSON(String json, final OnGetJSONCallback getJSONCallback, final List<ProductItem> productItems) {
         try {
-            final List<ProductItem> productItems = new ArrayList<>();
             JSONObject jsonObject = new JSONObject(json);
-            Iterator<String> keys = jsonObject.keys();
+            final Iterator<String> keys = jsonObject.keys();
             while (keys.hasNext()) {
                 String key = keys.next();
                 JSONObject jsonObjectProductList = jsonObject.getJSONObject(key);
-                Iterator<String> productKeys = jsonObjectProductList.keys();
+                final Iterator<String> productKeys = jsonObjectProductList.keys();
                 while (productKeys.hasNext()) {
 
                     String productKey = productKeys.next();
@@ -470,8 +469,9 @@ public class Repository implements RepositoryContract {
                             userData.setName(dataSnapshot.child(productItem.uid).child("name").getValue(String.class));
                             productItem.userData = userData;
                             productItems.add(productItem);
-                            insertListInDB(productItems, getJSONCallback);
-                            //getJSONCallback.onGetJSON(false);
+                            if (!keys.hasNext()) {
+                                getJSONCallback.onGetJSON(false, productItems);
+                            }
                         }
 
                         @Override
@@ -479,11 +479,6 @@ public class Repository implements RepositoryContract {
 
                         }
                     });
-
-                   /* userData.setEmail(jsonObjectProductData.getJSONObject("userData").getString("email"));
-                    userData.setName(jsonObjectProductData.getJSONObject("userData").getString("name"));
-                    userData.setPhoneNumber(jsonObjectProductData.getJSONObject("userData").getString("phoneNumber"));
-                    */
                 }
             }
             return true;
@@ -498,15 +493,17 @@ public class Repository implements RepositoryContract {
      *
      * @param productItems
      */
-    private void insertListInDB(final List<ProductItem> productItems, final OnGetJSONCallback getJSONCallback) {
-
+    @Override
+    public void insertListInDB(List<ProductItem> productItems, final onInsertListInDBCallback insertListInDBCallback) {
+        final List<ProductItem> productItemsList = new ArrayList<>(productItems);
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                for (ProductItem product : productItems) {
+                for (ProductItem product : productItemsList) {
                     getProductDao().insertProduct(product);
                 }
-                getJSONCallback.onGetJSON(false);
+                insertListInDBCallback.onInsert(false);
+
             }
         });
     }
@@ -580,15 +577,15 @@ public class Repository implements RepositoryContract {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        if (!loadCatalogFromJSON(response.toString(), getJSONCallback)) {
-                            getJSONCallback.onGetJSON(true);
+                        if (!loadCatalogFromJSON(response.toString(), getJSONCallback, new ArrayList<ProductItem>())) {
+                            getJSONCallback.onGetJSON(true, new ArrayList<ProductItem>());
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                getJSONCallback.onGetJSON(true);
+                getJSONCallback.onGetJSON(true, new ArrayList<ProductItem>());
             }
         });
         requestQueue.add(request);
