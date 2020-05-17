@@ -1,7 +1,7 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.modelTest;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginContract;
-import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginModel;
+import com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen.SplashScreenContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen.SplashScreenModel;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
@@ -21,10 +21,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LoginModelMockitoTest {
+public class SplashScreenModelMockitoTest {
 
     @Captor
-    private ArgumentCaptor<RepositoryContract.OnSignInCallback> onSignInCallbackArgumentCaptor;
+    private ArgumentCaptor<RepositoryContract.OnLoggedInCallback> onLoggedInCallbackArgumentCaptor;
 
     @Captor
     private ArgumentCaptor<RepositoryContract.OnGetJSONCallback> onGetJSONCallbackArgumentCaptor;
@@ -32,25 +32,18 @@ public class LoginModelMockitoTest {
     @Captor
     private ArgumentCaptor<RepositoryContract.onInsertListInDBCallback> onInsertListInDBCallbackArgumentCaptor;
 
-
     @Mock
     private RepositoryContract repositoryMock;
 
-
-    private RepositoryContract.OnSignInCallback signInCallbackMock = mock(RepositoryContract.OnSignInCallback.class);
+    private RepositoryContract.OnLoggedInCallback onLoggedInCallbackMock = mock(RepositoryContract.OnLoggedInCallback.class);
 
     private RepositoryContract.OnGetJSONCallback onGetJSONCallbackMock = mock(RepositoryContract.OnGetJSONCallback.class);
 
     private RepositoryContract.onInsertListInDBCallback onInsertListInDBCallbackMock = mock(RepositoryContract.onInsertListInDBCallback.class);
 
-    private LoginContract.Model model;
-
+    private SplashScreenContract.Model model;
 
     private static List<ProductItem> productItems = mock(List.class);
-
-    private static final String email = "jdpadron98@gmail.com";
-
-    private static final String password = "Jdpadron98";
 
 
     @Before
@@ -59,19 +52,18 @@ public class LoginModelMockitoTest {
         MockitoAnnotations.initMocks(this);
 
 
-        model = new LoginModel(repositoryMock);
+        model = new SplashScreenModel(repositoryMock);
 
     }
-
 
     @Test
-    public void verifyLogin() {
+    public void verifyCheckSession() {
 
-        model.signIn(email, password, signInCallbackMock);
+        model.checkSession(onLoggedInCallbackMock);
 
-        verify(repositoryMock).signIn(eq(email), eq(password), onSignInCallbackArgumentCaptor.capture());
-
+        verify(repositoryMock).isLoggedIn(onLoggedInCallbackArgumentCaptor.capture());
     }
+
 
     @Test
     public void verifyGetDataFromRepository() {
@@ -86,7 +78,7 @@ public class LoginModelMockitoTest {
     public void verifyInsertListInDb() {
         model.insertListInDb(onInsertListInDBCallbackMock, productItems);
 
-        verify(repositoryMock).insertListInDB(eq(productItems),onInsertListInDBCallbackArgumentCaptor.capture());
+        verify(repositoryMock).insertListInDB(eq(productItems), onInsertListInDBCallbackArgumentCaptor.capture());
     }
 
 
