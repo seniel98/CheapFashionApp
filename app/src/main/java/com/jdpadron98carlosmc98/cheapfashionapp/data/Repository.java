@@ -191,11 +191,25 @@ public class Repository implements RepositoryContract {
                         final String pid = UUID.randomUUID().toString().replace("-", "");
                         ProductItem productItem = new ProductItem(pid, productPrice, productName, url, productDescription, auth.getCurrentUser().getUid(), null);
                         productsRef.child(auth.getCurrentUser().getUid()).child(pid).setValue(productItem);
-                        callback.onAddNewProduct(false);
+                        //callback.onAddNewProduct(false);
+                        //Insertamos los datos del usuario de manera local para que no sea null en el market.
+                        productItem.setUserData(user[0]);
+                        addProductInLocalDB(productItem, callback);
                     }
                 }
             });
         }
+    }
+
+
+    private void addProductInLocalDB(final ProductItem productItem, final CreateProductEntryCallBack callback) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                getProductDao().insertProduct(productItem);
+                callback.onAddNewProduct(false);
+            }
+        });
     }
 
     @Override
@@ -419,19 +433,19 @@ public class Repository implements RepositoryContract {
      * Metodo que carga todos los productos de la base de datos, seleccionando sus diferentes parametros
      * asi como los parametros del usuario desde su propia lista, debido a que estos se pueden
      * modificar
+     *
      * @param json
      * @param getJSONCallback
      * @return
      */
-    private boolean loadCatalogFromJSON(String json, final OnGetJSONCallback getJSONCallback) {
+    private boolean loadCatalogFromJSON(String json, final OnGetJSONCallback getJSONCallback, final List<ProductItem> productItems) {
         try {
-            final List<ProductItem> productItems = new ArrayList<>();
             JSONObject jsonObject = new JSONObject(json);
-            Iterator<String> keys = jsonObject.keys();
+            final Iterator<String> keys = jsonObject.keys();
             while (keys.hasNext()) {
                 String key = keys.next();
                 JSONObject jsonObjectProductList = jsonObject.getJSONObject(key);
-                Iterator<String> productKeys = jsonObjectProductList.keys();
+                final Iterator<String> productKeys = jsonObjectProductList.keys();
                 while (productKeys.hasNext()) {
 
                     String productKey = productKeys.next();
@@ -455,8 +469,9 @@ public class Repository implements RepositoryContract {
                             userData.setName(dataSnapshot.child(productItem.uid).child("name").getValue(String.class));
                             productItem.userData = userData;
                             productItems.add(productItem);
-                            insertListInDB(productItems);
-                            getJSONCallback.onGetJSON(false);
+                            if (!keys.hasNext()) {
+                                getJSONCallback.onGetJSON(false, productItems);
+                            }
                         }
 
                         @Override
@@ -464,11 +479,6 @@ public class Repository implements RepositoryContract {
 
                         }
                     });
-
-                   /* userData.setEmail(jsonObjectProductData.getJSONObject("userData").getString("email"));
-                    userData.setName(jsonObjectProductData.getJSONObject("userData").getString("name"));
-                    userData.setPhoneNumber(jsonObjectProductData.getJSONObject("userData").getString("phoneNumber"));
-                    */
                 }
             }
             return true;
@@ -483,14 +493,17 @@ public class Repository implements RepositoryContract {
      *
      * @param productItems
      */
-    private void insertListInDB(final List<ProductItem> productItems) {
-
+    @Override
+    public void insertListInDB(List<ProductItem> productItems, final onInsertListInDBCallback insertListInDBCallback) {
+        final List<ProductItem> productItemsList = new ArrayList<>(productItems);
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                for (ProductItem product : productItems) {
+                for (ProductItem product : productItemsList) {
                     getProductDao().insertProduct(product);
                 }
+                insertListInDBCallback.onInsert(false);
+
             }
         });
     }
@@ -564,15 +577,15 @@ public class Repository implements RepositoryContract {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        if (!loadCatalogFromJSON(response.toString(), getJSONCallback)) {
-                            getJSONCallback.onGetJSON(true);
+                        if (!loadCatalogFromJSON(response.toString(), getJSONCallback, new ArrayList<ProductItem>())) {
+                            getJSONCallback.onGetJSON(true, new ArrayList<ProductItem>());
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                getJSONCallback.onGetJSON(true);
+                getJSONCallback.onGetJSON(true, new ArrayList<ProductItem>());
             }
         });
         requestQueue.add(request);
@@ -604,6 +617,7 @@ public class Repository implements RepositoryContract {
 
     /**
      * Metodo que inserta un producto a la tabla de favoritos del usuario conectado.
+     *
      * @param favoriteItems
      */
     private void insertFavoriteListInDB(final List<FavoriteItem> favoriteItems) {

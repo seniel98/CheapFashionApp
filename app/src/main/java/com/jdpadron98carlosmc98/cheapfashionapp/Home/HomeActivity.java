@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,7 +30,6 @@ import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimerTask;
 
 public class HomeActivity
         extends AppCompatActivity implements HomeContract.View {
@@ -45,6 +45,8 @@ public class HomeActivity
     private HomeAdapter homeAdapter;
 
     private RecyclerView recyclerView;
+
+    private SwipeRefreshLayout mySwipeRefreshLayout;
 
     private List<ProductItem> list;
 
@@ -88,6 +90,20 @@ public class HomeActivity
                 presenter.goToAddProduct();
             }
         });
+
+
+        mySwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        mySwipeRefreshLayout.setRefreshing(true);
+                        bottomNavigationView.setEnabled(false);
+                        mySwipeRefreshLayout.setEnabled(false);
+                        presenter.downloadDataFromRepository();
+                    }
+                }
+        );
+
     }
 
     /**
@@ -119,6 +135,7 @@ public class HomeActivity
         bottomNavigationView = findViewById(R.id.bottomNavViewMarket);
         addProductButton = findViewById(R.id.floatingButtonMarket);
         recyclerView = findViewById(R.id.homeProductRecyclerView);
+        mySwipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
     }
 
     private void initBottomNavMenu() {
@@ -192,11 +209,14 @@ public class HomeActivity
     }
 
     @Override
-    public void navigateToNextScreen() {
+    public void restartActivity() {
         Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }
+
+
 
     @Override
     protected void onResume() {
@@ -206,13 +226,11 @@ public class HomeActivity
         // load the data
         presenter.onResume();
 
-        presenter.downloadDataFromRepository();
-
-
-
+        presenter.getProductListData();
 
 
     }
+
 
     private void createRecyclerView() {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -255,20 +273,26 @@ public class HomeActivity
 
     /**
      * Metodo que crea un toast con el mensaje que se le pasa por parametros.
+     *
      * @param msg
      */
 
     @Override
-    public void showToast(String msg) {
-        final Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-        toast.show();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+    public void showToast(final String msg) {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                toast.cancel();
+                final Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
+                toast.show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast.cancel();
+                    }
+                }, 1000);
             }
-        }, 1000);
+        });
 
     }
 
@@ -278,6 +302,27 @@ public class HomeActivity
 
         // deal with the data
 //        ((TextView) findViewById(R.id.data)).setText(viewModel.data);
+    }
+
+    public void interactWithLayoutComponents() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                enableBottomNavAndSwipeRefresh();
+                disableRefreshCircle();
+
+            }
+        });
+
+    }
+
+    private void enableBottomNavAndSwipeRefresh(){
+        bottomNavigationView.setEnabled(true);
+        mySwipeRefreshLayout.setEnabled(true);
+    }
+
+    private void disableRefreshCircle(){
+        mySwipeRefreshLayout.setRefreshing(false);
     }
 
     /**

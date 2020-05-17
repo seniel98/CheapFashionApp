@@ -1,6 +1,9 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Home;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
+
+import java.util.List;
 
 public class HomeModel implements HomeContract.Model {
 
@@ -27,6 +30,11 @@ public class HomeModel implements HomeContract.Model {
     @Override
     public void getFavoriteDataFromRepository(RepositoryContract.GetFavoriteJSONCallback getFavoriteJSONCallback) {
         repository.getFavoriteJSONFromURL(getFavoriteJSONCallback);
+    }
+
+    @Override
+    public void insertListInDb(RepositoryContract.onInsertListInDBCallback onInsertListInDBCallback, List<ProductItem> productItems) {
+        repository.insertListInDB(productItems, onInsertListInDBCallback);
     }
 
 

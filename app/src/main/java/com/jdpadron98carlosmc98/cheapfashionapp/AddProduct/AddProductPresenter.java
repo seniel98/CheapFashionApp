@@ -2,6 +2,8 @@ package com.jdpadron98carlosmc98.cheapfashionapp.AddProduct;
 
 import android.widget.ImageView;
 
+import androidx.annotation.UiThread;
+
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 import java.lang.ref.WeakReference;

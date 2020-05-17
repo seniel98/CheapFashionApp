@@ -1,8 +1,10 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.Login;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 public class LoginPresenter implements LoginContract.Presenter {
 
@@ -30,10 +32,11 @@ public class LoginPresenter implements LoginContract.Presenter {
         model.signIn(emailStr, passStr, new RepositoryContract.OnSignInCallback() {
             @Override
             public void onSignIn(boolean error) {
-                if(!error){
-                    goToHomeRouter();
-                }else{
-                    viewModel.message="This user does not exist";
+                if (!error) {
+                    downloadDataFromRepository();
+                    //goToHomeRouter();
+                } else {
+                    viewModel.message = "This user does not exist";
                     view.get().displayData(viewModel);
 
                 }
@@ -41,6 +44,30 @@ public class LoginPresenter implements LoginContract.Presenter {
         });
     }
 
+    private void downloadDataFromRepository() {
+        model.getDataFromRepository(new RepositoryContract.OnGetJSONCallback() {
+            @Override
+            public void onGetJSON(boolean error, List<ProductItem> productItems) {
+                if (error) {
+                    view.get().showToast("NO CONNECTION. DATA MAY BE OBSOLETE");
+                    insertListInDb(productItems);
+                } else {
+                    insertListInDb(productItems);
+                }
+            }
+        });
+    }
+
+    private void insertListInDb(List<ProductItem> productItems) {
+        model.insertListInDb(new RepositoryContract.onInsertListInDBCallback() {
+            @Override
+            public void onInsert(boolean error) {
+                if (!error) {
+                    view.get().goToHome();
+                }
+            }
+        }, productItems);
+    }
 
 
     @Override
@@ -51,10 +78,10 @@ public class LoginPresenter implements LoginContract.Presenter {
             view.get().setErrorLayoutInputs(0);
         } else if (passStr.isEmpty()) {
             view.get().setErrorLayoutInputs(1);
-        } else{
+        } else {
             //view.get().enableProgressBar();
             //callModel
-            signIn(emailStr,passStr);
+            signIn(emailStr, passStr);
         }
     }
 

@@ -2,7 +2,6 @@ package com.jdpadron98carlosmc98.cheapfashionapp.AddProduct;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -37,7 +36,7 @@ public class AddProductActivity
 
     private ImageView addProductImage;
     private TextView addProductAddImageText;
-    private Integer REQUEST_CAMERA=1,SELECT_FILE=0;
+    private Integer REQUEST_CAMERA = 1, SELECT_FILE = 0;
     private EditText productEditText, priceEditText, descriptionEditText;
     private TextInputLayout productInputLayout, priceInputLayout, descriptionInputLayout;
     private MaterialButton addButton;
@@ -50,9 +49,9 @@ public class AddProductActivity
         setContentView(R.layout.activity_add_product);
         initLayoutComponents();
         initLayoutData();
-        askPermission(Manifest.permission.READ_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE);
+        askPermission(Manifest.permission.READ_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE);
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             AppMediator.resetInstance();
         }
         // do the setup
@@ -83,27 +82,26 @@ public class AddProductActivity
     }
 
     /**
-
-    /**
+     * /**
      * Metodo que crea un dialog, en el cual se puede seleccionar la galeria o la camara para
      * añadir una imagen al imageView del producto para poder añadirlo
      */
-    private void selectImage(){
-        final CharSequence[] items= {"Camera", "Gallery", "Cancel"};
+    private void selectImage() {
+        final CharSequence[] items = {"Camera", "Gallery", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(AddProductActivity.this);
         builder.setTitle("Add Image");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                if(items[i].equals("Camera")){
-                    Intent intent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent,REQUEST_CAMERA);
+                if (items[i].equals("Camera")) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, REQUEST_CAMERA);
 
-                }else if(items[i].equals("Gallery")){
-                    Intent intent= new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                } else if (items[i].equals("Gallery")) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     intent.setType("image/*");
-                    startActivityForResult(intent.createChooser(intent,"Select File"),SELECT_FILE);
-                }else if(items[i].equals("Cancel")){
+                    startActivityForResult(intent.createChooser(intent, "Select File"), SELECT_FILE);
+                } else if (items[i].equals("Cancel")) {
                     dialog.dismiss();
                 }
             }
@@ -113,35 +111,37 @@ public class AddProductActivity
 
     /**
      * Metodo que pide los permisos para poder acceder a la camara del dispositivo
+     *
      * @param permission
      * @param requestCode
      */
     private void askPermission(String permission, int requestCode) {
-        if(ContextCompat.checkSelfPermission(this, permission)!= PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
-        }else{
+        } else {
 
         }
     }
 
     /**
-     *  Metodo que dependiendo de donde hayamos tomado la imagen del producto lo inserta en el
-     *  imageView
+     * Metodo que dependiendo de donde hayamos tomado la imagen del producto lo inserta en el
+     * imageView
+     *
      * @param requestCode
      * @param resultCode
      * @param data
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
-        if(resultCode== Activity.RESULT_OK){
-            if(requestCode==REQUEST_CAMERA){
-                Bundle bundle= data.getExtras();
-                final Bitmap bitmap=(Bitmap) bundle.get("data");
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_CAMERA) {
+                Bundle bundle = data.getExtras();
+                final Bitmap bitmap = (Bitmap) bundle.get("data");
                 addProductImage.setImageBitmap(bitmap);
-            }else if(requestCode== SELECT_FILE){
-                Uri selectedImage= data.getData();
-                filePath= selectedImage;
+            } else if (requestCode == SELECT_FILE) {
+                Uri selectedImage = data.getData();
+                filePath = selectedImage;
                 addProductImage.setImageURI(selectedImage);
             }
         }
@@ -205,8 +205,6 @@ public class AddProductActivity
     }
 
 
-
-
     @Override
     public void navigateToNextScreen() {
         Intent intent = new Intent(this, AddProductActivity.class);
@@ -223,13 +221,20 @@ public class AddProductActivity
     }
 
     @Override
-    public void displayData(AddProductViewModel viewModel) {
-        Toast.makeText(this, viewModel.message, Toast.LENGTH_SHORT).show();
+    public void displayData(final AddProductViewModel viewModel) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                //Do something on UiThread
+                Toast.makeText(getApplicationContext(), viewModel.message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
     @Override
     public void onUpdateImage(AddProductViewModel viewModel) {
-        if (viewModel.image != null){
+        if (viewModel.image != null) {
             addProductImage.setImageDrawable(viewModel.image.getDrawable());
         }
 

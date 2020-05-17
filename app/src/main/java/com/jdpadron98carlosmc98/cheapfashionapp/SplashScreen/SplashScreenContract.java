@@ -1,8 +1,10 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen;
 
+import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 public interface SplashScreenContract {
 
@@ -12,6 +14,8 @@ public interface SplashScreenContract {
         void goToLogin();
 
         void goToHome();
+
+        void showToast(String msg);
     }
 
     interface Presenter {
@@ -31,6 +35,10 @@ public interface SplashScreenContract {
 
     interface Model {
         void checkSession(RepositoryContract.OnLoggedInCallback loggedInCallback);
+
+        void getDataFromRepository(RepositoryContract.OnGetJSONCallback onGetJSONCallback);
+
+        void insertListInDb(RepositoryContract.onInsertListInDBCallback onInsertListInDBCallback, List<ProductItem> productItems);
     }
 
     interface Router {
