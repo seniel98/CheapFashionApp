@@ -6,7 +6,6 @@ import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomePresenter implements HomeContract.Presenter {
@@ -90,6 +89,19 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
 
+    private void getProductListAfterRefresh() {
+        model.getProductListData(new RepositoryContract.GetProductListCallback() {
+            @Override
+            public void setProductList(List<ProductItem> loadProducts) {
+                state.homeProductList = loadProducts;
+                //Log.e(TAG, "getProductListData" + loadProducts.get(0).userData);
+                view.get().interactWithLayoutComponents();
+                view.get().fillArrayList(state);
+            }
+        });
+    }
+
+
     @Override
     public void downloadDataFromRepository() {
         model.getDataFromRepository(new RepositoryContract.OnGetJSONCallback() {
@@ -112,7 +124,7 @@ public class HomePresenter implements HomeContract.Presenter {
             @Override
             public void onInsert(boolean error) {
                 if (!error) {
-                    view.get().interactWithLayoutComponents();
+                    getProductListAfterRefresh();
                 }
             }
         }, productItems);
