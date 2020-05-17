@@ -725,23 +725,25 @@ public class Repository implements RepositoryContract {
 
     @Override
     public void getFavoriteJSONFromURL(final GetFavoriteJSONCallback getFavoriteJSONCallback) {
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        String JSON_FILE = "https://cheap-fashion-app.firebaseio.com/users/" + auth.getCurrentUser().getUid() + "/.json";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, JSON_FILE, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        loadFavoriteProductsFromJSON(response.toString());
-                        getFavoriteJSONCallback.onGetFavoriteJSONCallback(false);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                getFavoriteJSONCallback.onGetFavoriteJSONCallback(true);
-            }
-        });
-        requestQueue.add(request);
+        if(auth.getCurrentUser()!=null) {
+            RequestQueue requestQueue = Volley.newRequestQueue(context);
+            String JSON_FILE = "https://cheap-fashion-app.firebaseio.com/users/" + auth.getCurrentUser().getUid() + "/.json";
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, JSON_FILE, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            loadFavoriteProductsFromJSON(response.toString());
+                            getFavoriteJSONCallback.onGetFavoriteJSONCallback(false);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    getFavoriteJSONCallback.onGetFavoriteJSONCallback(true);
+                }
+            });
+            requestQueue.add(request);
+        }
     }
 
 

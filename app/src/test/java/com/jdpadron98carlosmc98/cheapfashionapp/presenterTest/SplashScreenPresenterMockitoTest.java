@@ -1,8 +1,8 @@
 package com.jdpadron98carlosmc98.cheapfashionapp.presenterTest;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginContract;
-import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginPresenter;
-import com.jdpadron98carlosmc98.cheapfashionapp.Login.LoginState;
+import com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen.SplashScreenContract;
+import com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen.SplashScreenPresenter;
+import com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen.SplashScreenState;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.ProductItem;
 import com.jdpadron98carlosmc98.cheapfashionapp.data.RepositoryContract;
 
@@ -23,9 +23,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LoginPresenterMockitoTest {
+public class SplashScreenPresenterMockitoTest {
     @Captor
-    private ArgumentCaptor<RepositoryContract.OnSignInCallback> signInCallbackArgumentCaptor;
+    private ArgumentCaptor<RepositoryContract.OnLoggedInCallback> onLoggedInCallbackArgumentCaptor;
 
     @Captor
     private ArgumentCaptor<RepositoryContract.OnGetJSONCallback> onGetJSONCallbackArgumentCaptor;
@@ -34,18 +34,18 @@ public class LoginPresenterMockitoTest {
     private ArgumentCaptor<RepositoryContract.onInsertListInDBCallback> onInsertListInDBCallbackArgumentCaptor;
 
     @Mock
-    private LoginContract.Model modelMock;
+    private SplashScreenContract.Model modelMock;
 
     @Mock
-    private LoginContract.Presenter presenterMock;
+    private SplashScreenContract.Presenter presenterMock;
 
     @Mock
-    private LoginContract.Router routerMock;
+    private SplashScreenContract.Router routerMock;
 
     @Mock
-    private LoginContract.View viewMock;
+    private SplashScreenContract.View viewMock;
 
-    private LoginState loginState;
+    private SplashScreenState splashScreenState;
 
     private static final String email = "jdpadron98@gmail.com";
     private static final String pass = "Jdpadron98";
@@ -54,13 +54,13 @@ public class LoginPresenterMockitoTest {
 
 
     @Before
-    public void setupLoginScreen(){
-        loginState = new LoginState();
+    public void setupLoginScreen() {
+        splashScreenState = new SplashScreenState();
         // To inject the mocks in the test this method needs to be called
         MockitoAnnotations.initMocks(this);
 
         // Get a reference to the class under test
-        presenterMock = new LoginPresenter(loginState);
+        presenterMock = new SplashScreenPresenter(splashScreenState);
 
         // Inject dependencies to the class under test
         presenterMock.injectView(new WeakReference<>(viewMock));
@@ -69,52 +69,23 @@ public class LoginPresenterMockitoTest {
     }
 
     @Test
-    public void goToSignUp(){
-        presenterMock.goToSignUpRouter();
-        verify(viewMock).goToSignUp();
-    }
-
-    @Test
-    public void goToForgotPassword(){
-        presenterMock.goToForgotPasswordRouter();
-        verify(viewMock).goToForgotPassword();
-    }
-
-    @Test
-    public void signInWithoutRegisteredUser(){
-        presenterMock.checkLogin(email,pass);
-        verify(modelMock).signIn(eq(email),eq(pass),signInCallbackArgumentCaptor.capture());
-        signInCallbackArgumentCaptor.getValue().onSignIn(true);
-        verify(viewMock).displayData(loginState);
-    }
-    @Test
-    public void errorNoPassword(){
-        presenterMock.checkLogin(email,"");
-        //1 == no password
-        verify(viewMock).setErrorLayoutInputs(1);
-    }
-    @Test
-    public void errorNoEmail(){
-        presenterMock.checkLogin("",pass);
-        //1 == no password
-        verify(viewMock).setErrorLayoutInputs(0);
-    }
-    @Test
-    public void errorNoEmailAndNoPass(){
-        presenterMock.checkLogin("","");
-        //1 == no password
-        verify(viewMock).setErrorLayoutInputs(2);
-    }
-
-    @Test
     public void loadDataFromRepository(){
-        presenterMock.signIn(email,pass);
-        verify(modelMock).signIn(eq(email),eq(pass),signInCallbackArgumentCaptor.capture());
-        signInCallbackArgumentCaptor.getValue().onSignIn(false);
+        presenterMock.checkSession();
+        verify(modelMock).checkSession(onLoggedInCallbackArgumentCaptor.capture());
+        onLoggedInCallbackArgumentCaptor.getValue().onLoggedIn(true);
         verify(modelMock).getDataFromRepository(onGetJSONCallbackArgumentCaptor.capture());
         onGetJSONCallbackArgumentCaptor.getValue().onGetJSON(false, itemList);
         verify(modelMock).insertListInDb(onInsertListInDBCallbackArgumentCaptor.capture(), eq(itemList));
         onInsertListInDBCallbackArgumentCaptor.getValue().onInsert(false);
         verify(viewMock).goToHome();
+
+    }
+
+    @Test
+    public void noUserLogged(){
+        presenterMock.checkSession();
+        verify(modelMock).checkSession(onLoggedInCallbackArgumentCaptor.capture());
+        onLoggedInCallbackArgumentCaptor.getValue().onLoggedIn(false);
+        verify(viewMock).goToLogin();
     }
 }

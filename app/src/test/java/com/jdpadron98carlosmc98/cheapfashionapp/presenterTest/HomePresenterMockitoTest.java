@@ -33,6 +33,9 @@ public class HomePresenterMockitoTest {
     private ArgumentCaptor<RepositoryContract.OnGetJSONCallback> onGetJSONCallbackArgumentCaptor;
 
     @Captor
+    private ArgumentCaptor<RepositoryContract.onInsertListInDBCallback> onInsertListInDBCallbackArgumentCaptor;
+
+    @Captor
     private ArgumentCaptor<RepositoryContract.OnLogoutCallback> onLogoutCallbackArgumentCaptor;
 
     @Mock
@@ -51,6 +54,9 @@ public class HomePresenterMockitoTest {
     private HomeState homeState;
 
     private static final List<ProductItem> productList = mock(List.class);
+
+    private static final List<ProductItem> dataList = mock(List.class);
+
 
     private static final ProductItem productItem = mock(ProductItem.class);
 
@@ -112,25 +118,5 @@ public class HomePresenterMockitoTest {
         getFavoriteJSONCallbackArgumentCaptor.getValue().onGetFavoriteJSONCallback(false);
     }
 
-    @Test
-    public void loadJSONProducts(){
-        presenterMock.downloadDataFromRepository();
-        verify(modelMock).getDataFromRepository(onGetJSONCallbackArgumentCaptor.capture());
-        onGetJSONCallbackArgumentCaptor.getValue().onGetJSON(false, productList);
-        verify(modelMock).getProductListData(getProductListCallbackArgumentCaptor.capture());
-        getProductListCallbackArgumentCaptor.getValue().setProductList(productList);
-        verify(viewMock).fillArrayList(homeState);
-    }
-
-    @Test
-    public void loadJSONProductsWithoutConnection(){
-        presenterMock.downloadDataFromRepository();
-        verify(modelMock).getDataFromRepository(onGetJSONCallbackArgumentCaptor.capture());
-        onGetJSONCallbackArgumentCaptor.getValue().onGetJSON(true, productList);
-        verify(viewMock).showToast(ERROR_STRING);
-        verify(modelMock).getProductListData(getProductListCallbackArgumentCaptor.capture());
-        getProductListCallbackArgumentCaptor.getValue().setProductList(productList);
-        verify(viewMock).fillArrayList(homeState);
-    }
 }
 

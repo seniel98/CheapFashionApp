@@ -1,22 +1,16 @@
 package com.jdpadron98carlosmc98.cheapfashionapp;
 
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.rule.GrantPermissionRule;
 import androidx.test.runner.AndroidJUnit4;
 
-import com.jdpadron98carlosmc98.cheapfashionapp.R;
 import com.jdpadron98carlosmc98.cheapfashionapp.SplashScreen.SplashScreenActivity;
 
 import org.hamcrest.Description;
@@ -29,11 +23,8 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.doubleClick;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
-import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -77,6 +68,7 @@ public class ChangeScreenEspressoTests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        fillInputs();
 
         ViewInteraction appCompatTextView = onView(
                 allOf(withId(R.id.forgotPass), withText("Forgot password?"),
@@ -117,7 +109,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(1500);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -135,7 +127,7 @@ public class ChangeScreenEspressoTests {
         materialButton.perform(click());
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -257,7 +249,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(1500);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -340,7 +332,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(1500);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -414,7 +406,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(1500);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -480,7 +472,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(1500);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -542,7 +534,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(1500);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -563,7 +555,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(1500);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -625,7 +617,7 @@ public class ChangeScreenEspressoTests {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(1500);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -717,7 +709,7 @@ public class ChangeScreenEspressoTests {
         materialButton.perform(click());
 
         try {
-            Thread.sleep(1500);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -769,7 +761,7 @@ public class ChangeScreenEspressoTests {
 
 
         try {
-            Thread.sleep(1500);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -792,7 +784,7 @@ public class ChangeScreenEspressoTests {
                                 2)));
         appCompatButton.perform(scrollTo(), click());
         try {
-            Thread.sleep(1500);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -814,6 +806,12 @@ public class ChangeScreenEspressoTests {
                                         0),
                                 3)));
         appCompatButton2.perform(scrollTo(), click());
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
